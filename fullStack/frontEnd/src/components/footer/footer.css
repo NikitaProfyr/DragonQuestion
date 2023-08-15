@@ -1,0 +1,31 @@
+.Footer {
+    height: 30vh;
+    width: 100%;
+    background-color: #FAFAFA; 
+    display: flex;
+    align-items: center;
+}
+.Footer .wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+.footer-left b{
+    color: #DD90E6;
+    font-size: 36px;
+    font-weight: bold;
+    font-style: italic;
+}
+
+.footer-left p{
+    color: #90B1E6;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.footer-left span{
+    color: #DD90E6;
+    font-size: 24px;
+    font-weight: bold;
+}
