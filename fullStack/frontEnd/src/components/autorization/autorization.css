@@ -1,0 +1,7 @@
+.bg-autorization{
+    height: calc(100vh - 80px);
+    background-color: #BFD0EC;
+    width: 100%;
+    overflow-y: hidden;
+    box-sizing: border-box;
+}
