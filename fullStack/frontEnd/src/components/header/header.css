@@ -4,6 +4,7 @@
     height: 80px;
     justify-content: space-between;
     font-weight: bold;
+    z-index: 50;
 }
 
 .nav-bar a{
