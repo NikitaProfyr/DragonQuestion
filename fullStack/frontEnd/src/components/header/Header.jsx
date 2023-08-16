@@ -1,6 +1,6 @@
 import React from "react";
 import LogoImg from '../../image/logo.png'
-// import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import './header.css'
 
 export class Header extends React.Component{
@@ -13,7 +13,8 @@ export class Header extends React.Component{
                         <img src={LogoImg} height="40" alt="Logo" />
                     </div>
                     <div className="nav-bar">
-                        <a href="#">Авторизация</a>
+                        {/* <a href="#"></a> */}
+                        <Link to="/authorization">Авторизация</Link>
                     </div>
                 </div>
             </div>
