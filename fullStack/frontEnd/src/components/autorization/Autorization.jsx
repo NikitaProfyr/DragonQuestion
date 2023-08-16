@@ -1,6 +1,7 @@
 import React from "react";
 import DraconImg from '../../image/drakonEgor.png'
 import logo from "../../image/logo.png"
+import { Link } from "react-router-dom";
 import './autorization.css'
 
 export class Autorization extends React.Component{
@@ -22,7 +23,7 @@ export class Autorization extends React.Component{
                             </form>
 
                             <a href=""><span>ЗАБЫЛ ПАРОЛЬ</span></a><br />
-                            <a href=""> ЗАРЕГИСТРИРОВАТЬСЯ</a>
+                            <Link to="/registration" className="link-to-registration">ЗАРЕГИСТРИРОВАТЬСЯ</Link>
                             
                             <img src={logo} alt="" width="110px" className="logo-content-autorization" />
                         </div>
