@@ -34,10 +34,13 @@ export class HomePage extends React.Component{
                             <div className="content-left-2">
                                 Не драконь,<br /> пройди опрос!
                             </div>
-                            <div className="content-right-2">
-                                <a href="#">Пройти опрос</a>
+                            <a href="#" className="button-content-home-page-buttom">
+                                <div className="content-right-2"> <span>Пройти опрос</span>    
+                                </div>
+                                </a>
+                                
 
-                            </div>
+                                
                         </div>
                         </div>
                     </div>
