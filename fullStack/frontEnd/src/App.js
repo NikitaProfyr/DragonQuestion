@@ -15,6 +15,9 @@ import {
 
 import './index.css';
 
+export var BaseUrl = 'https://reqres.in/'
+
+
 function App() {
   return (
     <>
