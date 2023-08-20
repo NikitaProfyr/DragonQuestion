@@ -3,6 +3,7 @@ import { HomePage } from './components/content-home-page/HomePage';
 import { Footer } from './components/footer/footer';
 import { Autorization } from './components/autorization/Autorization'
 import { Registration } from './components/registration/Registration';
+import { Basicheader } from './components/basic-header/Basic-header';
 
 import {
   BrowserRouter as Router,
@@ -22,7 +23,7 @@ function App() {
   return (
     <>
       <Router>
-      <Header />
+      <Basicheader />
        
       <Routes>
         <Route path='' element={<><HomePage /><Footer/></>} /> 
