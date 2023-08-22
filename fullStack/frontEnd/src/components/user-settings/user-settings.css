@@ -32,6 +32,9 @@
     -webkit-box-shadow: 0px 3px 7px 0px rgba(0, 0, 0, 0.5);
     -moz-box-shadow: 0px 3px 7px 0px rgba(0, 0, 0, 0.5);
     box-shadow: 0px 3px 7px 0px rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
 }
 
 .button-user-settings {
@@ -51,9 +54,7 @@
     color: #fff;
     font-weight: bold;
 }
-.right-content-settings {
-    display: block;
-}
+
 .button-user-settings .gradient-button-settings {
     background: rgb(107,160,244);
     background: linear-gradient(135deg, rgba(107,160,244,1) 0%, rgba(218,81,234,1) 100%);
@@ -62,4 +63,61 @@
     -webkit-box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.5) inset;
     -moz-box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.5) inset;
     box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.5) inset;
+}
+
+.change-password-block {
+    margin-top: 50px;
+}
+
+.change-password-block input{
+    height: 40px;
+    width: 300px;
+    background-color: #fff;
+    border-radius: 5px;
+    border: none;
+    font-size: 20px;
+    color: #90B1E6;
+    text-align: center;
+    caret-color: #DD90E6;
+    outline: none;
+}
+
+.change-password-block h1 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #90B1E6;
+}
+.change-password-block h2 {
+    font-size: 20px;
+    font-weight: bold;
+    color: #90B1E6;
+    margin-top: 20px;
+}
+.change-password-block h3 {
+    font-size: 14px;
+    font-weight: bold;
+    color: #90B1E6;
+    margin-top: 10px;
+}
+.account-deletion-block {
+    margin-top: 200px;
+}
+.account-deletion-block h2{
+    font-size: 20px;
+    font-weight: bold;
+    color: #90B1E6;
+    display: flex;
+    justify-content: center;
+}
+.account-deletion-block button {
+    height: 40px;
+    width: 300px;
+    border-radius: 50px;
+    margin-top: 20px;
+    border: none;
+    background: rgb(226,140,140);
+    background: linear-gradient(135deg, rgba(226,140,140,0.5) 0%, rgba(226,140,140,1) 100%);
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
 }

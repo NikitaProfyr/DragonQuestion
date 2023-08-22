@@ -15,7 +15,22 @@ export class UserSettings extends React.Component{
                             </div>
                             <div className="right-content-settings">
                                 <div className="security-block-settings">
-                                    <h1>Безопастность</h1>
+                                    <div className="content-security-block">
+                                        <div className="change-password-block">
+                                            <h1>БЕЗОПАСТНОСТЬ</h1>
+                                            <h2>СМЕНА ПАРОЛЯ</h2>
+                                            <h3>ТЕКУЩИЙ ПАРОЛЬ</h3>
+                                            <input type="password"/>
+                                            <h3>НОВЫЙ ПАРОЛЬ</h3>
+                                            <input type="password"/>
+                                            <h3>ПОДТВЕРДИТЕ НОВЫЙ ПАРОЛЬ</h3>
+                                            <input type="password"/>
+                                        </div>
+                                        <div className="account-deletion-block">
+                                            <h2>УДАЛЕНИЕ АККАУНТА</h2>
+                                            <button>Удалить</button>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div className="button-user-settings">
                                     <button>
