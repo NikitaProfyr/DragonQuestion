@@ -1,0 +1,65 @@
+.bg-content-user-settings {
+    background: rgb(221,144,230);
+    background: linear-gradient(135deg, rgba(221,144,230,0.2) 0%, rgba(144,177,230,0.2) 100%);
+    height: calc(100vh - 80px);
+}
+
+.bg-dragon-settings {
+    transform: rotate(-70deg);
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 700px;
+    top: 100px;
+    margin: auto;
+    z-index: 0;
+
+}
+
+.all-content-user-settings {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.security-block-settings {
+    float: right;
+    height: 675px;
+    width: 420px;
+    background-color: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(5px);
+    border-radius: 15px;
+    -webkit-box-shadow: 0px 3px 7px 0px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: 0px 3px 7px 0px rgba(0, 0, 0, 0.5);
+    box-shadow: 0px 3px 7px 0px rgba(0, 0, 0, 0.5);
+}
+
+.button-user-settings {
+    float: right;
+    display: flex;
+    justify-content: space-between;
+    width: 420px;
+    margin-top: 40px;
+}
+.button-user-settings button {
+    border: none;
+    background-color: #79A8F4;
+    height: 32px;
+    width: 200px;
+    border-radius: 5px;
+    z-index: 50;
+    color: #fff;
+    font-weight: bold;
+}
+.right-content-settings {
+    display: block;
+}
+.button-user-settings .gradient-button-settings {
+    background: rgb(107,160,244);
+    background: linear-gradient(135deg, rgba(107,160,244,1) 0%, rgba(218,81,234,1) 100%);
+}
+.button-user-settings button:active {
+    -webkit-box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.5) inset;
+    -moz-box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.5) inset;
+    box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.5) inset;
+}

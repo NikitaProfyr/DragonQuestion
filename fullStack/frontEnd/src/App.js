@@ -4,6 +4,7 @@ import { Footer } from './components/footer/footer';
 import { Autorization } from './components/autorization/Autorization'
 import { Registration } from './components/registration/Registration';
 import { Basicheader } from './components/basic-header/Basic-header';
+import { UserSettings } from './components/user-settings/UserSettings';
 
 import {
   BrowserRouter as Router,
@@ -26,7 +27,7 @@ function App() {
       <Basicheader />
        
       <Routes>
-        <Route path='' element={<><HomePage /><Footer/></>} /> 
+        <Route path='' element={<><UserSettings /><Footer/></>} /> 
         <Route path='/authorization' element={<Autorization />} />
         <Route path='/registration' element={<Registration />} />
         
