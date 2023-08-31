@@ -2,4 +2,9 @@ sqlalchemy
 fastapi
 uvicorn[standart]
 psycopg2
+pydantic
+pydantic[email]
+passlib
 black
+bcrypt
+starlette

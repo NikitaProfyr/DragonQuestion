@@ -1,12 +1,12 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from router.UserRouter import userRouter
 
 
 
-if __name__ == '__main__':
 
-    app = FastAPI()
+app = FastAPI()
 
     # app.add_middleware(
     #     CORSMiddleware,
@@ -18,6 +18,7 @@ if __name__ == '__main__':
 
 
     # регистрация роутеров
-    # app.include_router(
-    #
-    # )
+app.include_router(
+    router=userRouter,
+    prefix='/users',
+)

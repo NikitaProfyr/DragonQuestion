@@ -4,3 +4,4 @@
 """
 
 from model.settings import Base
+from model.UserModel import User

@@ -10,7 +10,7 @@ engine = create_engine(
     "postgresql+psycopg2://dies_admin:123123@127.0.0.1:5432/DQDB",
     echo=True, future=True)
 
-sessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+# sessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 Base = declarative_base()
 
