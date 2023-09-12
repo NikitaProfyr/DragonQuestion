@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import './basic-header.css'
 
 export class Basicheader extends React.Component{
+     
     render() {
         return(
              <div className="Header-bg">

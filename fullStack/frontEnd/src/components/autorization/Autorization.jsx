@@ -1,4 +1,7 @@
 import React from "react";
+
+// import { BaseHeader } from '../base-header/BaseHeader'
+
 import DraconImg from '../../image/drakonEgor.png'
 import logo from "../../image/logo.png"
 import { Link, Navigate } from "react-router-dom";
@@ -8,6 +11,7 @@ import './autorization.css'
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { BaseUrl } from '../../App.js'
+import { TestUrl } from "../../App.js";
 import axios from "axios";
 
 
@@ -25,7 +29,8 @@ export class Autorization extends React.Component{
     }
 
     onClickAutorization = (dates) => {
-        axios.post(BaseUrl+'api/login', dates).then(response => {
+        // axios.post(BaseUrl+'api/login', dates).then(response => {
+        axios.post(TestUrl+'users/autorization', dates).then(response => {
             if (response.status === 200){
                 
                 this.redirectToMain()
@@ -76,14 +81,6 @@ export class Autorization extends React.Component{
                                     
                                 }}
                             </Formik>
-
-                            {/* <form>
-                                <div className="form-input-autorization">
-                                    <input placeholder="Введите email" type="email" name="email" />
-                                    <input placeholder="Введите пароль" type="password" name="password" />
-                                </div>
-                                <button type="submit" formMethod="post">ВОЙТИ</button>
-                            </form> */}
 
                             <a href=""><span>ЗАБЫЛ ПАРОЛЬ</span></a><br />
                             <Link to="/registration" className="link-to-registration">ЗАРЕГИСТРИРОВАТЬСЯ</Link>

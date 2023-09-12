@@ -1,3 +1,6 @@
+from collections import OrderedDict
+
+from typing import Optional
 from pydantic import BaseModel, EmailStr
 
 
@@ -5,14 +8,23 @@ class UserSchema(BaseModel):
     id: int
     email: EmailStr
     hashedPassword: str
-    userName: str
-    firstName: str
-    lastName: str
+    userName: Optional[str] = None
 
     class Config:
         from_attributes = True
 
 
-class UserRegistrationSchema(BaseModel):
+class UserBase(BaseModel):
     email: EmailStr
-    hashedPassword: str
+
+
+class UserCreate(UserBase):
+    password: str
+
+
+class UserLite(UserBase):
+    id: int
+
+
+class TokenSchema(BaseModel):
+    accesToken: str

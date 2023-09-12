@@ -4,4 +4,4 @@
 """
 
 from model.settings import Base
-from model.UserModel import User
+from model.UserModel import User, Token

@@ -1,10 +1,12 @@
-sqlalchemy
-fastapi
+sqlalchemy~=2.0.19
+fastapi~=0.101.1
 uvicorn[standart]
 psycopg2
-pydantic
+pydantic~=2.1.1
 pydantic[email]
-passlib
+passlib~=1.7.4
 black
 bcrypt
-starlette
+starlette~=0.27.0
+python-jose
+alembic~=1.11.2

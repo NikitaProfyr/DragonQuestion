@@ -8,6 +8,7 @@ import './registration.css'
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { BaseUrl } from '../../App.js'
+import { TestUrl } from "../../App.js";
 import axios from "axios";
  
 
@@ -31,12 +32,20 @@ export class Registration extends React.Component{
 
     onClickRegistration = (dates) => {
         console.log(dates)
-         axios.post(BaseUrl+'api/users', dates).then(response => {
+
+        this.datesRequersts = {
+            email: dates.email,
+            hashedPassword: dates.password1
+        }
+
+        // axios.post(BaseUrl+'api/users', dates).then(response => {
+        axios.post(TestUrl+'users/registration', this.datesRequersts).then(response => {    
             if (response.status === 201){
                 console.log(response.status)
                 this.redirectToMain()
             } 
             else{
+                console.log(dates)
                 console.log(response.status)
             }
          })
