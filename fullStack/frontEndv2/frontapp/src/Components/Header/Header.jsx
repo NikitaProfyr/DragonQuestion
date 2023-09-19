@@ -1,19 +1,27 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import HeaderBase from './HeaderBase'
 import HeaderUser from './HeaderUser'
+import './header.css'
 
 const Header = () => {
+    // const [user, setUser] = useState(null)
+    let user = null
+    const setUser = (user) => {
+        // user = {username:'test'}
+        // console.log(document.cookie)
+        user = null
+        return user 
+    }
+      
     
-    let user = {name:'test'} 
-
-    if (typeof user === undefined){
+    if (setUser(user) === null){
         return (
             <HeaderBase/>      
         )
     }
     else{
         return (
-            <HeaderUser/>      
+            <HeaderUser user={setUser(user)} />      
         )
     }
 }

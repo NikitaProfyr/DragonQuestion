@@ -11,7 +11,7 @@ class User(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     email = Column(String, unique=True)
     hashedPassword = Column(String)
-    userName = Column(String, nullable=True)
+    userName = Column(String, nullable=True, default='username')
     firstName = Column(String, nullable=True)
     lastName = Column(String, nullable=True)
 
