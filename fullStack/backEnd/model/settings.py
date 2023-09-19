@@ -7,7 +7,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
 engine = create_engine(
-    "postgresql+psycopg2://dies_admin:123123@127.0.0.1:5432/DQDB",
+    "postgresql+psycopg2://axem4n:elker_16@127.0.0.1:5432/DQDB",
     echo=True, future=True)
 
 # sessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)

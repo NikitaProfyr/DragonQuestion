@@ -1,5 +1,3 @@
-from collections import OrderedDict
-
 from typing import Optional
 from pydantic import BaseModel, EmailStr
 
@@ -15,7 +13,7 @@ class UserSchema(BaseModel):
 
 
 class UserBase(BaseModel):
-    email: EmailStr
+    userName: str
 
 
 class UserCreate(UserBase):

@@ -1,8 +1,7 @@
-
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 
-from router.UserRouter import userRouter
+from routers.UserRouter import userRouter
 
 app = FastAPI()
 
@@ -13,7 +12,6 @@ app.add_middleware(
     allow_methods=["*"],  # Разрешить любые HTTP-методы
     allow_headers=["*"],  # Разрешить любые заголовки
 )
-
 
 # регистрация роутеров
 
