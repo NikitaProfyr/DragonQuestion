@@ -10,6 +10,7 @@ import Footer from '../Footer/Footer'
 import Header from '../Header/Header'
 import HomePage from '../HomePage/HomePage'
 import Login from '../Login/Login'
+import Registration from '../Registration/Registration'
  
 
 
@@ -32,6 +33,11 @@ const AppRoutes = () => {
         <>
           <Header/>
           <Login/>
+        </>}/>
+        <Route path={ROUTES.REGISTRATION} element = {
+        <>
+          <Header/>
+          <Registration/>
         </>}/>
       </Routes>
     </BrowserRouter>

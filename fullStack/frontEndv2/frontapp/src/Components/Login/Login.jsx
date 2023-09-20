@@ -13,7 +13,7 @@ const Login = () => {
 
     const onClickRedirect = (dates) =>{
         let response = AuthService.login(dates.target.email.value, dates.target.password.value)
-        document.cookie = {token: response} 
+         
         console.log(response)
         setredirectToMain(true)
     }

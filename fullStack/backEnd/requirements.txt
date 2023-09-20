@@ -10,3 +10,4 @@ bcrypt
 starlette
 python-jose
 alembic
+python-dotenv

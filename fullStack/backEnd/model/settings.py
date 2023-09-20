@@ -5,9 +5,14 @@
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+from dotenv import load_dotenv
+from os import getenv
+load_dotenv()
+
+POSTGRE_URL = f"postgresql+psycopg2://{getenv('POSTGRES_USER')}:{getenv('POSTGRES_PASSWORD')}@127.0.0.1:5432/DQDB"
 
 engine = create_engine(
-    "postgresql+psycopg2://axem4n:elker_16@127.0.0.1:5432/DQDB",
+    POSTGRE_URL,
     echo=True, future=True)
 
 # sessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)

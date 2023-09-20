@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from "react-router-dom";
 
 import DraconImg from '../../image/drakonEgor.png'
+import { ROUTES } from '../../utils/routes';
 import './home-page.css'
 
 const HomePage = () => {
@@ -11,7 +12,7 @@ const HomePage = () => {
                 <div className="wrapper">
                     <div className="content-block-1">
                         <div className="text-content-block-1">
-                            <p>Присоединяйтесь к нам сегодня и сделайте свой голос услышаным!<br /><Link to="/registration">Зарегистрируйтесь</Link> на нашем сайте, чтобы начать создавать и участвовать в опросах уже сейчас.</p>
+                            <p>Присоединяйтесь к нам сегодня и сделайте свой голос услышаным!<br /><Link to={ROUTES.LOGIN}>Зарегистрируйтесь</Link> на нашем сайте, чтобы начать создавать и участвовать в опросах уже сейчас.</p>
                             <div className="h2-text-content-block-1">
                                 <span className="DQtext">DQ</span> - by IBD<br/>company.
                             </div>           
