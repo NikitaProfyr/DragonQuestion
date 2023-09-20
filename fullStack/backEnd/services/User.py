@@ -79,7 +79,7 @@ def getCurrentUser(token: Annotated[str, Depends(oauth2Scheme)], db: Session = A
         tokenData = UserBase(userName=userName)
     except JWTError:
         raise credentialsException
-    user = getUser(db=db, userSchema=tokenData)
+    user = getUser(db=db, userShema=tokenData)
     if user is None:
         raise credentialsException
     return user

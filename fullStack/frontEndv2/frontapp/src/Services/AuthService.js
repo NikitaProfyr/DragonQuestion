@@ -7,8 +7,24 @@ export default class AuthService {
         })
     }
 
-    static registration(email, password){
-        return Api.post('/login', {email, password})
+    static registration(userName, password){
+        
+        const userData = {
+            userName: userName,
+            password: password
+        }
+        console.log(userData)
+        var answer = false
+        Api.post('/users/logup', userData).then(response => {
+            console.log(response.status)
+            if (response.status == 400){
+                answer = false
+            }
+            if (response.status == 200){
+                answer = true
+            }
+        })
+        return answer
     }
 
     static logout(email, password){

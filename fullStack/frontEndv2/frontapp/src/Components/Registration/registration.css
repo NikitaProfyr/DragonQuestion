@@ -39,7 +39,7 @@
     font-weight: bold;
     z-index: 100;
     text-align: center;
-    margin-top: 10px;
+    margin-top: 20px;
     outline: none;
     caret-color: #DD90E6;
 }
@@ -59,7 +59,9 @@
     position: absolute;
     transform: rotate(-25deg);
     z-index: 0;
-
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
 }
 
 .content-registration b{
@@ -106,32 +108,4 @@
 }
 .form-input-registration {
     margin-top: 60px;
-}
-.checkbox-tumpler {
-    display: flex;
-    background: #fff;
-    height: 50px;
-    width: 400px;
-    border-radius: 15px;
-    color: #4586EE;
-    border: none;
-    font-size: 24px;
-    font-weight: bold;
-    z-index: 100;
-    margin-top: 10px;
-}
-.checkbox-user {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    width: 50%;
-}
-
-.checkbox-creater {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    width: 50%;
 }
