@@ -3,7 +3,13 @@ from starlette.middleware.cors import CORSMiddleware
 
 from routers.UserRouter import userRouter
 
-app = FastAPI()
+app = FastAPI(
+    title="IBD App",
+    description="IBD Corporation - perfect, fast, cheap.",
+    contact={
+        "name":"Toporov Denis, Profyr Nikita"
+    }
+)
 
 app.add_middleware(
     CORSMiddleware,
