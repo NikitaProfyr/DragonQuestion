@@ -1,10 +1,8 @@
 import Api from "../Http";
 
 export default class AuthService {
-    static login(email, password){
-        return Api.post('/users/login', {email, password}).then(response => {
-            console.log(response.data)
-        })
+    static login(userName, password){
+        return Api.post('/users/login', {userName, password})
     }
 
     static registration(userName, password){
