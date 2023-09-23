@@ -1,8 +1,5 @@
-import { configureStore } from '@reduxjs/toolkit'
+// import { createStore } from 'redux';
+ 
+// const store = createStore(reducer);
 
-export const srote = configureStore({
-    reducer: {
-        user: 'test',
-    },
-    devTools: true,
-})
+// export default store;

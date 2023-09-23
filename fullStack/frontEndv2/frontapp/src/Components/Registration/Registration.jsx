@@ -8,7 +8,7 @@ import AuthService from "../../Services/AuthService";
 
 
 const Registration = () => {
-    
+    const [redirectToMain, setredirectToMain] = useState(false)
     const submitDataReg = (data) => {
         data.preventDefault()
         let userName = `${data.target.userName.value}`
@@ -26,9 +26,11 @@ const Registration = () => {
         if (password1.length < 6) {
             return alert("Пароль должен иметь более 6 символов.")
         }
-        AuthService.registration(userName, password1)
-   
-            
+        setredirectToMain(AuthService.registration(userName, password1))
+        
+        if (redirectToMain === true){
+            console.log("huy")
+        }
     }
     return (
     <>         

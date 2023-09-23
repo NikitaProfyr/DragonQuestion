@@ -17,13 +17,15 @@ export default class AuthService {
         var answer = false
         Api.post('/users/logup', userData).then(response => {
             console.log(response.status)
-            if (response.status == 400){
+            if (response.status === 400){
                 answer = false
             }
-            if (response.status == 200){
+            if (response.status === 200){
+                console.log("ebat`")
                 answer = true
             }
         })
+        console.log(answer, "3232")
         return answer
     }
 

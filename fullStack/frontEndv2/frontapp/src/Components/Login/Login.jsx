@@ -32,10 +32,8 @@ const Login = () => {
                             
                             <form onSubmit={onClickRedirect}>
                                 <div className="form-input-autorization">
-                                    <input type="email" name="email" placeholder="Введите email" required />
-                                    <div className="error-message" id="emailError"></div>
+                                    <input type="text" name="email" placeholder="Введите email" required />
                                     <input type="password" name="password" placeholder="Введите пароль" required />
-                                    <div className="error-message" id="passwordError"></div>
                                 </div>
                                 <button type="submit">ВОЙТИ</button>
                             </form>
