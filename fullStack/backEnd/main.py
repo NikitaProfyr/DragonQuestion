@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 
 from routers.UserRouter import userRouter
+from routers.QuizRouter import quizRouter
 
 app = FastAPI(
     title="IBD App",
@@ -26,3 +27,6 @@ app.include_router(
     prefix='/users',
 )
 
+app.include_router(
+    router=quizRouter,
+)

@@ -5,7 +5,7 @@ from starlette.status import HTTP_401_UNAUTHORIZED
 from model.UserSchema import UserCreate
 from model.Settings import get_db
 from security import ACCESS_TOKEN_EXPIRE_MINUTES
-from services.User import createUser, authenticated, createAccesToken, getCurrentUser
+from services.User import createUser, authenticated, createAccessToken, getCurrentUser
 
 userRouter = APIRouter(tags=["users"])
 
@@ -19,11 +19,11 @@ def authorization(userData: UserCreate, db: Session = Depends(get_db)):
             detail="Некорректные имя пользователя или пароль",
             headers={"WWW-Authenticate": "Bearer"},
         )
-    accesTokenExpires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
-    accesToken = createAccesToken(data={"sub": user.userName}, expires_delta=accesTokenExpires)
+    accessTokenExpires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    accessToken = createAccessToken(data={"sub": user.userName}, expires_delta=accessTokenExpires)
 
 
-    return {"accesToken": accesToken, "tokenType": "bearer"}
+    return {"accessToken": accessToken, "tokenType": "bearer"}
 
 
 @userRouter.post('/logup')

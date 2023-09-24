@@ -14,6 +14,7 @@ class User(Base):
     lastName = Column(String, nullable=True)
 
     Token = relationship("Token", back_populates="User")
+    quiz = relationship("Quiz", back_populates="User")
 
 
 class Token(Base):

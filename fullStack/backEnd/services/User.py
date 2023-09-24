@@ -54,7 +54,7 @@ def authenticated(db: Session, userSchema: UserCreate):
     return user
 
 
-def createAccesToken(data: dict, expires_delta: timedelta | None = None):
+def createAccessToken(data: dict, expires_delta: timedelta | None = None):
     toEncode = data.copy()
     if expires_delta:
         expire = datetime.utcnow() + expires_delta

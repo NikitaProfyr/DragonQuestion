@@ -1,5 +1,7 @@
-from typing import Optional
+from typing import Optional, List
 from pydantic import BaseModel, EmailStr
+
+from model.QuizSchema import QuizSchema
 
 
 class UserSchema(BaseModel):
@@ -7,6 +9,7 @@ class UserSchema(BaseModel):
     email: EmailStr
     hashedPassword: str
     userName: Optional[str] = None
+    quiz: List[QuizSchema] = None
 
     class Config:
         from_attributes = True
