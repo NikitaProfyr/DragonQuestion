@@ -3,15 +3,27 @@ import axios from "axios";
 
 export const ApiUrl = 'http://127.0.0.1:8000'
 
-const Api = axios.create({
-    withCredentials: true,
+let Api = null;
+
+const ApiWithOutToken = axios.create({
     baseURL: ApiUrl,
 })
 
-Api.interceptors.request.use((config) => {
-    config.headers.Authorization =  `Bearer ${localStorage.getItem('token')}` 
-    console.log(config.headers)
-    return config
+const ApiWithToken = axios.create({
+    withCredentials: true,
+    baseURL: ApiUrl,
+    headers: {
+        Authorization: `Bearer ${localStorage.getItem('accesToken')}`,
+        'Content-Type': 'application/json',
+    },
+    
 })
+
+if(localStorage.getItem('accesToken') === null){
+    Api = ApiWithOutToken
+}
+else{
+    Api = ApiWithToken
+}
 
 export default Api

@@ -1,19 +1,26 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 
 import './registration.css'
 import logo from "../../image/logo.png"
 import DraconImg from '../../image/drakonEgor.png'
 import AuthService from "../../Services/AuthService";
+import { useDispatch } from "react-redux";
+import { logupAction } from "../../Feutures/Actions/actionUser";
 
 
 const Registration = () => {
-    const [redirectToMain, setredirectToMain] = useState(false)
-    const submitDataReg = (data) => {
-        data.preventDefault()
-        let userName = `${data.target.userName.value}`
-        let password1 = `${data.target.password1.value}`
-        let password2 = `${data.target.password2.value}`
+    
+    const [userName, setUserName] = useState()
+    const [password1, setPassword1] = useState()
+    const [password2, setPassword2] = useState()
+
+    const dispatch = useDispatch()
+    const submitDataReg = (e) => {
+        // data.preventDefault()
+        
+
+    
         if (!userName || !password1 || !password2){
             return alert("Необходимо заполнить все поля!")
         }
@@ -26,11 +33,8 @@ const Registration = () => {
         if (password1.length < 6) {
             return alert("Пароль должен иметь более 6 символов.")
         }
-        setredirectToMain(AuthService.registration(userName, password1))
-        
-        if (redirectToMain === true){
-            console.log("huy")
-        }
+        dispatch(logupAction({userName:userName,password:password1}))
+        return <Navigate to= "/authorization"></Navigate>
     }
     return (
     <>         
@@ -41,9 +45,9 @@ const Registration = () => {
                     <b>РЕГИСТРАЦИЯ</b>
                     <form onSubmit={submitDataReg}>
                         <div className="form-input-registration">
-                            <input type="text" name="userName" placeholder="Введите имя пользователя" />
-                            <input type="password" name="password1" placeholder="Введите пароль" />
-                            <input type="password" name="password2" placeholder="Повторите пароль" />
+                            <input onChange={e => {setUserName(e.target.value)}} type="text" name="userName" placeholder="Введите имя пользователя" />
+                            <input onChange={e => {setPassword1(e.target.value)}} type="password" name="password1" placeholder="Введите пароль" />
+                            <input onChange={e => {setPassword2(e.target.value)}} type="password" name="password2" placeholder="Повторите пароль" />
                         </div>
                         <button type="submit">ЗАРЕГИСТРИРОВАТЬСЯ</button>
                     </form>

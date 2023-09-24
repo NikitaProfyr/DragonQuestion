@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import LogoImg from '../../image/logo.png'
 import './header-user.css'
 
-const HeaderUser = (user) => {
+const HeaderUser = () => {
     // console.log(user)
 
     return(
@@ -17,7 +17,7 @@ const HeaderUser = (user) => {
                 <div className="nav-bar">
                     <Link to="/authorization" className="link-quiz">Опросы</Link>
                     <Link to="/authorization">Пройденные опросы</Link>
-                    <Link to="/authorization">{user.user.username}</Link>
+                    <Link to="/authorization">axe</Link>
                 </div>
             </div>
         </div>

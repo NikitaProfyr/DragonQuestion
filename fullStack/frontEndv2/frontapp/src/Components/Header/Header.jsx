@@ -2,26 +2,22 @@ import React, { useState, useEffect } from 'react'
 import HeaderBase from './HeaderBase'
 import HeaderUser from './HeaderUser'
 import './header.css'
+import { useSelector } from 'react-redux'
 
 const Header = () => {
-    // const [user, setUser] = useState(null)
-    let user = null
-    const setUser = (user) => {
-        // user = {username:'test'}
-        // console.log(document.cookie)
-        user = null
-        return user 
-    }
+
+    const isActive = useSelector(state => state.reducerUser.isActive)
+    
       
     
-    if (setUser(user) === null){
+    if (isActive === false){
         return (
             <HeaderBase/>      
         )
     }
     else{
         return (
-            <HeaderUser user={setUser(user)} />      
+            <HeaderUser />      
         )
     }
 }

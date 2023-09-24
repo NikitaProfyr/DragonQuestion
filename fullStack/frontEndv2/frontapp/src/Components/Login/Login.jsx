@@ -16,7 +16,8 @@ const Login = () => {
     const isActive = useSelector(state=> state.reducerUser.isActive)
 
     const dispatch = useDispatch()
-    const onClickLogin = () => {
+    const onClickLogin = (e) => {
+        e.preventDefault()
         const userData = {
             userName:userName,
             password:password
@@ -24,6 +25,9 @@ const Login = () => {
         dispatch(loginAction(userData))
     }
 
+    if(isActive === true){
+        return <Navigate to="/"></Navigate>
+    }
     
     return (
         <>
