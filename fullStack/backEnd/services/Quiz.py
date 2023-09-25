@@ -10,20 +10,20 @@ from model.UserSchema import UserLite
 
 
 def createQuiz(quizData: QuizSchema, userData: UserLite, db: Session = Depends(get_db)):
-
-    quiz = Quiz(title=quizData.title, description=quizData.description, authorId=userData.id)
+    print(quizData.title, quizData.description, quizData.image, userData.id)
+    quiz = Quiz(title=quizData.title, description=quizData.description, image=quizData.image, authorId=userData.id)
     db.add(quiz)
     db.commit()
 
-    for itemQuistion in quizData.question:
-        question = Question(title=itemQuistion.title)
-        db.add(question)
-        db.commit()
-
-        for itemAnswer in itemQuistion.answer:
-            answer = Answer(title=itemAnswer.title, right=itemAnswer.right, questionId=question.id)
-            db.add(answer)
-            db.commit()
+    # for itemQuistion in quizData.question:
+    #     question = Question(title=itemQuistion.title)
+    #     db.add(question)
+    #     db.commit()
+    #
+    #     for itemAnswer in itemQuistion.answer:
+    #         answer = Answer(title=itemAnswer.title, right=itemAnswer.right, questionId=question.id)
+    #         db.add(answer)
+    #         db.commit()
 
 
 

@@ -11,7 +11,7 @@ class Answer(Base):
     right = Column(BOOLEAN, nullable=False)
 
     questionId = Column(Integer, ForeignKey('Question.id'))
-    question = relationship('Question', back_populates='Answer')
+    question = relationship('Question', backref='Answer')
 
 
 class Question(Base):
@@ -21,9 +21,9 @@ class Question(Base):
     title = Column(String, nullable=False)
 
     quizId = Column(Integer, ForeignKey('Quiz.id'))
-    quiz = relationship('Quiz', back_populates='Question')
+    quiz = relationship('Quiz', backref='Question')
 
-    answer = relationship('Answer', back_populates='Question')
+    answer = relationship('Answer', backref = 'Question')
 
 
 class Quiz(Base):
@@ -36,5 +36,5 @@ class Quiz(Base):
 
     authorId = Column(Integer, ForeignKey('User.id'))
 
-    author = relationship('User', back_populates='Quiz')
-    question = relationship('Question', back_populates='Quiz')
+    author = relationship('User', backref = 'Quiz')
+    question = relationship('Question', backref = 'Quiz')
