@@ -5,7 +5,7 @@ import LogoImg from '../../image/logo.png'
 import './header-user.css'
 
 const HeaderUser = () => {
-    // console.log(user)
+    
 
     return(
         <div className="Header-bg">

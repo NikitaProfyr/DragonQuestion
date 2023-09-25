@@ -13,13 +13,13 @@ const ApiWithToken = axios.create({
     withCredentials: true,
     baseURL: ApiUrl,
     headers: {
-        Authorization: `Bearer ${localStorage.getItem('accesToken')}`,
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
         'Content-Type': 'application/json',
     },
     
 })
 
-if(localStorage.getItem('accesToken') === null){
+if(localStorage.getItem('accessToken') === null){
     Api = ApiWithOutToken
 }
 else{

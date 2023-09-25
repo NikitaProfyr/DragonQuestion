@@ -1,6 +1,9 @@
 import React from 'react'
+import { useEffect } from 'react'
 import { useState } from 'react'
-import { BrowserRouter, Route, Router, Routes } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { chekLoginAction, getUserAction } from '../../Feutures/Actions/actionUser'
 import AuthService from '../../Services/AuthService'
  
 import { ROUTES } from '../../utils/routes'
@@ -15,17 +18,28 @@ import Registration from '../Registration/Registration'
 
 
 const AppRoutes = () => {
-  const [user, getUser] = useState(null)
+  const dispatch = useDispatch()
   
-  console.log(AuthService.getUserName()) 
-
+  const accessToken = localStorage.getItem('accessToken')
+  if(accessToken === null){
+    console.log(accessToken);
+  } 
+  else{
+    AuthService.getUserInfo(accessToken)
+    .then(response => {
+      // console.log(response);
+      dispatch(getUserAction(response))
+      dispatch(chekLoginAction(true));
+       
+    }) 
+  }
+  
   return (
     <BrowserRouter>
       <Routes>
         <Route index element = {
         <>
           <Header/>
-          <AuthService.getUserName/>
           <HomePage/>
           <Footer/>
         </>}/>

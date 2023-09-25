@@ -14,7 +14,7 @@ from model.UserSchema import UserBase, UserCreate
 from security import pwdContext, SECRET_KEY, ALGORITHM, oauth2Scheme
 
 
-def getUser(db:Session, userShema: UserBase):
+def getUser(db: Session, userShema: UserBase):
     user = db.scalar(select(User).where(User.userName == userShema.userName))
     if not user:
         raise HTTPException(

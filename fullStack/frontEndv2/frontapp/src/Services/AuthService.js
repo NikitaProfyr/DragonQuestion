@@ -4,6 +4,8 @@ export default class AuthService {
     static login(userName, password){
         return Api.post('/users/login', {userName, password})
         .then(response => {
+            console.log(response.data.accessToken);
+            localStorage.setItem('accessToken', response.data.accessToken)
             return Promise.resolve(response)
         }) 
     }
@@ -33,9 +35,10 @@ export default class AuthService {
         return Api.post('/login', {email, password})
     }
 
-    static getUserName(){
-        const token = document.cookie 
-        console.log(token)
-        // return Api.post('/users/getUser', token.accesToken)
+    static getUserInfo(accessToken){
+        return Api.post( `/users/getUser?token=${accessToken}`)
+        .then(response => {
+            return Promise.resolve(response.data)
+        })
     }
 }

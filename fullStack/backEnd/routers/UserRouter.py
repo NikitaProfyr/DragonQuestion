@@ -2,7 +2,7 @@ from datetime import timedelta
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from starlette.status import HTTP_401_UNAUTHORIZED
-from model.UserSchema import UserCreate
+from model.UserSchema import UserCreate, TokenSchema
 from model.Settings import get_db
 from security import ACCESS_TOKEN_EXPIRE_MINUTES
 from services.User import createUser, authenticated, createAccessToken, getCurrentUser
@@ -31,6 +31,6 @@ def registration(userData: UserCreate, db: Session = Depends(get_db)):
     return createUser(db=db, userSchema=userData)
 
 
-@userRouter.get('/getUser')
+@userRouter.post('/getUser')
 def currentUser(token, db: Session = Depends(get_db)):
     return getCurrentUser(token, db=db)
