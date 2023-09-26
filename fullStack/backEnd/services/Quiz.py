@@ -9,21 +9,28 @@ from fastapi import HTTPException, Depends
 from model.UserSchema import UserLite
 
 
+def createAnswer(idQuestion: int, anwerData: AnswerSchema, db: Session = Depends(get_db)):
+    anwer = Answer(title=anwerData.title, right=anwerData.right, questionId=idQuestion)
+    db.add(anwer)
+    db.commit()
+
+
+def createQuestion(idQuiz: int, questionData: QuestionSchema, db: Session = Depends(get_db)):
+    question = Question(title=questionData.title, quizId=idQuiz)
+    db.add(question)
+    db.commit()
+
+    for itemAnswer in questionData.answer:
+        createAnswer(anwerData=itemAnswer, db=db)
+
+
 def createQuiz(quizData: QuizSchema, userData: UserLite, db: Session = Depends(get_db)):
-    print(quizData.title, quizData.description, quizData.image, userData.id)
     quiz = Quiz(title=quizData.title, description=quizData.description, image=quizData.image, authorId=userData.id)
     db.add(quiz)
     db.commit()
 
-    # for itemQuistion in quizData.question:
-    #     question = Question(title=itemQuistion.title)
-    #     db.add(question)
-    #     db.commit()
-    #
-    #     for itemAnswer in itemQuistion.answer:
-    #         answer = Answer(title=itemAnswer.title, right=itemAnswer.right, questionId=question.id)
-    #         db.add(answer)
-    #         db.commit()
+    for itemQuistion in quizData.question:
+        createQuestion(idQuiz=quiz.id, questionData=itemQuistion, db=db)
 
 
 
