@@ -21,9 +21,9 @@ def authorization(userData: UserCreate, db: Session = Depends(get_db)):
         )
     accessTokenExpires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     accessToken = createAccessToken(data={"sub": user.userName}, expires_delta=accessTokenExpires)
+    user = getCurrentUser(accessToken, db=db)
 
-
-    return {"accessToken": accessToken, "tokenType": "bearer"}
+    return {"user": user, "accessToken": accessToken, "tokenType": "bearer"}
 
 
 @userRouter.post('/logup')

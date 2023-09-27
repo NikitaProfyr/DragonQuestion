@@ -7,7 +7,7 @@ import logo from "../../image/logo.png"
 import AuthService from '../../Services/AuthService';
 import './autorization.css'
 import { useDispatch, useSelector } from 'react-redux'
-import { loginAction } from '../../Feutures/Actions/actionUser';
+import { loginAction} from '../../Feutures/Actions/actionUser';
  
 
 const Login = () => {
@@ -18,16 +18,19 @@ const Login = () => {
     const dispatch = useDispatch()
     const onClickLogin = (e) => {
         e.preventDefault()
-        const userData = {
-            userName:userName,
-            password:password
-        }
-        dispatch(loginAction(userData))
+        dispatch(loginAction(userName, password))
+        .then(() => {
+            <Navigate to="/"></Navigate>
+        })
+        .catch(() => {
+            alert('ты шо еблан?')
+        })
+
     }
 
-    if(isActive === true){
-        return <Navigate to="/"></Navigate>
-    }
+    // if(isActive === true){
+    //     return <Navigate to="/"></Navigate>
+    // }
     
     return (
         <>

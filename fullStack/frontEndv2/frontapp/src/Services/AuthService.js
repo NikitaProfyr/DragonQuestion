@@ -6,7 +6,11 @@ export default class AuthService {
         .then(response => {
             console.log(response.data.accessToken);
             localStorage.setItem('accessToken', response.data.accessToken)
+            localStorage.setItem('user', JSON.stringify(response.data.user))
             return Promise.resolve(response)
+        })
+        .catch(e => {
+            return Promise.reject(e)
         }) 
     }
 

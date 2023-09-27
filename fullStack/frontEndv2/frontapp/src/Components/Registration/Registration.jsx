@@ -6,7 +6,6 @@ import logo from "../../image/logo.png"
 import DraconImg from '../../image/drakonEgor.png'
 import AuthService from "../../Services/AuthService";
 import { useDispatch } from "react-redux";
-import { logupAction } from "../../Feutures/Actions/actionUser";
 
 
 const Registration = () => {
@@ -33,7 +32,7 @@ const Registration = () => {
         if (password1.length < 6) {
             return alert("Пароль должен иметь более 6 символов.")
         }
-        dispatch(logupAction({userName:userName,password:password1}))
+         
         return <Navigate to= "/authorization"></Navigate>
     }
     return (

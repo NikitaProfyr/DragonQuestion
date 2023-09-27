@@ -29,7 +29,7 @@ def createQuiz(quizData: QuizSchema, userData: UserLite, db: Session = Depends(g
     db.add(quiz)
     db.commit()
 
-    for itemQuistion in quizData.question:
+    for itemQuistion in quizData.queson:
         createQuestion(idQuiz=quiz.id, questionData=itemQuistion, db=db)
 
 

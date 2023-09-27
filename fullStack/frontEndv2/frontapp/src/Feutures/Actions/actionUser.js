@@ -1,19 +1,14 @@
-export const loginAction = (value) => ({
-    type: 'LOGIN',
-    value: value
-}) 
+import AuthService from "../../Services/AuthService"
 
-export const logupAction = (value) => ({
-    type: 'LOGUP',
-    value: value
-}) 
-
-export const chekLoginAction = (value) => ({
-    type: 'CHEK_LOGIN',
-    value: value
-}) 
-
-export const getUserAction = (value) => ({
-    type: 'GET_CURRENT_USER',
-    value: value
-}) 
+export const loginAction = (userName, password) => (dispatch) => {
+    return AuthService.login(userName, password)
+    .then((response) => {
+        dispatch({type: 'LOGINSUCCES', payload: response.data})
+        return Promise.resolve()
+    })
+    .cath(err=> {
+        dispatch({type: 'LOGINFAILED'})
+        return Promise.reject()
+    
+    })
+}

@@ -3,7 +3,6 @@ import { useEffect } from 'react'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import { chekLoginAction, getUserAction } from '../../Feutures/Actions/actionUser'
 import AuthService from '../../Services/AuthService'
  
 import { ROUTES } from '../../utils/routes'
@@ -19,7 +18,9 @@ import Registration from '../Registration/Registration'
 
 const AppRoutes = () => {
   const dispatch = useDispatch()
-  
+  const userInfo = useSelector(state => state.reducerUser.user)
+
+
   const accessToken = localStorage.getItem('accessToken')
   if(accessToken === null){
     console.log(accessToken);
@@ -28,9 +29,9 @@ const AppRoutes = () => {
     AuthService.getUserInfo(accessToken)
     .then(response => {
       // console.log(response);
-      dispatch(getUserAction(response))
-      dispatch(chekLoginAction(true));
-       
+      // dispatch(getUserAction(response))
+      
+      console.log(response) 
     }) 
   }
   
