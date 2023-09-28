@@ -17,24 +17,7 @@ import Registration from '../Registration/Registration'
 
 
 const AppRoutes = () => {
-  const dispatch = useDispatch()
-  const userInfo = useSelector(state => state.reducerUser.user)
 
-
-  const accessToken = localStorage.getItem('accessToken')
-  if(accessToken === null){
-    console.log(accessToken);
-  } 
-  else{
-    AuthService.getUserInfo(accessToken)
-    .then(response => {
-      // console.log(response);
-      // dispatch(getUserAction(response))
-      
-      console.log(response) 
-    }) 
-  }
-  
   return (
     <BrowserRouter>
       <Routes>

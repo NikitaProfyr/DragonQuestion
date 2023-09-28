@@ -18,9 +18,9 @@ const Login = () => {
     const dispatch = useDispatch()
     const onClickLogin = (e) => {
         e.preventDefault()
-        dispatch(loginAction(userName, password))
+        loginAction(userName, password, dispatch)
         .then(() => {
-            <Navigate to="/"></Navigate>
+            
         })
         .catch(() => {
             alert('ты шо еблан?')
@@ -28,9 +28,9 @@ const Login = () => {
 
     }
 
-    // if(isActive === true){
-    //     return <Navigate to="/"></Navigate>
-    // }
+    if(isActive === true){
+        return <Navigate to="/"></Navigate>
+    }
     
     return (
         <>

@@ -1,9 +1,10 @@
 import Api from "../Http";
 
 export default class AuthService {
-    static login(userName, password){
+    static login = (userName, password) =>{
         return Api.post('/users/login', {userName, password})
         .then(response => {
+            console.log(response.data.accessToken);
             console.log(response.data.accessToken);
             localStorage.setItem('accessToken', response.data.accessToken)
             localStorage.setItem('user', JSON.stringify(response.data.user))
@@ -35,8 +36,9 @@ export default class AuthService {
         return answer
     }
 
-    static logout(email, password){
-        return Api.post('/login', {email, password})
+    static logout(){
+        localStorage.removeItem('accessToken')
+        localStorage.removeItem('user')
     }
 
     static getUserInfo(accessToken){

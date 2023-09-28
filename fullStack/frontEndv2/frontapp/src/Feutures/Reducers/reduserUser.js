@@ -3,6 +3,7 @@ import AuthService from "../../Services/AuthService"
 
 const LOGINSUCCES = 'LOGINSUCCES'
 const LOGINFAILED = 'LOGINFAILED'
+const LOGOUT = 'LOGOUT'
 
 const user = JSON.parse(localStorage.getItem('user')) 
 
@@ -19,6 +20,8 @@ const reducerUser = (state = stateUser, action) => {
             return {...state, userInfo: payload.userInfo, isActive: true}
         case LOGINFAILED:
             return {...state, userInfo: null, isActive: false}
+        case LOGOUT:
+            return {...state, userInfo: null, isActive: false}    
         // case SIGNUP:
         //     return <Navigate to = "/authorization" />
         default: 

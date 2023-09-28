@@ -5,20 +5,19 @@ import './header.css'
 import { useSelector } from 'react-redux'
 
 const Header = () => {
+    const isActive = useSelector(state => state.reducerUser.isActive)
 
-    return (
-        <HeaderBase/>      
-    )
-    // if (isActive === false){
-    //     return (
-    //         <HeaderBase/>      
-    //     )
-    // }
-    // else{
-    //     return (
-    //         <HeaderUser />      
-    //     )
-    // }
+
+    if (isActive === false){
+        return (
+            <HeaderBase/>      
+        )
+    }
+    else{
+        return (
+            <HeaderUser />      
+        )
+    }
 }
 
 export default Header
