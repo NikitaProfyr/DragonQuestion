@@ -1,0 +1,162 @@
+.bg-content-user-settings {
+    background: rgb(221,144,230);
+    background: linear-gradient(135deg, rgba(221,144,230,0.2) 0%, rgba(144,177,230,0.2) 100%);
+    height: calc(100vh - 80px);
+    display: flex;
+    justify-content: center;
+}
+
+.bg-dragon-settings {
+    transform: rotate(-70deg);
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 500px;
+    top: 100px;
+    margin: auto;
+    z-index: 0;
+
+}
+
+.all-content-user-settings {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.security-block-settings {
+    float: right;
+    height: 675px;
+    width: 420px;
+    background-color: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(5px);
+    border-radius: 15px;
+    -webkit-box-shadow: 0px 3px 7px 0px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: 0px 3px 7px 0px rgba(0, 0, 0, 0.5);
+    box-shadow: 0px 3px 7px 0px rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+}
+
+.button-user-settings {
+    float: right;
+    display: flex;
+    justify-content: space-between;
+    width: 420px;
+    margin-top: 40px;
+}
+.button-user-settings button {
+    border: none;
+    background-color: #79A8F4;
+    height: 32px;
+    width: 200px;
+    border-radius: 5px;
+    z-index: 50;
+    color: #fff;
+    font-weight: bold;
+}
+
+.button-user-settings .gradient-button-settings {
+    background: rgb(107,160,244);
+    background: linear-gradient(135deg, rgba(107,160,244,1) 0%, rgba(218,81,234,1) 100%);
+}
+.button-user-settings button:active {
+    -webkit-box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.5) inset;
+    -moz-box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.5) inset;
+    box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.5) inset;
+}
+.content-security-block {
+    display: block;
+    width: 300px;
+}
+
+.change-password-block {
+    margin-top: 50px;
+}
+
+.change-password-block input{
+    height: 40px;
+    width: 300px;
+    background-color: #fff;
+    border-radius: 5px;
+    border: none;
+    font-size: 20px;
+    color: #90B1E6;
+    text-align: center;
+    caret-color: #DD90E6;
+    outline: none;
+}
+.change-password-block button {
+    border: none;
+    background-color: #79A8F4;
+    height: 40px;
+    width: 300px;
+    border-radius: 5px;
+    z-index: 50;
+    color: #fff;
+    font-weight: bold;
+    margin-top: 25px;
+}
+.change-password-block h1 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #90B1E6;
+}
+.change-password-block h2 {
+    font-size: 20px;
+    font-weight: bold;
+    color: #90B1E6;
+    margin-top: 20px;
+}
+.change-password-block h3 {
+    font-size: 14px;
+    font-weight: bold;
+    color: #90B1E6;
+    margin-top: 10px;
+}
+.account-deletion-block {
+    margin-top: 135px;
+}
+.account-deletion-block h2{
+    font-size: 20px;
+    font-weight: bold;
+    color: #90B1E6;
+    display: flex;
+    justify-content: center;
+}
+.account-deletion-block button {
+    height: 40px;
+    width: 300px;
+    border-radius: 50px;
+    margin-top: 20px;
+    border: none;
+    background: rgb(226,140,140);
+    background: linear-gradient(135deg, rgba(226,140,140,0.5) 0%, rgba(226,140,140,1) 100%);
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+}
+.account-deletion-block button:active {
+    -webkit-box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.5) inset;
+    -moz-box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.5) inset;
+    box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.5) inset;
+}
+.right-content-settings {
+    height: calc(100vh - 80px);
+    width: 50%;
+    display: flex;
+    align-items: center;
+
+
+}
+.right-content-align {
+    display: block;
+}
+.left-content-settings {
+    background-color: bisque;
+    width: 50%;
+    height: calc(100vh - 80px);
+    display: flex;
+    align-items: center;
+}

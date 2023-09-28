@@ -12,6 +12,7 @@ import Footer from '../Footer/Footer'
 import Header from '../Header/Header'
 import HomePage from '../HomePage/HomePage'
 import Login from '../Login/Login'
+import QuizList from '../QuizList/QuizList'
 import Registration from '../Registration/Registration'
  
 
@@ -27,7 +28,14 @@ const AppRoutes = () => {
           <HomePage/>
           <Footer/>
         </>}/>
-        <Route path='/authorization' element = {
+        <Route path={ROUTES.QUIZ_LIST} element = {
+          <>
+            <Header/>
+            <QuizList/>
+            <Footer/>
+          </>
+        } />
+        <Route path={ROUTES.LOGIN} element = {
         <>
           <Header/>
           <Login/>

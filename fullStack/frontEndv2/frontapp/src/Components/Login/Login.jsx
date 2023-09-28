@@ -8,6 +8,7 @@ import AuthService from '../../Services/AuthService';
 import './autorization.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { loginAction} from '../../Feutures/Actions/actionUser';
+import { ROUTES } from '../../utils/routes';
  
 
 const Login = () => {
@@ -23,13 +24,13 @@ const Login = () => {
             
         })
         .catch(() => {
-            alert('ты шо еблан?')
+            alert('Не правильный логин или пароль.')
         })
 
     }
 
     if(isActive === true){
-        return <Navigate to="/"></Navigate>
+        return <Navigate to={ROUTES.QUIZ_LIST}></Navigate>
     }
     
     return (

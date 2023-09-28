@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from model.QuizSchema import QuestionSchema, QuizSchema, AnswerSchema
 from model.Quiz import Question, Quiz, Answer
 from model.Settings import get_db
-from sqlalchemy import select
+from sqlalchemy import select, delete
 from fastapi import HTTPException, Depends
 
 from model.UserSchema import UserLite
@@ -21,7 +21,7 @@ def createQuestion(idQuiz: int, questionData: QuestionSchema, db: Session = Depe
     db.commit()
 
     for itemAnswer in questionData.answer:
-        createAnswer(anwerData=itemAnswer, db=db)
+        createAnswer(idQuestion=question.id, anwerData=itemAnswer, db=db)
 
 
 def createQuiz(quizData: QuizSchema, userData: UserLite, db: Session = Depends(get_db)):
@@ -29,8 +29,21 @@ def createQuiz(quizData: QuizSchema, userData: UserLite, db: Session = Depends(g
     db.add(quiz)
     db.commit()
 
-    for itemQuistion in quizData.queson:
+    for itemQuistion in quizData.question:
         createQuestion(idQuiz=quiz.id, questionData=itemQuistion, db=db)
 
 
+def deleteCurrentQuiz(idQuiz: int, db: Session = Depends(get_db)):
+    quiz = delete(Quiz).where(Quiz.id == idQuiz)
+    db.execute(quiz)
+    db.commit()
 
+
+def selectQuiz(db: Session = Depends(get_db)):
+    quiz = db.scalar(select(Quiz))
+    return quiz
+
+
+def selelctCurrentQuiz(idQuiz: int, db: Session = Depends(get_db)):
+    currentQuiz = db.scalar(select(Quiz).where(Quiz.id == idQuiz))
+    return currentQuiz

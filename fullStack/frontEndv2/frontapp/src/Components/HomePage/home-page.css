@@ -55,8 +55,10 @@
     height: 850px;  
     z-index: 0;
     position: absolute;
-    top: 0;
+    bottom: 0;
+    top: 200px;
     right: 0;
+    margin: auto;
 }
 
 .bg-content-block-2 {

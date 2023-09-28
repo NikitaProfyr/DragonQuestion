@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux'
 
 const Header = () => {
     const isActive = useSelector(state => state.reducerUser.isActive)
-
+  
 
     if (isActive === false){
         return (
