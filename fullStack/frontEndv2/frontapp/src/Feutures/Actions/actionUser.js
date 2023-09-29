@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux"
 import AuthService from "../../Services/AuthService"
 
-export const loginAction = async(userName, password, dispatch) => {
+export const loginAction = (userName, password, dispatch) => {
 
     return AuthService.login(userName, password)
     .then((response) => {

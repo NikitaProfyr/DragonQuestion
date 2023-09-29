@@ -1,4 +1,5 @@
 from sqlalchemy.orm import Session
+from starlette import status
 
 from model.QuizSchema import QuestionSchema, QuizSchema, AnswerSchema
 from model.Quiz import Question, Quiz, Answer
@@ -46,4 +47,9 @@ def selectQuiz(db: Session = Depends(get_db)):
 
 def selelctCurrentQuiz(idQuiz: int, db: Session = Depends(get_db)):
     currentQuiz = db.scalar(select(Quiz).where(Quiz.id == idQuiz))
+    if not currentQuiz:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f"Опрос с идентифекатором: '{idQuiz}', не найден."
+        )
     return currentQuiz

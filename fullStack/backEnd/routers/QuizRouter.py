@@ -17,7 +17,7 @@ def addQuiz(quiz: QuizSchema, user: UserLite, db: Session = Depends(get_db)):
 
 
 @quizRouter.get('/getquiz')
-def getQuiz(db: Session = Depends(get_db)) -> List[QuizSchema]:
+def getQuiz(db: Session = Depends(get_db)):
     return selectQuiz(db=db)
 
 
