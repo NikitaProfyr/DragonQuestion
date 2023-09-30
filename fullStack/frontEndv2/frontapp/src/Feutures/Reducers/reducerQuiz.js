@@ -1,8 +1,11 @@
+import { QuizService } from "../../Services/QuizService"
 
 export const GET_QUIZ = 'GET_QUIZ'
 
+const quizQuery = QuizService.getQuiz().then(response => Promise.resolve(response.data))
+
 const stateQuiz = {
-    quiz: []
+    quiz: quizQuery
 }
 
 

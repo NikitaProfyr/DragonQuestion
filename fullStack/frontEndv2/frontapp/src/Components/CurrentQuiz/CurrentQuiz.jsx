@@ -1,8 +1,11 @@
 import React from 'react'
+import { useState } from 'react'
 
-const CurrentQuiz = () => {
+const CurrentQuiz = (props) => {
+  const [quiz, setQuiz] = useState(props)
+  
   return (
-    <div>CurrentQuiz</div>
+    <div>{quiz.title}</div>
   )
 }
 

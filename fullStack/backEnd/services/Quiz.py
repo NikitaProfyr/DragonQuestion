@@ -1,4 +1,6 @@
-from sqlalchemy.orm import Session
+from typing import List
+
+from sqlalchemy.orm import Session, joinedload
 from starlette import status
 
 from model.QuizSchema import QuestionSchema, QuizSchema, AnswerSchema
@@ -41,7 +43,7 @@ def deleteCurrentQuiz(idQuiz: int, db: Session = Depends(get_db)):
 
 
 def selectQuiz(db: Session = Depends(get_db)):
-    quiz = db.scalar(select(Quiz))
+    quiz = db.query(Quiz).options(joinedload(Quiz.question).joinedload(Question.answer)).all()
     return quiz
 
 

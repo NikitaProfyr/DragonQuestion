@@ -17,7 +17,7 @@ def addQuiz(quiz: QuizSchema, user: UserLite, db: Session = Depends(get_db)):
 
 
 @quizRouter.get('/getquiz')
-def getQuiz(db: Session = Depends(get_db)):
+def getQuiz(db: Session = Depends(get_db)) -> List[QuizSchema]:
     return selectQuiz(db=db)
 
 
@@ -27,5 +27,5 @@ def getCurrentQuiz(idQuiz: int, db: Session = Depends(get_db)) -> QuizSchema:
 
 
 @quizRouter.delete('/deletequiz/{idQuiz}')
-def removeCurrentQuiz(idQuiz: int, db: Session = Depends(get_db)):
+def removeCurrentQuiz(idQuiz: int, db: Session = Depends(get_db)) :
     return deleteCurrentQuiz(idQuiz=idQuiz, db=db)
