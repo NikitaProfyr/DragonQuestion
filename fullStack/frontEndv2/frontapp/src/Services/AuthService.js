@@ -1,27 +1,29 @@
 import Api from "../Http";
 
 export default class AuthService {
-    static login = (userName, password) =>{
-        return Api.post('/users/login', {userName, password})
-        .then(response => {
-            console.log(response.data.accessToken);
-            console.log(response.data.accessToken);
-            localStorage.setItem('accessToken', response.data.accessToken)
-            localStorage.setItem('user', JSON.stringify(response.data.user))
-            return Promise.resolve(response)
-        })
-        .catch(e => {
-            return Promise.reject(e)
-        }) 
+    static login = async (userName, password) => {
+        const {data} = await Api.post('/users/login', {userName, password})
+        localStorage.setItem('accessToken', data.accessToken)
+        localStorage.setItem('user', JSON.stringify(data.user))
+        return data
+
+        
+        // return Api.post('/users/login', {userName, password})
+        // .then(response => {
+        //     localStorage.setItem('accessToken', response.data.accessToken)
+        //     localStorage.setItem('user', JSON.stringify(response.data.user))
+        //     return Promise.resolve(response)
+        // })
+        // .catch(e => {
+        //     return Promise.reject(e)
+        // }) 
     }
 
-    static logup(userName, password){
-        
+    static logup(userName, password){    
         const userData = {
             userName: userName,
             password: password
         }
-        console.log(userData)
         var answer = false
         Api.post('/users/logup', userData).then(response => {
             if (response.status === 400){

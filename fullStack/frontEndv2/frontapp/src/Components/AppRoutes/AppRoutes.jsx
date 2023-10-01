@@ -18,6 +18,13 @@ import Registration from '../Registration/Registration'
 
 
 const AppRoutes = () => {
+  const user = useSelector(state => state.reducerUser.userInfo)
+  const isActive = useSelector(state => state.reducerUser.isActive)
+  const [loader, setLoader] = useState(true)
+
+  useEffect(() => {
+    
+  }, [])
 
   return (
     <BrowserRouter>

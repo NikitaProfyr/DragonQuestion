@@ -2,10 +2,8 @@ import { QuizService } from "../../Services/QuizService"
 
 export const GET_QUIZ = 'GET_QUIZ'
 
-const quizQuery = QuizService.getQuiz().then(response => Promise.resolve(response.data))
-
 const stateQuiz = {
-    quiz: quizQuery
+    quiz: [] 
 }
 
 
@@ -14,7 +12,7 @@ export const reducerQuiz = (state = stateQuiz, action) => {
 
     switch(type){
         case GET_QUIZ:
-            return {...state, quiz: payload}
+            return {...state, quiz: [...payload]}
         default:
             return state
     }

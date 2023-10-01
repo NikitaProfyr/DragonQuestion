@@ -17,7 +17,7 @@ const reducerUser = (state = stateUser, action) => {
 
     switch(type){
         case LOGINSUCCES:
-            return {...state, userInfo: payload.userInfo, isActive: true}
+            return {...state, userInfo: payload.user, isActive: true}
         case LOGINFAILED:
             return {...state, userInfo: null, isActive: false}
         case LOGOUT:

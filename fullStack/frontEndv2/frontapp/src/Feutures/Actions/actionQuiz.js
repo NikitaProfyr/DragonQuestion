@@ -4,10 +4,7 @@ import { GET_QUIZ } from "../Reducers/reducerQuiz"
  
 
 
-export const getQuizAction = (dispatch) => {
-    return QuizService.getQuiz()
-    .then(response => {
-        dispatch({type: GET_QUIZ, payload: response.data})
-        return Promise.resolve()
-    })
+export const getQuizAction = async (dispatch) => {
+    const data = await QuizService.getQuiz()
+    dispatch({type: GET_QUIZ, payload: data})
 }

@@ -1,4 +1,7 @@
 import React from 'react'
+import { useEffect } from 'react';
+import { useState } from 'react';
+import { Spinner } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from "react-router-dom";
 import { logoutAction } from '../../Feutures/Actions/actionUser';
@@ -8,15 +11,21 @@ import './header-user.css'
 
 const HeaderUser = () => {
     const user = useSelector(state => state.reducerUser.userInfo)
-    console.log(user)
-  
+    const [loader, setLoader] = useState(true)
+
     const dispatch = useDispatch()
+
+    useEffect(() => {
+        if (user !== null){
+            setLoader(false)
+        }
+    }, []) 
 
     const onClickLogOut = () => {
         logoutAction(dispatch)
     }
-    if (user === undefined){
-        return <>ЗАГРУЗКА</>
+    if (loader){
+        // return <Spinner animation='grow'/>
     }
     else{
         return(
