@@ -3,8 +3,9 @@ import { useEffect } from 'react'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getQuizAction } from '../../Feutures/Actions/actionQuiz'
-
+import './quiz-list.css'
 import DraconImg from '../../image/drakonEgor.png'
+ 
 import { QuizService } from '../../Services/QuizService'
 import CurrentQuiz from '../CurrentQuiz/CurrentQuiz'
 
@@ -21,12 +22,9 @@ const QuizList = () => {
   },[])
 
   return (
-    <div className="bg-container">
-      <img src={ DraconImg } alt="" className="draconImg" />
+    <div className="bg-quiz-list">
       <div className="wrapper">
-        <div className="contentBlockQuiz">
-          {quiz.map((item) => (<div>{item.title}</div>))}
-        </div>
+        {quiz.map((item) => (<CurrentQuiz key={item.id} props={item} />))}
       </div>
     </div>
   )

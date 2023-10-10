@@ -3,6 +3,9 @@ import { useEffect } from 'react'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import IndexPage from '../../Page/IndexPage'
+import LoginPage from '../../Page/LoginPage'
+import QuizListPage from '../../Page/QuizListPage'
 import AuthService from '../../Services/AuthService'
  
 import { ROUTES } from '../../utils/routes'
@@ -30,22 +33,16 @@ const AppRoutes = () => {
     <BrowserRouter>
       <Routes>
         <Route index element = {
-        <>
-          <Header/>
-          <HomePage/>
-          <Footer/>
-        </>}/>
+          <IndexPage/>
+        }/>
         <Route path={ROUTES.QUIZ_LIST} element = {
           <>
-            <Header/>
-            <QuizList/>
-            <Footer/>
+            <QuizListPage/>
           </>
         } />
         <Route path={ROUTES.LOGIN} element = {
         <>
-          <Header/>
-          <Login/>
+          <LoginPage/>
         </>}/>
         <Route path={ROUTES.REGISTRATION} element = {
         <>
