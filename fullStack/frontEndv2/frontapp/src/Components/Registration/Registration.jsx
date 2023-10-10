@@ -14,7 +14,7 @@ const Registration = () => {
     const [password1, setPassword1] = useState()
     const [password2, setPassword2] = useState()
 
-    const dispatch = useDispatch()
+    // const dispatch = useDispatch()
     const submitDataReg = (e) => {
         // data.preventDefault()
         
@@ -32,7 +32,8 @@ const Registration = () => {
         if (password1.length < 6) {
             return alert("Пароль должен иметь более 6 символов.")
         }
-         
+        AuthService.logup(userName, password1)
+        
         return <Navigate to= "/authorization"></Navigate>
     }
     return (
