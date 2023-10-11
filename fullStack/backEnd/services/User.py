@@ -3,14 +3,14 @@ from typing import Annotated
 
 from fastapi import HTTPException, Depends
 from jose import jwt, JWTError
-from sqlalchemy import select
+from sqlalchemy import select, update
 from sqlalchemy.orm import Session
 from starlette import status
-from starlette.status import HTTP_400_BAD_REQUEST
+from starlette.status import HTTP_400_BAD_REQUEST, HTTP_200_OK
 
 from model.Settings import get_db
 from model.User import User
-from model.UserSchema import UserBase, UserCreate
+from model.UserSchema import UserBase, UserCreate, UserLite, UserUpdate
 from security import pwdContext, SECRET_KEY, ALGORITHM, oauth2Scheme
 
 
@@ -82,4 +82,17 @@ def getCurrentUser(token: Annotated[str, Depends(oauth2Scheme)], db: Session = A
     user = getUser(db=db, userShema=tokenData)
     if user is None:
         raise credentialsException
+    return user
+
+
+def updateUser(db: Session, user: UserUpdate):
+    query = (update(User)
+             .where(User.id == user.id)
+             .values(userName=user.userName,
+                     firstName=user.firstName,
+                     lastName=user.lastName,
+                     email=user.email))
+    db.execute(query)
+    db.commit()
+    user = db.scalar(select(User).where(User.id == user.id))
     return user

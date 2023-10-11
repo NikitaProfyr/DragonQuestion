@@ -6,6 +6,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import IndexPage from '../../Page/IndexPage'
 import LoginPage from '../../Page/LoginPage'
 import QuizListPage from '../../Page/QuizListPage'
+import UserSetingPage from '../../Page/UserSetingPage'
 import AuthService from '../../Services/AuthService'
  
 import { ROUTES } from '../../utils/routes'
@@ -49,6 +50,7 @@ const AppRoutes = () => {
           <Header/>
           <Registration/>
         </>}/>
+        <Route path={ROUTES.USER_SETTING} element = {<UserSetingPage/>} />
       </Routes>
     </BrowserRouter>
   )

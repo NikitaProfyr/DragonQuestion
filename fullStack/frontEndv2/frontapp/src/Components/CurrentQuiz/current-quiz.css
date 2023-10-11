@@ -1,0 +1,24 @@
+.current-quiz{
+    padding-top: 20px;
+    text-align: center;
+    width: 300px;
+    height: 400px;
+    backdrop-filter: blur(4px);
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #1E58EDCC;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.current-quiz a{
+    color: #9E00FF;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.current-quiz-img{
+    width: 250px;
+    height: 180px;
+    padding: 0;
+    align-self: center;
+}

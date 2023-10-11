@@ -2,10 +2,10 @@ from datetime import timedelta
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from starlette.status import HTTP_401_UNAUTHORIZED
-from model.UserSchema import UserCreate, TokenSchema
+from model.UserSchema import UserCreate, TokenSchema, UserUpdate
 from model.Settings import get_db
 from security import ACCESS_TOKEN_EXPIRE_MINUTES
-from services.User import createUser, authenticated, createAccessToken, getCurrentUser
+from services.User import createUser, authenticated, createAccessToken, getCurrentUser, updateUser
 
 userRouter = APIRouter(tags=["users"])
 
@@ -34,3 +34,8 @@ def registration(userData: UserCreate, db: Session = Depends(get_db)):
 @userRouter.post('/getUser')
 def currentUser(token, db: Session = Depends(get_db)):
     return getCurrentUser(token, db=db)
+
+
+@userRouter.put('/updateUser')
+def updateUserData(userData: UserUpdate, db: Session = Depends(get_db)) -> UserUpdate:
+    return updateUser(db=db, user=userData)

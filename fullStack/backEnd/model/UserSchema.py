@@ -27,5 +27,11 @@ class UserLite(UserBase):
     id: int
 
 
+class UserUpdate(UserLite):
+    email: str
+    firstName: str
+    lastName: str
+
+
 class TokenSchema(BaseModel):
     accesToken: str
