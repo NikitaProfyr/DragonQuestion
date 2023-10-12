@@ -27,13 +27,13 @@ const QuizList = () => {
     <div className="bg-quiz-list">
       <div className="wrapper">
         <Container fluid>
-          <div className="quiz-list" style={{paddingTop:'20px'}}>
-            <Row>
-              {quiz.map((item) => (
-                <CurrentQuiz key={item.id} props={item} />)
-              )}
-            </Row>  
-          </div>  
+          
+          <Row className='d-flex justify-content-sm-center justify-content-md-around justify-content-lg-between'>
+            {quiz.map((item) => (
+              <CurrentQuiz key={item.id} props={item} />)
+            )}
+          </Row>  
+          
         </Container> 
       </div>
     </div>

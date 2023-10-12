@@ -12,18 +12,14 @@ const CurrentQuiz = ({props}) => {
   const [quiz, setQuiz] = useState(props)
   console.log(quiz);
   
-  return (  
-    <Col >
-      <div className="item">
+  return (    
       <Card className='current-quiz'>
         <Card.Img className='current-quiz-img' variant='top' src={CurrentQuizDragon} alt='ДРАКОН' />
         <Card.Body>
           <Card.Title><Link to={ROUTES.QUIZ_CURRENT + `/${quiz.id}`}>{quiz.title}</Link></Card.Title>
           <Card.Text>{quiz.description}</Card.Text>
         </Card.Body>
-      </Card>
-      </div>
-    </Col>   
+      </Card>  
   )
 }
 
