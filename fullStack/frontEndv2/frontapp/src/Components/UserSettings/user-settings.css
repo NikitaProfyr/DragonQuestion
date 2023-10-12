@@ -1,12 +1,13 @@
 .bg-content-user-settings {
-    background: rgb(221,144,230);
-    background: linear-gradient(135deg, rgba(221,144,230,0.2) 0%, rgba(144,177,230,0.2) 100%);
+    background: linear-gradient(135deg, rgba(221,144,230,0.2) 10%, rgba(144,177,230,0.2) 100%), url('../../image/whitepurpleDragon.png');
+    background-position: center;
+    background-repeat: no-repeat; 
     height: calc(100vh - 80px);
     display: flex;
     justify-content: center;
 }
 
-.bg-dragon-settings {
+/* .bg-dragon-settings {
     transform: rotate(-70deg);
     position: absolute;
     bottom: 0;
@@ -16,11 +17,11 @@
     margin: auto;
     z-index: 0;
 
-}
+} */
 
 .all-content-user-settings {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     width: 100%;
 }

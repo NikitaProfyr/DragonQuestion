@@ -7,10 +7,13 @@ import './user-settings.css'
 const UserSettings = () => {
   return (
     <div className="bg-content-user-settings">
-        <img src={PurpleDragonEgor} className="bg-dragon-settings" width="600px" />
+        {/* <img src={PurpleDragonEgor} className="bg-dragon-settings" width="600px" /> */}
             <div className="wrapper">
                 <div className="all-content-user-settings">
-                    <div className="left-content-settings">
+                    <div className="form-left-user-setting">
+                    </div>
+                    <div className="form-right-user-setting">asd</div>
+                    {/* <div className="left-content-settings">
                         <input type="file" id="file" multiple accept="image/*"/>
                         <img src="" alt="test" id="image" />
                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae assumenda facilis consequatur numquam aut rem sunt est obcaecati consectetur sequi temporibus praesentium excepturi earum quos, perspiciatis animi repudiandae quo blanditiis!
@@ -49,7 +52,7 @@ const UserSettings = () => {
                             </div>
                         </div>
                         
-                    </div>
+                    </div> */}
                 </div>
             </div>
     </div>
