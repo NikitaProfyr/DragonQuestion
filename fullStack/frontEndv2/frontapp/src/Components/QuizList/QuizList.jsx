@@ -26,7 +26,7 @@ const QuizList = () => {
   return (
     <div className="bg-quiz-list">
       <div className="wrapper">
-        {/* <Container fluid> */}
+        <Container fluid>
           <div className="quiz-list" style={{paddingTop:'20px'}}>
             <Row>
               {quiz.map((item) => (
@@ -34,7 +34,7 @@ const QuizList = () => {
               )}
             </Row>  
           </div>  
-        {/* </Container>  */}
+        </Container> 
       </div>
     </div>
   )

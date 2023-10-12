@@ -1,6 +1,8 @@
 .bg-quiz-list{
-    background: linear-gradient(90deg, rgba(228, 0, 255, 0.25) 0%, rgba(0, 98, 255, 0.25) 100%), url('../../image/drakonEgorLGBT.jpg');
-    height: calc(100vh - 80px);   
+    background: linear-gradient(90deg, rgba(228, 0, 255, 0.25) 0%, rgba(0, 98, 255, 0.25) 100%), url('../../image/drakonEgorLGBT.png');
+    min-height: calc(100vh - 80px);   
+    background-size: contain;
     background-repeat: no-repeat;
     background-position: center; 
 }
+

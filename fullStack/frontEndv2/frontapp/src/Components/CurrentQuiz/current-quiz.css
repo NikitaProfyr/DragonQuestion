@@ -1,13 +1,17 @@
 .current-quiz{
     padding-top: 20px;
     text-align: center;
-    width: 300px;
-    height: 400px;
-    backdrop-filter: blur(4px);
-    background-color: rgba(255, 255, 255, 0.2);
     color: #1E58EDCC;
     font-size: 25px;
     font-weight: bold;
+    margin: 0;
+    width: 300px;
+    height: 400px; 
+    backdrop-filter: blur(4px);
+    background-color: rgba(255, 255, 255, 0.2);
+    -webkit-box-shadow: 0px 0px 10px 4px rgba(34, 60, 80, 0.2);
+    -moz-box-shadow: 0px 0px 10px 4px rgba(34, 60, 80, 0.2);
+    box-shadow: 0px 0px 10px 4px rgba(34, 60, 80, 0.2);
 }
 
 .current-quiz a{
@@ -21,4 +25,10 @@
     height: 180px;
     padding: 0;
     align-self: center;
+    opacity: 0.85;
+}
+
+.item {
+    display: flex;
+    justify-content: center;
 }

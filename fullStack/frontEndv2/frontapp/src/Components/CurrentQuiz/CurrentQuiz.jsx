@@ -14,6 +14,7 @@ const CurrentQuiz = ({props}) => {
   
   return (  
     <Col >
+      <div className="item">
       <Card className='current-quiz'>
         <Card.Img className='current-quiz-img' variant='top' src={CurrentQuizDragon} alt='ДРАКОН' />
         <Card.Body>
@@ -21,7 +22,8 @@ const CurrentQuiz = ({props}) => {
           <Card.Text>{quiz.description}</Card.Text>
         </Card.Body>
       </Card>
-    </Col>  
+      </div>
+    </Col>   
   )
 }
 
