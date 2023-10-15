@@ -5,5 +5,6 @@ export const ROUTES = {
     QUIZ_LIST: '/quizlist',
     QUIZ_CURRENT: '/quiz',
     QUIZ_DETAIL: "/quiz" + "/:id",
+    QUIZ_USER: "/quiz-uzer",
     USER_SETTING: '/setting'
 } 

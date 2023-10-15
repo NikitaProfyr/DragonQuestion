@@ -38,7 +38,7 @@ const HeaderUser = () => {
                     </div>
                     <div className="nav-bar">
                         <Link to="/authorization" className="link-quiz">Опросы</Link>
-                        <Link to="/authorization">Пройденные опросы</Link>
+                        <Link to={ROUTES.QUIZ_USER}>Мои опросы</Link>
                         <Link to={ROUTES.USER_SETTING}>{user.userName}</Link>
                         <Link to={ROUTES.HOME} onClick={ onClickLogOut } >Выйди</Link>
                     </div>

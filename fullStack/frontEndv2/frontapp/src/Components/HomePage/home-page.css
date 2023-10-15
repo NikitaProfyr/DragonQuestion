@@ -68,11 +68,6 @@
     overflow-y: hidden;
     overflow-x: hidden;
     box-sizing: border-box;
-    /* position: relative;
-      left: 50%;
-      right: 50%;
-    margin-left: -50vw;  
-    margin-right: -50vw;  */
 }
 
 .content-top-2 {

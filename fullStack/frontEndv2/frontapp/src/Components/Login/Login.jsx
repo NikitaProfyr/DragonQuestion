@@ -20,12 +20,13 @@ const Login = () => {
     const onClickLogin = (e) => {
         e.preventDefault()
         loginAction(userName, password, dispatch)
+        .catch(() => {
+            alert('Не правильный логин или пароль.')
+        })
         // .then(() => {
             
         // })
-        // .catch(() => {
-        //     alert('Не правильный логин или пароль.')
-        // })
+        
 
     }
 
