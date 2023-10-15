@@ -13,7 +13,33 @@ import RegistrationPage from '../../Page/RegistrationPage'
 import AuthService from '../../Services/AuthService'
  
 import { ROUTES } from '../../utils/routes'
+import QuizDetailPage from '../../Page/QuizDetailPage'
  
+const PublicRoutes = [
+  {
+      patch: ROUTES.HOME,
+      Component: IndexPage,
+  },
+  {
+      patch: ROUTES.LOGIN,
+      Component: LoginPage,
+  },
+  {
+      patch: ROUTES.REGISTRATION,
+      Component: RegistrationPage,
+  },
+]
+
+const PrivateRoutes = [
+  {
+      patch: ROUTES.QUIZ_LIST,
+      page: QuizListPage,
+  },
+  {
+      patch: ROUTES.USER_SETTING,
+      page: UserSetingPage
+  },
+]
  
 
 
@@ -29,9 +55,9 @@ const AppRoutes = () => {
   return (
     <BrowserRouter>
       <Routes>
-        {/* {PublicRoutes.map(({patch, page}) => <Route key={patch} patch={patch} Component={page} exact/>)} */}
+        {/* {PublicRoutes.map(({patch, page}) => <Route key={patch} patch={patch} Component={page} exact/>)}
 
-        {/* {isActive && PrivateRoutes.map(({patch, page}) => <Route key={patch} patch={patch} Component={page} exact/>)} */}
+        {isActive && PrivateRoutes.map(({patch, page}) => <Route key={patch} patch={patch} Component={page} exact/>)} */}
 
         <Route index element = {
           <IndexPage/>
@@ -50,6 +76,7 @@ const AppRoutes = () => {
           <RegistrationPage/>
         </>}/>
         <Route path={ROUTES.USER_SETTING} element = {<UserSetingPage/>} />
+        <Route path={ROUTES.QUIZ_DETAIL} element = {<QuizDetailPage/>}/>
       </Routes>
     </BrowserRouter>
   )
