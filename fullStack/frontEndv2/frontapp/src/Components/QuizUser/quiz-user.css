@@ -1,6 +1,6 @@
 .bg-quiz-user{
-    background: rgb(173,0,255);
-    background: linear-gradient(135deg, rgba(173,0,255,0.35) 0%, rgba(97,194,200,0.35) 100%), url('../../image/drakonEgorLGBT.png');
+    background: rgb(221,144,230);
+    background: linear-gradient(135deg, rgba(221,144,230,0.25) 0%, rgba(144,177,230,0.25) 100%), url('../../image/drakonEgorLGBT.png');
     min-height: calc(100vh - 80px);   
     background-size: contain;
     background-repeat: no-repeat;
@@ -15,9 +15,4 @@
 
 .list-group-item{
     border: 0;
-}
-
-.content-test {
-    display: grid;
-    grid-template-columns: 2fr 2fr;
 }

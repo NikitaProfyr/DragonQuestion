@@ -26,8 +26,8 @@ const CurrentQuiz = ({props}) => {
       className="d-flex flex-column h-100 current-quiz"
     >
       <img className='current-quiz-img' src={CurrentQuizDragon} alt="" />
-      <p className='fs-5 fw-bold text-break'>{quiz.title}</p>
-      <p className=''>{quiz.description}</p>
+      <p className='title fs-5 fw-bold text-break'>{quiz.title}</p>
+      <p className='fs-5 fw-bold text-break'>{quiz.description}</p>
     </Link>
   )
 }

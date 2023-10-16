@@ -32,7 +32,7 @@ const QuizUser = () => {
     <div className="bg-quiz-user">
 
 
-      <div className="container py-3">
+      <div className="container py-5">
         <div className="row">
           <div className="col-lg-3 col-12 mb-4">
             <ListGroup className="list" style={{ cursor: "pointer", }}>

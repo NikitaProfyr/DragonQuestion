@@ -14,7 +14,7 @@ const Footer = () => {
                         <p>Адрес:<span> г.Лос-Анджелес</span></p>
                     </div>
                     <div className="footer-right">
-                        <img src={logo} alt="IBD" width="300px" />
+                        <img src={logo} alt="IBD" width="300px"/>
 
                     </div>
                 

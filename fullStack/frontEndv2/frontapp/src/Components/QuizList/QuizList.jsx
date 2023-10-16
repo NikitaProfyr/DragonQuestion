@@ -30,7 +30,7 @@ const QuizList = () => {
           
           <div className='row'>
             {quiz.map((item) => (
-              <div className='col-md-3 col-sm-6'>
+              <div className='col-md-3 col-sm-6 mt-4'>
                 <CurrentQuiz key={item.id} props={item} />
               </div>  )
             )}
