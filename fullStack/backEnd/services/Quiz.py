@@ -55,3 +55,12 @@ def selelctCurrentQuiz(idQuiz: int, db: Session = Depends(get_db)):
             detail=f"Опрос с идентифекатором: '{idQuiz}', не найден."
         )
     return currentQuiz
+
+
+def selectUserQuiz(idUser: int, db: Session = Depends(get_db)):
+    quiz = db.query(Quiz).options(joinedload(Quiz.question).joinedload(Question.answer))\
+        .where(Quiz.authorId == idUser).all()
+    print(quiz)
+    if not quiz:
+        return None
+    return quiz

@@ -22,9 +22,11 @@ const HeaderUser = () => {
         }
     }, []) 
 
+
     const onClickLogOut = () => {
         logoutAction(dispatch)
     }
+
     if (loader){
         // return <Spinner animation='grow'/>
     }
