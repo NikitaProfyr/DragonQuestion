@@ -25,16 +25,16 @@ const QuizList = () => {
 
   return (
     <div className="bg-quiz-list">
-      <div className="wrapper">
-        <Container fluid>
+      <div className="container">
+
           
-          <Row className='d-flex justify-content-sm-center justify-content-md-around justify-content-lg-between'>
+          <div className='row'>
             {quiz.map((item) => (
-              <CurrentQuiz key={item.id} props={item} />)
+              <div className='col-md-3 col-sm-6'>
+                <CurrentQuiz key={item.id} props={item} />
+              </div>  )
             )}
-          </Row>  
-          
-        </Container> 
+          </div>  
       </div>
     </div>
   )

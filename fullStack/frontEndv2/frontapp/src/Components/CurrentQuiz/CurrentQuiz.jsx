@@ -19,13 +19,16 @@ const CurrentQuiz = ({props}) => {
   }
 
   return (    
-      <Card className='current-quiz mt-4'>
-        <Card.Img className='current-quiz-img' variant='top' src={CurrentQuizDragon} alt='ДРАКОН' />
-        <Card.Body>
-          <Card.Title><Link onClick={() => (setCurrentQuiz(quiz.id))} to={ROUTES.QUIZ_CURRENT + `/${quiz.id}`}>{quiz.title}</Link></Card.Title>
-          <Card.Text >{quiz.description}</Card.Text>
-        </Card.Body>
-      </Card>  
+    
+    <Link 
+      onClick={() => (setCurrentQuiz(quiz.id))} 
+      to={ROUTES.QUIZ_CURRENT + `/${quiz.id}`} 
+      className="d-flex flex-column h-100 current-quiz"
+    >
+      <img className='current-quiz-img' src={CurrentQuizDragon} alt="" />
+      <p className='fs-5 fw-bold text-break'>{quiz.title}</p>
+      <p className=''>{quiz.description}</p>
+    </Link>
   )
 }
 

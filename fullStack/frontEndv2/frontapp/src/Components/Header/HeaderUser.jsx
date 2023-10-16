@@ -33,7 +33,7 @@ const HeaderUser = () => {
     else{
         return(
             <div className="Header-bg">
-            <div className="wrapper">
+            <div className="container px-4">
                 <div className="Header">
                     <div className="logo">
                         <Link to={ROUTES.QUIZ_LIST}><img src={LogoImg} height="40" alt="Logo" /></Link>

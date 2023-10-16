@@ -17,9 +17,7 @@
     border: 0;
 }
 
-.left-content {
-    width: 600px;
-}
-.list {
-    width: 300px;
+.content-test {
+    display: grid;
+    grid-template-columns: 2fr 2fr;
 }
