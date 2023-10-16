@@ -8,6 +8,7 @@ import { useEffect } from 'react'
 import { getUserQuiz } from '../../Feutures/Actions/actionQuiz'
 import { useState } from 'react'
 import CurrentQuiz from '../CurrentQuiz/CurrentQuiz'
+import Pagination from 'react-bootstrap/Pagination';
 
 
 
@@ -31,7 +32,8 @@ const QuizUser = () => {
         <div className="bg-quiz-user">
             <div className="wrapper">
                 <div className="d-flex justify-content-lg-between">
-                    <div className="left-content">
+                    <div className="left-content float-start">
+                    
                         <div className='mt-4'>
                             <ListGroup className="list" style={{cursor:"pointer", }}>
                                 <ListGroup.Item action href="#">Мои опросы</ListGroup.Item>
@@ -40,7 +42,8 @@ const QuizUser = () => {
                             </ListGroup>
                         </div>
                     </div>   
-                    <div className=''>
+                    
+                    <div className='right-content float-end'>
                         {quiz === null ?
                             <div>вопросов нет</div>
                             :
@@ -52,7 +55,28 @@ const QuizUser = () => {
                                 }
                             </>
                         }
+                    
                     </div>
+                </div>
+                
+                <div className="pagination-content d-flex align-items-center justify-content-center">
+                    <Pagination>
+                        <Pagination.First />
+                        <Pagination.Prev />
+                        <Pagination.Item>{1}</Pagination.Item>
+                        <Pagination.Ellipsis />
+
+                        <Pagination.Item>{10}</Pagination.Item>
+                        <Pagination.Item>{11}</Pagination.Item>
+                        <Pagination.Item active>{12}</Pagination.Item>
+                        <Pagination.Item>{13}</Pagination.Item>
+                        <Pagination.Item disabled>{14}</Pagination.Item>
+
+                        <Pagination.Ellipsis />
+                        <Pagination.Item>{20}</Pagination.Item>
+                        <Pagination.Next />
+                        <Pagination.Last />
+                    </Pagination>
                 </div>
             </div>
         </div>

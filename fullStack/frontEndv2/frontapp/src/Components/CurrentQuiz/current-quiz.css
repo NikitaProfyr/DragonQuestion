@@ -11,12 +11,15 @@
     -webkit-box-shadow: 0px 0px 10px 4px rgba(34, 60, 80, 0.2);
     -moz-box-shadow: 0px 0px 10px 4px rgba(34, 60, 80, 0.2);
     box-shadow: 0px 0px 10px 4px rgba(34, 60, 80, 0.2);
+    border: 0;
 }
 
 .current-quiz a{
-    color: #9E00FF;
-    font-weight: 600;
+    color: #da78dd;
+    font-weight: bold;
+    font-size: 20px;
     text-decoration: none;
+    opacity: 0.;
 }
 
 .current-quiz-img{
