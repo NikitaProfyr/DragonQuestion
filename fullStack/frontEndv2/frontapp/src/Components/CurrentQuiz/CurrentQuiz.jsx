@@ -1,7 +1,5 @@
 import React from 'react'
 import { useState } from 'react'
-import Col from 'react-bootstrap/Col'
-import Card from 'react-bootstrap/Card'
 import { Link, Navigate } from 'react-router-dom'
 import { ROUTES } from '../../utils/routes'
 import { useDispatch, useSelector } from 'react-redux'
@@ -12,10 +10,7 @@ import CurrentQuizDragon from '../../image/currentQuizDragon.png'
 
 const CurrentQuiz = ({props}) => {
   const [quiz, setQuiz] = useState(props)
-  const dispatch = useDispatch()
   
-  
-
   return (    
     
     <Link 

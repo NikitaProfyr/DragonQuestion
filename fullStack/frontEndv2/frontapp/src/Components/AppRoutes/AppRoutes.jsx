@@ -14,7 +14,9 @@ import AuthService from '../../Services/AuthService'
  
 import { ROUTES } from '../../utils/routes'
 import QuizDetailPage from '../../Page/QuizDetailPage'
+import QuizUserDetailPage from '../../Page/QuizUserDetailPage'
 import QuizUserPage from '../../Page/QuizUserPage'
+import QuizCreatePage from '../../Page/QuizCreatePage'
  
 const PublicRoutes = [
   {
@@ -79,6 +81,8 @@ const AppRoutes = () => {
         <Route path={ROUTES.USER_SETTING} element = {<UserSetingPage/>} />
         <Route path={ROUTES.QUIZ_DETAIL} element = {<QuizDetailPage/>}/>
         <Route path={ROUTES.QUIZ_USER} element = {<QuizUserPage/>} />
+        <Route path={ROUTES.QUIZ_USER_DETAIL} element = {<QuizUserDetailPage/>} />
+        <Route path={ROUTES.QUIZ_CREATE} element = {<QuizCreatePage/>} />
       </Routes>
     </BrowserRouter>
   )
