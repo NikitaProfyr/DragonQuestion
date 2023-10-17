@@ -6,34 +6,53 @@ import Carousel from 'react-bootstrap/Carousel';
 
 
 import './quiz-create.css'
- 
+import { addQuestionAction } from '../../Feutures/Actions/actionQuiz';
+
 
 const QuizCreate = () => {
+  const dispatch = useDispatch()
   const quiz = useSelector(state => state.reducerQuiz.createQuiz)
+  const addQuestion = (e) => {
+    e.preventDefault()
+    quiz.question.push({
+      title: ""
+    }
+    )
+    dispatch(addQuestionAction(quiz))
+    console.log(quiz);
+  }
   console.log(quiz);
   return (
-        <div className="bg-create-quiz">
-            <div className="container">
-                <form className='py-5 d-flex flex-column w-100'>             
-                      <div className="d-flex flex-column test">
-                          <input type="text" />
-                          <input type="text" />
-                          <input type="file" accept="image/*" />
-                          <Carousel className='w-100' interval={null}>
-                        {quiz.question.map((item) => (
-                          <Carousel.Item>
-                              <h2>huy</h2>
-                              <h2>huy</h2>
-                              <h2>huy</h2>
-                          </Carousel.Item>
-                        ))}
-                      </Carousel>
-                      </div>
-                      <button>Добавить вопрос</button>
-                </form>
-            </div>
-        </div>
-    )
+    <div className="bg-create-quiz">
+      <div className="container">
+        <form className='row py-5 create-quiz-content'>
+          <div className="d-flex flex-column form-create-quiz">
+            <input type="text" placeholder='Введите название опроса'/>
+            <input type="text" placeholder='Введите описание'/>
+            <label for="myfile" class="label">Выберите файлы</label>
+            <input type="file" class="my" id="myfile" name="myfile" accept="image/*" multiple></input>
+            {/* <input type="file" accept="image/*" className='input-file'/> */}
+          </div>
+          <Carousel className='slederXXXTENTACION' interval={null}>
+            {quiz.question.map((item) => (
+              <Carousel.Item className=''>
+                <div className="d-flex justify-content-center align-items-center content-in-slide">
+                  <h2>huy</h2>
+                  <h2>huy</h2>
+                  <h2>huy</h2>
+                </div>
+              </Carousel.Item>
+            ))}
+          </Carousel>
+          <div className="buttons-group">
+            <button onClick={addQuestion}>Добавить вопрос</button>
+            <button>Создать опрос</button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  )
 }
 
 export default QuizCreate

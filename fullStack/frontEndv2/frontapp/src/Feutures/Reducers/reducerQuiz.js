@@ -12,7 +12,7 @@ const stateQuiz = {
         title: "",
         description: "",
         image: "",
-        question: [{},{},{}]
+        question: [{},{}]
     },
     currentQuiz: {},
 }
