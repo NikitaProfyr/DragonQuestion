@@ -15,13 +15,19 @@ const QuizCreate = () => {
   const quiz = useSelector(state => state.reducerQuiz.createQuiz)
   const [count, setCount] = useState(0)
 
-  const addAnswer = (index) => {
-    // e.preventDefault()
-    console.log(index)
-    quiz.question[index].answer.push({
+  const addAnswer = (e, item) => {
+    e.preventDefault()
+    item.answer.push({
       title: "",
       right: false
     })
+    dispatch(addQuestionAction(quiz))
+  }
+  const removeAnswer = (e, item, ansItem) =>{
+    e.preventDefault()
+    const index = item.answer.indexOf(ansItem)
+    delete item.answer[index]
+    dispatch(addQuestionAction(quiz))
   }
   const addQuestion = (e) => {
     e.preventDefault()
@@ -31,7 +37,6 @@ const QuizCreate = () => {
     }
     )
     dispatch(addQuestionAction(quiz))
-
   }
   const logInfo = (e) => {
     e.preventDefault()
@@ -48,22 +53,22 @@ const QuizCreate = () => {
             <input type="file" class="my" id="myfile" name="myfile" accept="image/*" multiple></input>
           </div>
           <Carousel className='slederXXXTENTACION' interval={null}>
-            {quiz.question.map((item, index) => (
+            {quiz.question.map((item) => (
               <Carousel.Item className=''>
                 <div className="d-flex justify-content-center align-items-center content-in-slide">
-                  <div className="col-4 d-flex flex-column mx-3 in-slide-form-xxxtentacion">
+                  <div className="col-4 d-flex flex-column mx-5 in-slide-form-xxxtentacion">
                     <input onChange={(e) => (item.title = e.target.value)} type="text" placeholder='Введите вопрос'></input>
-                    <button onClick={addAnswer(index)}>Добавить ответ</button>
+                    <button onClick={(e) => (addAnswer(e, item))}>Добавить ответ</button>
                     <button>Добавить правильный ответ</button>
                     <button>Удалить вопрос</button>
                   </div>
                   <div className="col-4 d-flex flex-column">
-                    {item.answer.map((ansItem)=>(
+                    {item.answer.map((ansItem) => (
                       <div className="d-flex in-slide-form-lilpump">
-                      <input type="text" placeholder='Введите описание'></input>
-                      <div className="del-answer-icon">
-                        <img src={cross} height="30px" alt="" />
-                      </div>
+                        <input onChange={(e) => (ansItem.title = e.target.value)} type="text" placeholder='Введите описание'></input>
+                        <div className="del-answer-icon">
+                          <img onClick={(e) => (removeAnswer(e, item, ansItem))} src={cross} height="30px" alt="" />
+                        </div>
                     </div>
                     ))}
                   </div>

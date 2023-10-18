@@ -3,7 +3,7 @@ import AuthService from "../../Services/AuthService"
 
 export const loginAction = async (userName, password, dispatch) => {
     const data = await AuthService.login(userName, password)
-    console.log(data);
+    // console.log(data);
     dispatch({type: 'LOGINSUCCES', payload: data})
     // return AuthService.login(userName, password)
     // .then((response) => {
