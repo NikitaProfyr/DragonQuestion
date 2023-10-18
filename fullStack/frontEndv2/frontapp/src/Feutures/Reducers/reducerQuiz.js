@@ -12,7 +12,9 @@ const stateQuiz = {
         title: "",
         description: "",
         image: "",
-        question: [{},{}]
+        question: [{
+            title:"1"
+        }]
     },
     currentQuiz: {},
 }
@@ -23,7 +25,7 @@ export const reducerQuiz = (state = stateQuiz, action) => {
 
     switch(type){
         case CREATE_QUIZ:
-            return {...state, createQuiz: payload}
+            return {...state, createQuiz: {...payload}}
         case GET_QUIZ_USER:
             return {...state, quizUser: payload}
         case GET_QUIZ:

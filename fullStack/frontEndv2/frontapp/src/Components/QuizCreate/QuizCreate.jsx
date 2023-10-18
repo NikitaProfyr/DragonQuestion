@@ -7,21 +7,27 @@ import Carousel from 'react-bootstrap/Carousel';
 
 import './quiz-create.css'
 import { addQuestionAction } from '../../Feutures/Actions/actionQuiz';
+import { useEffect } from 'react';
 
 
 const QuizCreate = () => {
   const dispatch = useDispatch()
   const quiz = useSelector(state => state.reducerQuiz.createQuiz)
+  const [count, setCount] = useState(0)
+
   const addQuestion = (e) => {
-    e.preventDefault()
+    e.preventDefault()  
     quiz.question.push({
       title: ""
     }
     )
     dispatch(addQuestionAction(quiz))
+    
+    console.log(count);
     console.log(quiz);
+    
   }
-  console.log(quiz);
+
   return (
     <div className="bg-create-quiz">
       <div className="container">
@@ -37,13 +43,14 @@ const QuizCreate = () => {
             {quiz.question.map((item) => (
               <Carousel.Item className=''>
                 <div className="d-flex justify-content-center align-items-center content-in-slide">
-                  <h2>huy</h2>
-                  <h2>huy</h2>
-                  <h2>huy</h2>
+                  <div className="col">
+                    <input onChange={(e) => (dispatch(addQuestionAction(quiz.quistion)))} type="text"></input>
+                  </div>
                 </div>
               </Carousel.Item>
             ))}
           </Carousel>
+          <h2>{quiz.question.length}</h2>
           <div className="buttons-group">
             <button onClick={addQuestion}>Добавить вопрос</button>
             <button>Создать опрос</button>
