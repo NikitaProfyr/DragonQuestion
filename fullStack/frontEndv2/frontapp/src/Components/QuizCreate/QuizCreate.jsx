@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 
 import Carousel from 'react-bootstrap/Carousel';
-
+import galka from '../../image/icon300pn.png'
 import cross from '../../image/cross13.png'
 import './quiz-create.css'
 import { addQuestionAction } from '../../Feutures/Actions/actionQuiz';
@@ -23,7 +23,13 @@ const QuizCreate = () => {
     })
     dispatch(addQuestionAction(quiz))
   }
-  const removeAnswer = (e, item, ansItem) =>{
+  const cheackAnswer = (item) => {
+    item.right === true ?
+      item.right = false :
+      item.right = true
+    dispatch(addQuestionAction(quiz))
+  }
+  const removeAnswer = (e, item, ansItem) => {
     e.preventDefault()
     const index = item.answer.indexOf(ansItem)
     delete item.answer[index]
@@ -33,7 +39,7 @@ const QuizCreate = () => {
     e.preventDefault()
     quiz.question.push({
       title: "",
-      answer:[]
+      answer: []
     }
     )
     dispatch(addQuestionAction(quiz))
@@ -64,12 +70,23 @@ const QuizCreate = () => {
                   </div>
                   <div className="col-4 d-flex flex-column">
                     {item.answer.map((ansItem) => (
-                      <div className="d-flex in-slide-form-lilpump">
-                        <input onChange={(e) => (ansItem.title = e.target.value)} type="text" placeholder='Введите описание'></input>
-                        <div className="del-answer-icon">
-                          <img onClick={(e) => (removeAnswer(e, item, ansItem))} src={cross} height="30px" alt="" />
+                      ansItem.right === true ?
+                        <div className="d-flex in-slide-form-lilpump active">
+                          <div className="check-answer-icon active" onClick={() => (cheackAnswer(ansItem))}><img src={galka} height="30px" alt="" /></div>
+                          <input onChange={(e) => (ansItem.title = e.target.value)} type="text" placeholder='Введите описание'></input>
+                          <div className="del-answer-icon">
+                            <img onClick={(e) => (removeAnswer(e, item, ansItem))} src={cross} height="30px" alt="" />
+                          </div>
                         </div>
-                    </div>
+                        :
+                        <div className="d-flex in-slide-form-lilpump">
+                          <div className="check-answer-icon" onClick={() => (cheackAnswer(ansItem))}><img src={galka} height="30px" alt="" /></div>
+                          <input onChange={(e) => (ansItem.title = e.target.value)} type="text" placeholder='Введите описание'></input>
+                          <div className="del-answer-icon">
+                            <img onClick={(e) => (removeAnswer(e, item, ansItem))} src={cross} height="30px" alt="" />
+                          </div>
+                        </div>
+
                     ))}
                   </div>
                 </div>
