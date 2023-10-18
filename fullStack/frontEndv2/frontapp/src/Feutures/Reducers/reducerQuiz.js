@@ -13,7 +13,10 @@ const stateQuiz = {
         description: "",
         image: "",
         question: [{
-            title:"1"
+            title:"1",
+            answer:[{
+                title:"da"
+            }]
         }]
     },
     currentQuiz: {},
