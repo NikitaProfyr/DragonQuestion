@@ -8,6 +8,7 @@ import cross from '../../image/cross13.png'
 import './quiz-create.css'
 import { addQuestionAction } from '../../Feutures/Actions/actionQuiz';
 import { useEffect } from 'react';
+import { validationQuiz } from '../../Services/QuizService';
 
 
 const QuizCreate = () => {
@@ -44,19 +45,26 @@ const QuizCreate = () => {
     )
     dispatch(addQuestionAction(quiz))
   }
-  const logInfo = (e) => {
+  const removeQuestion = (e, item) => {
+    e.preventDefault()
+    const index = quiz.question.indexOf(item)
+    delete quiz.question[index]
+    dispatch(addQuestionAction(quiz))
+  }
+  const createQuiz = (e) => {
     e.preventDefault()
     console.log(quiz)
+
   }
   return (
     <div className="bg-create-quiz">
       <div className="container">
-        <form className='row col-12 py-5 create-quiz-content'>
+        <form onSubmit={(e) => (createQuiz(e))} className='row col-12 py-5 create-quiz-content'>
           <div className="d-flex col-4 flex-column form-create-quiz">
-            <input type="text" placeholder='Введите название опроса' />
-            <input type="text" placeholder='Введите описание' />
+            <input type="text" onChange={(e) => (quiz.title = e.target.value)} placeholder='Введите название опроса' />
+            <input type="text" onChange={(e) => (quiz.description = e.target.value)} placeholder='Введите описание' />
             <label for="myfile" class="label">Выберите файлы</label>
-            <input type="file" class="my" id="myfile" name="myfile" accept="image/*" multiple></input>
+            <input type="file" value={(e) => (quiz.image = e.target.value)} class="my" id="myfile" name="myfile" accept="image/*" multiple></input>
           </div>
           <Carousel className='slederXXXTENTACION' interval={null}>
             {quiz.question.map((item) => (
@@ -65,8 +73,7 @@ const QuizCreate = () => {
                   <div className="col-4 d-flex flex-column mx-5 in-slide-form-xxxtentacion">
                     <input onChange={(e) => (item.title = e.target.value)} type="text" placeholder='Введите вопрос'></input>
                     <button onClick={(e) => (addAnswer(e, item))}>Добавить ответ</button>
-                    <button>Добавить правильный ответ</button>
-                    <button>Удалить вопрос</button>
+                    <button onClick={(e) => (removeQuestion(e, item))}>Удалить вопрос</button>
                   </div>
                   <div className="col-4 d-flex flex-column">
                     {item.answer.map((ansItem) => (
@@ -93,10 +100,9 @@ const QuizCreate = () => {
               </Carousel.Item>
             ))}
           </Carousel>
-          <h2>{quiz.question.length}</h2>
           <div className="buttons-group col-4">
             <button onClick={addQuestion}>Добавить вопрос</button>
-            <button onClick={logInfo}>Создать опрос</button>
+            <button type='submit'>Создать опрос</button>
           </div>
 
         </form>
