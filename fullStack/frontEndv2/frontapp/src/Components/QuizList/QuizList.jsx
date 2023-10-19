@@ -7,7 +7,7 @@ import Row from 'react-bootstrap/Row'
 
 import './quiz-list.css'
 import DraconImg from '../../image/drakonEgor.png'
- 
+
 import { QuizService } from '../../Services/QuizService'
 import CurrentQuiz from '../CurrentQuiz/CurrentQuiz'
 import { Container } from 'react-bootstrap'
@@ -17,24 +17,23 @@ import { Container } from 'react-bootstrap'
 const QuizList = () => {
   const quiz = useSelector(state => state.reducerQuiz.quiz)
   const dispatch = useDispatch()
-  
+
   useEffect(() => {
     getQuizAction(dispatch)
-   
-  },[])
+
+  }, [])
 
   return (
     <div className="bg-quiz-list">
       <div className="container">
-
-          
-          <div className='row'>
-            {quiz.map((item) => (
-              <div className='col-md-3 col-sm-6 mt-4'>
-                <CurrentQuiz key={item.id} props={item} />
-              </div>  )
-            )}
-          </div>  
+        <h3>Необходимо убрать margin: 0 0 16px в CurrentQuiz</h3>
+        <div className='row py-4'>
+          {quiz.map((item) => (
+            <div className='col-md-4 col-sm-6 col-lg-3 mb-4'>
+              <CurrentQuiz key={item.id} props={item} />
+            </div>)
+          )}
+        </div>
       </div>
     </div>
   )

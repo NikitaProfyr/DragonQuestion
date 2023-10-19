@@ -1,6 +1,7 @@
 .current-quiz{
-    text-align: center;
-    color: #3d77d4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 100%;
     backdrop-filter: blur(4px);
     background-color: rgba(255, 255, 255, 0.2);
@@ -11,19 +12,39 @@
     text-decoration: none;
     border-radius: 10px;
     overflow: hidden;
+    height: 400px;
+
 }
 
-.current-quiz .title{
+.title-quiz{
+    display: flex;
+    justify-content: center;
+    align-items: center;
     color: #e600ff;
+    height: 75px;
+    width: 90%;
+    font-size: 18px;
     font-weight: bold;
     text-decoration: none;
     opacity: 0.9;
     text-align: center;
 }
-
+.title-description {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 75px;
+    width: 90%;
+    font-size: 16px;
+    font-weight: bold;
+    text-decoration: none;
+    opacity: 0.9;
+    text-align: center;
+    color: #3d77d4;
+}
 .current-quiz-img{
     width: 100%;
-    height: 180px;
+    min-height: 200px;
     object-fit: cover;
     padding: 0;
     align-self: center;
