@@ -24,7 +24,7 @@ const QuizList = () => {
   }, [])
 
   return (
-    <div className="bg-quiz-list">
+    <div className="bg-quiz-list overflow-hidden">
       <div className="container">
         <div className='row py-4'>
           {quiz.map((item) => (

@@ -1,3 +1,4 @@
+import shutil
 from typing import List
 
 from sqlalchemy.orm import Session, joinedload
@@ -7,7 +8,7 @@ from model.QuizSchema import QuestionSchema, QuizSchema, AnswerSchema
 from model.Quiz import Question, Quiz, Answer
 from model.Settings import get_db
 from sqlalchemy import select, delete
-from fastapi import HTTPException, Depends
+from fastapi import HTTPException, Depends, UploadFile, File
 
 from model.UserSchema import UserLite
 
@@ -64,3 +65,8 @@ def selectUserQuiz(idUser: int, db: Session = Depends(get_db)):
     if not quiz:
         return None
     return quiz
+
+
+def createImageQuiz(image: UploadFile = File(...)):
+    imgPath = "C:/Users/AxemaN/Desktop/DQ/fullStack/backEnd/media/quizImage/"
+    shutil.copy(image.filename, imgPath)

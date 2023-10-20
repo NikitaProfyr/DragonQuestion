@@ -48,7 +48,7 @@ const QuizUser = () => {
                     <div><Spinner></Spinner></div>
                     :
                     <>{quiz.map((item) => (
-                      <div className='col-md-4 col-xl-3 col-6 mb-4'>
+                      <div className='col-md-6 col-xl-4 col-12 mb-4'>
                         <CurrentQuizUser key={item.id} props={item}></CurrentQuizUser>
                       </div>
                     ))}</>

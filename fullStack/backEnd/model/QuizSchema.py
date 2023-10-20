@@ -17,10 +17,11 @@ class QuestionSchema(BaseModel):
 
 
 class QuizSchema(BaseModel):
-    # id: int
+    id: int
     title: str
     description: str
-    image: UploadFile = File(...)
+    image: str
+    # image: UploadFile = File(...)
     question: List[QuestionSchema]
 
 
