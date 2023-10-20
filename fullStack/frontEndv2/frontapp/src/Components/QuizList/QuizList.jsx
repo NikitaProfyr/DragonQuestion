@@ -26,7 +26,6 @@ const QuizList = () => {
   return (
     <div className="bg-quiz-list">
       <div className="container">
-        <h3>Необходимо убрать margin: 0 0 16px в CurrentQuiz</h3>
         <div className='row py-4'>
           {quiz.map((item) => (
             <div className='col-md-4 col-sm-6 col-lg-3 mb-4'>

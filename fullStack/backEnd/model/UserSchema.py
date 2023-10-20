@@ -27,6 +27,10 @@ class UserLite(UserBase):
     id: int
 
 
+class UserId(BaseModel):
+    id: int
+
+
 class UserUpdate(UserLite):
     email: str
     firstName: str

@@ -11,3 +11,4 @@ starlette
 python-jose
 alembic
 python-dotenv
+python-multipart

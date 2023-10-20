@@ -1,18 +1,21 @@
 import React from 'react'
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
-
 import Carousel from 'react-bootstrap/Carousel';
+
 import galka from '../../image/icon300pn.png'
 import cross from '../../image/cross13.png'
+
 import './quiz-create.css'
+
 import { addQuestionAction } from '../../Feutures/Actions/actionQuiz';
 import { useEffect } from 'react';
-import { validationQuiz } from '../../Services/QuizService';
-
+import { QuizService, validationQuiz } from '../../Services/QuizService';
+ 
 
 const QuizCreate = () => {
   const dispatch = useDispatch()
+  const user = useSelector(state => state.reducerUser.userInfo)
   const quiz = useSelector(state => state.reducerQuiz.createQuiz)
   const [count, setCount] = useState(0)
 
@@ -51,20 +54,31 @@ const QuizCreate = () => {
     delete quiz.question[index]
     dispatch(addQuestionAction(quiz))
   }
-  const createQuiz = (e) => {
+  const addImage = (e) => {
+    console.log(e.target.files[0]);
+    const formData = new FormData();
+    formData.append('file', e.target.files[0])
+    quiz.image = formData.get('file')
+    console.log(formData.get('file'));
+    dispatch(addQuestionAction(quiz))
+  }
+  const addQuiz = (e) => {
     e.preventDefault()
     console.log(quiz)
-
+    QuizService.createQuiz(quiz, user.id).catch((error) => {
+      alert(error)
+    })
+    
   }
   return (
     <div className="bg-create-quiz">
       <div className="container">
-        <form onSubmit={(e) => (createQuiz(e))} className='row col-12 py-5 create-quiz-content'>
+        <form onSubmit={(e) => (addQuiz(e))} className='row col-12 py-5 create-quiz-content'>
           <div className="d-flex col-4 flex-column form-create-quiz">
             <input type="text" onChange={(e) => (quiz.title = e.target.value)} placeholder='Введите название опроса' />
             <input type="text" onChange={(e) => (quiz.description = e.target.value)} placeholder='Введите описание' />
-            <label for="myfile" class="label">Выберите файлы</label>
-            <input type="file" value={(e) => (quiz.image = e.target.value)} class="my" id="myfile" name="myfile" accept="image/*" multiple></input>
+            <label htmlFor="myfile" className="label">Выберите файлы</label>
+            <input type="file" onChange={addImage} className="my" id="myfile" name="myfile" accept="image/*"></input>
           </div>
           <Carousel className='slederXXXTENTACION' interval={null}>
             {quiz.question.map((item) => (

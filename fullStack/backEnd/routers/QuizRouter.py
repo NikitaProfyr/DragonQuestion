@@ -1,19 +1,29 @@
 from typing import List
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, UploadFile, File
 from sqlalchemy.orm import Session
 
 from model.QuizSchema import QuizSchema
 from model.Settings import get_db
-from model.UserSchema import UserLite
+from model.UserSchema import UserLite, UserId
 from services.Quiz import createQuiz, selectQuiz, selelctCurrentQuiz, deleteCurrentQuiz, selectUserQuiz
 
 quizRouter = APIRouter(prefix='/quiz', tags=['опросы'])
 
 
+@quizRouter.post('/testEbat')
+def testRoute(file: UploadFile = File(...)):
+    return {"filename": file.filename}
+
+
 @quizRouter.post('/createquiz')
-def addQuiz(quiz: QuizSchema, user: UserLite, db: Session = Depends(get_db)):
-    return createQuiz(quizData=quiz, userData=user, db=db)
+def addQuiz(quiz: QuizSchema, userId: UserId, db: Session = Depends(get_db)):
+    print("huyuhuhyuhuyhyu")
+    print("huyuhuhyuhuyhyu")
+    print("huyuhuhyuhuyhyu")
+    print("huyuhuhyuhuyhyu")
+    print("huyuhuhyuhuyhyu")
+    return createQuiz(quizData=quiz, userData=userId, db=db)
 
 
 @quizRouter.get('/getquiz')

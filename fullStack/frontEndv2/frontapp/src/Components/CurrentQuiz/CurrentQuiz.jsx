@@ -21,8 +21,8 @@ const CurrentQuiz = ({ props }) => {
       className="d-flex flex-column h-100 current-quiz"
     >
       <img className='current-quiz-img' src={CurrentQuizDragon} alt="" />
-      <p className='title-quiz text-break'>{quiz.title}</p>
-      <p className='title-description text-break'>{quiz.description}</p>
+      <p className='title-quiz m-0 text-break'>{quiz.title}</p>
+      <p className='title-description m-0 text-break'>{quiz.description}</p>
       </Link>
     </Tilt>
     

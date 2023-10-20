@@ -15,6 +15,17 @@ export class QuizService {
             .catch(() => ({}))
         return data
     }
+    static createQuiz = (quiz, userId) => {
+        console.log(quiz);
+        console.log(userId);
+        return Api.post('/quiz/createquiz', 
+            {
+                quiz: quiz,
+                userId: {
+                    id: userId
+                }
+            })
+    }
 }
 
 
