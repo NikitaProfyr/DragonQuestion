@@ -28,9 +28,8 @@ def createQuestion(idQuiz: int, questionData: QuestionSchema, db: Session = Depe
         createAnswer(idQuestion=question.id, anwerData=itemAnswer, db=db)
 
 
-def createQuiz(quizData: QuizSchema, userData: UserId, image: UploadFile = File(...), db: Session = Depends(get_db)):
-    patchImg = createImageQuiz(image)
-    quiz = Quiz(title=quizData.title, description=quizData.description, image=patchImg, authorId=userData.id)
+def createQuiz(quizData: QuizSchema, userData: UserId, db: Session = Depends(get_db)):
+    quiz = Quiz(title=quizData.title, description=quizData.description, image=quizData.image, authorId=userData.id)
     db.add(quiz)
     db.commit()
 
@@ -71,4 +70,8 @@ def createImageQuiz(image: UploadFile = File(...)):
     imgPath = "media/quizImage/"
     with open(f"{imgPath}{image.filename}", "wb") as buffer:
         shutil.copyfileobj(image.file, buffer)
+    print(imgPath + image.filename)
+    print(imgPath + image.filename)
+    print(imgPath + image.filename)
+    print(imgPath + image.filename)
     return imgPath + image.filename

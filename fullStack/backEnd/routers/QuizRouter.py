@@ -12,8 +12,8 @@ quizRouter = APIRouter(prefix='/quiz', tags=['опросы'])
 
 
 @quizRouter.post('/createquiz')
-def addQuiz(quiz: QuizSchema, userId: UserId, image: UploadFile = File(...), db: Session = Depends(get_db)):
-    return createQuiz(quizData=quiz, userData=userId, image=image, db=db)
+def addQuiz(quiz: QuizSchema, userId: UserId, db: Session = Depends(get_db)):
+    return createQuiz(quizData=quiz, userData=userId, db=db)
 
 
 @quizRouter.get('/getquiz')

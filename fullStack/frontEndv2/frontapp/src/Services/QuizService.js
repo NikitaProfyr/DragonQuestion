@@ -17,20 +17,22 @@ export class QuizService {
     }
     static createQuiz = (quiz, userId) => {
         console.log(quiz);  
+        console.log(userId);  
         // console.log(userId);
-        console.log(JSON.stringify({quiz: quiz, userId:{id: userId}}));
+        // console.log(JSON.stringify({quiz: quiz, userId:{id: userId}}));
 
         return Api.post('/quiz/createquiz',{
             quiz: quiz,
-            userId:{id: userId}
+            userId:{id: userId},
         },
-        {
-            headers: {
-                'Content-Type': 'multipart/form-data;'
-            }
-        }
         )
     }
+    static createImageQuiz = async (image) => {
+        console.log(image);
+        const { data } = await Api.post('/quiz/download/image', image, {headers:{'Content-type':'multipart/form-data'}})
+        return data
+    }
+
 }
 
 

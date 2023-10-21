@@ -17,7 +17,6 @@ const QuizCreate = () => {
   const dispatch = useDispatch()
   const user = useSelector(state => state.reducerUser.userInfo)
   const quiz = useSelector(state => state.reducerQuiz.createQuiz)
-  const [count, setCount] = useState(0)
 
   const addAnswer = (e, item) => {
     e.preventDefault()
@@ -60,18 +59,20 @@ const QuizCreate = () => {
     const formData = new FormData();
     formData.append('file', e.target.files[0])
     quiz.image = formData.get('file')
-    console.log(formData.get('file'));
-    console.log(quiz.image);
+    // console.log(formData.get('file'));
+    // console.log(quiz.image);
     dispatch(addQuestionAction(quiz))
-    console.log(quiz);
+    // console.log(quiz);
   }
-  const addQuiz = (e) => {
+  const addQuiz = async (e) => {
     e.preventDefault()
     // console.log(quiz)
-    QuizService.createQuiz(quiz, user.id).catch((error) => {
-      alert(error)
-    })
-    
+    quiz.image = await QuizService.createImageQuiz(quiz.image)
+    dispatch(addQuestionAction(quiz))
+    // QuizService.createQuiz(quiz, user.id).catch((error) => {
+    //   alert(error)
+    // })
+    console.log(quiz);
   }
   return (
     <div className="bg-create-quiz">
