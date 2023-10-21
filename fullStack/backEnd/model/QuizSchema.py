@@ -1,6 +1,6 @@
 from typing import List
 
-from fastapi import UploadFile, File
+from fastapi import UploadFile, File, Form
 from pydantic import BaseModel, Field, FilePath
 
 
@@ -21,8 +21,24 @@ class QuizSchema(BaseModel):
     title: str
     description: str
     image: str
-    # image: UploadFile = File(...)
     question: List[QuestionSchema]
+
+
+class AnswerFormDataSchema(BaseModel):
+    title: str = Form(...)
+    right: bool = Form(...)
+
+
+class QuestionFormDataSchema(BaseModel):
+    title: str = Form(...)
+    answer: List[AnswerFormDataSchema]
+
+
+class QuizFormDataSchema(BaseModel):
+    title: str = Form(...)
+    description: str = Form(...)
+    image: UploadFile = File(...)
+    question: List[QuestionFormDataSchema]
 
 
 

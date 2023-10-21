@@ -55,16 +55,19 @@ const QuizCreate = () => {
     dispatch(addQuestionAction(quiz))
   }
   const addImage = (e) => {
+
     console.log(e.target.files[0]);
     const formData = new FormData();
     formData.append('file', e.target.files[0])
     quiz.image = formData.get('file')
     console.log(formData.get('file'));
+    console.log(quiz.image);
     dispatch(addQuestionAction(quiz))
+    // console.log(quiz);
   }
   const addQuiz = (e) => {
     e.preventDefault()
-    console.log(quiz)
+    // console.log(quiz)
     QuizService.createQuiz(quiz, user.id).catch((error) => {
       alert(error)
     })
@@ -77,7 +80,7 @@ const QuizCreate = () => {
           <div className="d-flex col-4 flex-column form-create-quiz">
             <input type="text" onChange={(e) => (quiz.title = e.target.value)} placeholder='Введите название опроса' />
             <input type="text" onChange={(e) => (quiz.description = e.target.value)} placeholder='Введите описание' />
-            <label htmlFor="myfile" className="label">Выберите файлы</label>
+            <label htmlFor="myfile" className="label">Выберите файл</label>
             <input type="file" onChange={addImage} className="my" id="myfile" name="myfile" accept="image/*"></input>
           </div>
           <Carousel className='slederXXXTENTACION' interval={null}>

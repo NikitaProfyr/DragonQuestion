@@ -1,9 +1,9 @@
 from typing import List
 
-from fastapi import APIRouter, Depends, UploadFile, File
+from fastapi import APIRouter, Depends, UploadFile, File, Form
 from sqlalchemy.orm import Session
 
-from model.QuizSchema import QuizSchema
+from model.QuizSchema import QuizSchema, QuizFormDataSchema
 from model.Settings import get_db
 from model.UserSchema import UserLite, UserId
 from services.Quiz import createQuiz, selectQuiz, selelctCurrentQuiz, deleteCurrentQuiz, selectUserQuiz, createImageQuiz
@@ -11,18 +11,8 @@ from services.Quiz import createQuiz, selectQuiz, selelctCurrentQuiz, deleteCurr
 quizRouter = APIRouter(prefix='/quiz', tags=['опросы'])
 
 
-@quizRouter.post('/testEbat')
-def testRoute(file: UploadFile = File(...)):
-    return {"filename": file.filename}
-
-
 @quizRouter.post('/createquiz')
-def addQuiz(quiz: QuizSchema, userId: UserId, db: Session = Depends(get_db)):
-    print("huyuhuhyuhuyhyu")
-    print("huyuhuhyuhuyhyu")
-    print("huyuhuhyuhuyhyu")
-    print("huyuhuhyuhuyhyu")
-    print("huyuhuhyuhuyhyu")
+def addQuiz(quiz: QuizFormDataSchema, userId: int = Form(...), db: Session = Depends(get_db)):
     return createQuiz(quizData=quiz, userData=userId, db=db)
 
 

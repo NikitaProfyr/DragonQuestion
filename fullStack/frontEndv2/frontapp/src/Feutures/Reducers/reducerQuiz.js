@@ -11,7 +11,7 @@ const stateQuiz = {
     createQuiz: {
         title: "",
         description: "",
-        image: "",
+        image:{},
         question: [{
             title:"",
             answer:[{

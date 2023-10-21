@@ -4,22 +4,22 @@ from typing import List
 from sqlalchemy.orm import Session, joinedload
 from starlette import status
 
-from model.QuizSchema import QuestionSchema, QuizSchema, AnswerSchema
+from model.QuizSchema import QuestionSchema, QuizSchema, AnswerSchema, QuizFormDataSchema, QuestionFormDataSchema, AnswerFormDataSchema
 from model.Quiz import Question, Quiz, Answer
 from model.Settings import get_db
 from sqlalchemy import select, delete
-from fastapi import HTTPException, Depends, UploadFile, File
+from fastapi import HTTPException, Depends, UploadFile, File, Form
 
 from model.UserSchema import UserLite
 
 
-def createAnswer(idQuestion: int, anwerData: AnswerSchema, db: Session = Depends(get_db)):
+def createAnswer(idQuestion: int, anwerData: AnswerFormDataSchema, db: Session = Depends(get_db)):
     anwer = Answer(title=anwerData.title, right=anwerData.right, questionId=idQuestion)
     db.add(anwer)
     db.commit()
 
 
-def createQuestion(idQuiz: int, questionData: QuestionSchema, db: Session = Depends(get_db)):
+def createQuestion(idQuiz: int, questionData: QuestionFormDataSchema, db: Session = Depends(get_db)):
     question = Question(title=questionData.title, quizId=idQuiz)
     db.add(question)
     db.commit()
@@ -28,8 +28,8 @@ def createQuestion(idQuiz: int, questionData: QuestionSchema, db: Session = Depe
         createAnswer(idQuestion=question.id, anwerData=itemAnswer, db=db)
 
 
-def createQuiz(quizData: QuizSchema, userData: UserLite, db: Session = Depends(get_db)):
-    quiz = Quiz(title=quizData.title, description=quizData.description, image=quizData.image, authorId=userData.id)
+def createQuiz(quizData: QuizFormDataSchema, userData: int = Form(...), db: Session = Depends(get_db)):
+    quiz = Quiz(title=quizData.title, description=quizData.description, image=createImageQuiz(quizData.image), authorId=userData.id)
     db.add(quiz)
     db.commit()
 
@@ -59,14 +59,15 @@ def selelctCurrentQuiz(idQuiz: int, db: Session = Depends(get_db)):
 
 
 def selectUserQuiz(idUser: int, db: Session = Depends(get_db)):
-    quiz = db.query(Quiz).options(joinedload(Quiz.question).joinedload(Question.answer))\
+    quiz = db.query(Quiz).options(joinedload(Quiz.question).joinedload(Question.answer)) \
         .where(Quiz.authorId == idUser).all()
-    print(quiz)
     if not quiz:
         return None
     return quiz
 
 
 def createImageQuiz(image: UploadFile = File(...)):
-    imgPath = "C:/Users/AxemaN/Desktop/DQ/fullStack/backEnd/media/quizImage/"
-    shutil.copy(image.filename, imgPath)
+    imgPath = "media/quizImage/"
+    with open(f"{imgPath}{image.filename}", "wb") as buffer:
+        shutil.copyfileobj(image.file, buffer)
+    return imgPath + image.filename
