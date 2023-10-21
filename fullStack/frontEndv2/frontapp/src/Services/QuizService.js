@@ -18,19 +18,17 @@ export class QuizService {
     static createQuiz = (quiz, userId) => {
         console.log(quiz);  
         // console.log(userId);
-        // console.log();
-        return Api.post('/quiz/createquiz',
-            {
-                quiz: quiz,
-                userId: {
-                    id: userId
-                }
-            },
-            {
-                headers: {
-                    'Content-Type': 'multipart/form-data;'
-                }
+        console.log(JSON.stringify({quiz: quiz, userId:{id: userId}}));
+
+        return Api.post('/quiz/createquiz',{
+            quiz: quiz,
+            userId:{id: userId}
+        },
+        {
+            headers: {
+                'Content-Type': 'multipart/form-data;'
             }
+        }
         )
     }
 }

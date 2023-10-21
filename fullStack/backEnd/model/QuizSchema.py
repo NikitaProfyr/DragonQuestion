@@ -24,28 +24,3 @@ class QuizSchema(BaseModel):
     question: List[QuestionSchema]
 
 
-class AnswerFormDataSchema(BaseModel):
-    title: str = Form(...)
-    right: bool = Form(...)
-
-
-class QuestionFormDataSchema(BaseModel):
-    title: str = Form(...)
-    answer: List[AnswerFormDataSchema]
-
-
-class QuizFormDataSchema(BaseModel):
-    title: str = Form(...)
-    description: str = Form(...)
-    image: UploadFile = File(...)
-    question: List[QuestionFormDataSchema]
-
-
-
-
-
-
-
-
-
-

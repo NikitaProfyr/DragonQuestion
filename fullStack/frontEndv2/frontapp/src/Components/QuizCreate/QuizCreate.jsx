@@ -63,7 +63,7 @@ const QuizCreate = () => {
     console.log(formData.get('file'));
     console.log(quiz.image);
     dispatch(addQuestionAction(quiz))
-    // console.log(quiz);
+    console.log(quiz);
   }
   const addQuiz = (e) => {
     e.preventDefault()

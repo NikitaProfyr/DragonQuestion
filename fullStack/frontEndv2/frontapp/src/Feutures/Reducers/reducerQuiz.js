@@ -9,9 +9,10 @@ const stateQuiz = {
     quiz: [],
     quizUser: [],
     createQuiz: {
+        id:"1",
         title: "",
         description: "",
-        image:{},
+        image:'testtest.jpg',
         question: [{
             title:"",
             answer:[{
