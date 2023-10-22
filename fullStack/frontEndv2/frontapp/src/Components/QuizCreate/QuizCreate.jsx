@@ -57,8 +57,9 @@ const QuizCreate = () => {
 
     console.log(e.target.files[0]);
     const formData = new FormData();
-    formData.append('file', e.target.files[0])
-    quiz.image = formData.get('file')
+    formData.append('image', e.target.files[0])
+    // quiz.image = formData.get('file')
+    quiz.image = formData
     // console.log(formData.get('file'));
     // console.log(quiz.image);
     dispatch(addQuestionAction(quiz))
@@ -69,9 +70,9 @@ const QuizCreate = () => {
     // console.log(quiz)
     quiz.image = await QuizService.createImageQuiz(quiz.image)
     dispatch(addQuestionAction(quiz))
-    // QuizService.createQuiz(quiz, user.id).catch((error) => {
-    //   alert(error)
-    // })
+    QuizService.createQuiz(quiz, user.id).catch((error) => {
+      alert(error)
+    })
     console.log(quiz);
   }
   return (

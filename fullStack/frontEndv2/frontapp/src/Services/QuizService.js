@@ -29,8 +29,11 @@ export class QuizService {
     }
     static createImageQuiz = async (image) => {
         console.log(image);
-        const { data } = await Api.post('/quiz/download/image', image, {headers:{'Content-type':'multipart/form-data'}})
-        return data
+        const  data  = await Api.post('/quiz/download/image', image, {headers:{'Content-type':'multipart/form-data'}})
+        .catch(
+            (error) => {console.log(error);}
+        )
+        return data.data
     }
 
 }
