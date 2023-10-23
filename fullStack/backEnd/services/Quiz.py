@@ -70,8 +70,5 @@ def createImageQuiz(image: UploadFile = File(...)):
     imgPath = "media/quizImage/"
     with open(f"{imgPath}{image.filename}", "wb") as buffer:
         shutil.copyfileobj(image.file, buffer)
-    print(imgPath + image.filename)
-    print(imgPath + image.filename)
-    print(imgPath + image.filename)
-    print(imgPath + image.filename)
-    return imgPath + image.filename
+    return image.filename
+

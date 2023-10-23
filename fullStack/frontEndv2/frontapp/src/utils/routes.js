@@ -11,4 +11,5 @@ export const ROUTES = {
     QUIZ_CREATE: "/quiz-create"
 } 
 
+export const MEDIA_URL = '../'
 // QUIZ_USER_DETAIL: "/quiz-user-detail" + "/:id",

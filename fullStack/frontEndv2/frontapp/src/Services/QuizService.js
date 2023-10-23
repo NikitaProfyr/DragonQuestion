@@ -1,4 +1,3 @@
-import { Alert } from "bootstrap";
 import Api from "../Http";
 
 export class QuizService {
@@ -35,7 +34,12 @@ export class QuizService {
         )
         return data.data
     }
-
+    static getImage = async (imgUrl) => {
+        console.log(`/quiz/image/${imgUrl}`);
+        return await Api.get(`/quiz/image/${imgUrl}`).catch(() => {
+            return '../../image/currentQuizDragon.png'
+        })
+    } 
 }
 
 
