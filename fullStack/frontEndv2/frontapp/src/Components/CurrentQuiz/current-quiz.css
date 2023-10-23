@@ -12,7 +12,6 @@
     text-decoration: none;
     border-radius: 10px;
     overflow: hidden;
-    height: 400px;
     z-index: 1;
 
 }
@@ -50,4 +49,5 @@
     padding: 0;
     align-self: center;
     opacity: 0.9;
+    height: 200px;
 }

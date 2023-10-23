@@ -9,7 +9,7 @@ const HomePage = () => {
     return(
         <>
             <div className="bg-content-block-1">
-                <div className="wrapper">
+                <div className="container">
                     <div className="content-block-1">
                         <div className="text-content-block-1">
                             <p>Присоединяйтесь к нам сегодня и сделайте свой голос услышаным!<br /><Link to={ROUTES.LOGIN}>Зарегистрируйтесь</Link> на нашем сайте, чтобы начать создавать и участвовать в опросах уже сейчас.</p>
@@ -25,7 +25,7 @@ const HomePage = () => {
                 </div>
             </div>  
             <div className="bg-content-block-2">
-                <div className="wrapper">
+                <div className="container">
                     <div className="content-block-2">
                         <div className="content-top-2">
                             <div className="content-top-group">Dragon Question<p>Лучшая платформа для проведения опросов</p></div>

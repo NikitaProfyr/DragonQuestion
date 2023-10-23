@@ -1,11 +1,11 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { ROUTES } from '../../utils/routes'
-import LogoImg from '../../image/logo.png'
+import LogoImg from '../../image/IBDnew.svg'
 
 const HeaderBase = () => {
   return (
-      <div className="wrapper">
+      <div className="container">
           <div className="Header">
           
               <div className="logo">

@@ -28,7 +28,7 @@ const QuizList = () => {
       <div className="container">
         <div className='row py-4'>
           {quiz.map((item) => (
-            <div className='col-md-4 col-sm-6 col-lg-3 mb-4'>
+            <div className='col-md-4 col-sm-6 col-lg-4 col-xl-3 mb-4'>
               <CurrentQuiz key={item.id} props={item} />
             </div>)
           )}

@@ -40,7 +40,7 @@ const QuizDetail = () => {
           </div>
           <div className="right-content">
             <div className="img-block">
-              <img src={drakon} alt="" />
+              <img src={"http://127.0.0.1:8000/quiz/image/?urlImage=" + quiz.image} height="200px" alt="" />
               <Button className='d-block w-100 quizButton'>Пройти тест</Button>
             </div>
           </div>

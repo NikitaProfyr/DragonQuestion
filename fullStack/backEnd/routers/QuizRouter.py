@@ -47,8 +47,6 @@ def removeCurrentQuiz(idQuiz: int, db: Session = Depends(get_db)):
     return deleteCurrentQuiz(idQuiz=idQuiz, db=db)
 
 
-@quizRouter.get('/image/{urlImage}', response_class=FileResponse)
+@quizRouter.get('/image/', response_class=FileResponse)
 def getQuizImage(urlImage: str):
-    imgPath = "media/quizImage/" + urlImage
-    print(imgPath)
-    return "media/quizImage/" + urlImage
+    return urlImage

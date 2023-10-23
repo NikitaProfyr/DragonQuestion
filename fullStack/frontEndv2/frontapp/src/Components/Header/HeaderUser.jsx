@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, Navigate } from "react-router-dom";
 import { logoutAction } from '../../Feutures/Actions/actionUser';
 
-import LogoImg from '../../image/logo.png'
+import LogoImg from '../../image/IBDnew.svg'
 import { ROUTES } from '../../utils/routes';
 import './header-user.css'
 
