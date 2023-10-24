@@ -26,6 +26,16 @@ export class QuizService {
         },
         )
     }
+    static delQuiz = async (quiz, idUser) => {
+        // console.log({
+        //     quizData: quiz,
+        //     idUser: {
+        //         id: idUser
+        //     }
+        // })
+        return await Api.delete("/quiz/deletequiz/" + `?quizData=${quiz}&idUser=${idUser}`
+        )
+    }
     static createImageQuiz = async (image) => {
         console.log(image);
         const  data  = await Api.post('/quiz/download/image', image, {headers:{'Content-type':'multipart/form-data'}})

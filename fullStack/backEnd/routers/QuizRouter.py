@@ -41,10 +41,10 @@ def downloadImage(image: UploadFile = File(...)):
     return createImageQuiz(image=image)
 
 
-@quizRouter.delete('/deletequiz/{idQuiz}')
-def removeCurrentQuiz(idQuiz: int, db: Session = Depends(get_db)):
+@quizRouter.delete('/deletequiz/')
+def removeCurrentQuiz(quizData: int, idUser: int, db: Session = Depends(get_db)):
     """Удалить конкретный опрос"""
-    return deleteCurrentQuiz(idQuiz=idQuiz, db=db)
+    return deleteCurrentQuiz(quizData=quizData, idUser=idUser, db=db)
 
 
 @quizRouter.get('/image/', response_class=FileResponse)

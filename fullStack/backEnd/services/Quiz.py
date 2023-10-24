@@ -1,5 +1,6 @@
 import shutil
 from typing import List
+import os
 
 from sqlalchemy.orm import Session, joinedload
 from starlette import status
@@ -9,7 +10,7 @@ from model.Quiz import Question, Quiz, Answer
 from model.Settings import get_db
 from sqlalchemy import select, delete
 from fastapi import HTTPException, Depends, UploadFile, File, Form
-
+from starlette.status import HTTP_400_BAD_REQUEST
 from model.UserSchema import UserLite, UserId
 
 
@@ -37,8 +38,14 @@ def createQuiz(quizData: QuizSchema, userData: UserId, db: Session = Depends(get
         createQuestion(idQuiz=quiz.id, questionData=itemQuistion, db=db)
 
 
-def deleteCurrentQuiz(idQuiz: int, db: Session = Depends(get_db)):
-    quiz = delete(Quiz).where(Quiz.id == idQuiz)
+def deleteCurrentQuiz(quizData: int, idUser: int, db: Session = Depends(get_db)):
+
+    quizCheck = db.scalar(select(Quiz).where(Quiz.id == quizData, Quiz.authorId == idUser))
+    if not quizCheck:
+        return HTTP_400_BAD_REQUEST
+    quiz = delete(Quiz).where(Quiz.id == quizData, Quiz.authorId == idUser)
+
+    os.remove(quizCheck.image)
     db.execute(quiz)
     db.commit()
 

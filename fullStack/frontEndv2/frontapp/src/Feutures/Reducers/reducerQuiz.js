@@ -21,7 +21,16 @@ const stateQuiz = {
             }]
         }]
     },
-    currentQuiz: {},
+    currentQuiz: {
+        id:"1",
+        title: "",
+        description: "",
+        image:'testtest.jpg',
+        question: [{
+            title:"",
+            answer:[]
+        }]
+    },
 }
 
 
