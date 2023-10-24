@@ -28,6 +28,7 @@
     text-decoration: none;
     opacity: 0.9;
     text-align: center;
+    word-break: break-all;
 }
 .title-description {
     display: flex;
