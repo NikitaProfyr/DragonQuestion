@@ -38,6 +38,7 @@ const QuizUser = () => {
               <ListGroup.Item action href={ROUTES.QUIZ_CREATE}>Создать опрос</ListGroup.Item>
             </ListGroup>
           </div>
+          
           <div className="col-lg-9 col-12">
             <div className="row">
               {quiz === null ?

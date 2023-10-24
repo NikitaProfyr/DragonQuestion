@@ -7,9 +7,7 @@ export const ROUTES = {
     QUIZ_CURRENT: '/quiz',
     QUIZ_DETAIL: "/quiz" + "/:id",
     QUIZ_USER: "/quiz-uzer",
-    QUIZ_USER_DETAIL: "/quiz-user/quiz" + "/:id",
+    QUIZ_USER_DETAIL: "/quiz-user" ,
     QUIZ_CREATE: "/quiz-create"
 } 
 
-export const MEDIA_URL = '../'
-// QUIZ_USER_DETAIL: "/quiz-user-detail" + "/:id",

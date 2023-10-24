@@ -6,18 +6,22 @@ import Carousel from 'react-bootstrap/Carousel';
 import galka from '../../image/icon300pn.png'
 import cross from '../../image/cross13.png'
 
-import './quiz-create.css'
+import './quiz-cud.css'
 
 import { addQuestionAction } from '../../Feutures/Actions/actionQuiz';
 import { useEffect } from 'react';
-import { QuizService, validationQuiz } from '../../Services/QuizService';
+import { QuizService } from '../../Services/QuizService';
  
 
 const QuizCreate = () => {
   const dispatch = useDispatch()
   const user = useSelector(state => state.reducerUser.userInfo)
   const quiz = useSelector(state => state.reducerQuiz.createQuiz)
+  const [index, setIndex] = useState(quiz.question.length - 1)
 
+  const handleSubmit = (selectedIndex) => {
+    setIndex(selectedIndex)
+  }
   const addAnswer = (e, item) => {
     e.preventDefault()
     item.answer.push({
@@ -36,6 +40,7 @@ const QuizCreate = () => {
     e.preventDefault()
     const index = item.answer.indexOf(ansItem)
     delete item.answer[index]
+    item.answer = item.answer.filter(element => element !== null)
     dispatch(addQuestionAction(quiz))
   }
   const addQuestion = (e) => {
@@ -45,13 +50,20 @@ const QuizCreate = () => {
       answer: []
     }
     )
+    setIndex(quiz.question.length - 1)
     dispatch(addQuestionAction(quiz))
   }
   const removeQuestion = (e, item) => {
     e.preventDefault()
+    if(quiz.question.length < 2){
+      return alert("опрос должен содержать минимум 1 опрос")
+    }
     const index = quiz.question.indexOf(item)
     delete quiz.question[index]
+    quiz.question = quiz.question.filter(item => item !== null)
+    setIndex(quiz.question.length - 1)
     dispatch(addQuestionAction(quiz))
+    
   }
   const addImage = (e) => {
 
@@ -67,13 +79,13 @@ const QuizCreate = () => {
   }
   const addQuiz = async (e) => {
     e.preventDefault()
-    // console.log(quiz)
+
+    console.log(quiz)
     quiz.image = await QuizService.createImageQuiz(quiz.image)
     dispatch(addQuestionAction(quiz))
     QuizService.createQuiz(quiz, user.id).catch((error) => {
       alert(error)
     })
-    console.log(quiz);
   }
   return (
     <div className="bg-create-quiz">
@@ -85,7 +97,8 @@ const QuizCreate = () => {
             <label htmlFor="myfile" className="label">Выберите файл</label>
             <input type="file" onChange={addImage} className="my" id="myfile" name="myfile" accept="image/*"></input>
           </div>
-          <Carousel className='slederXXXTENTACION' interval={null}>
+          
+          <Carousel className='slederXXXTENTACION' activeIndex={index} onSelect={ handleSubmit } interval={null}>
             {quiz.question.map((item) => (
               <Carousel.Item className=''>
                 <div className="d-flex justify-content-center align-items-center content-in-slide">
@@ -112,7 +125,6 @@ const QuizCreate = () => {
                             <img onClick={(e) => (removeAnswer(e, item, ansItem))} src={cross} height="30px" alt="" />
                           </div>
                         </div>
-
                     ))}
                   </div>
                 </div>

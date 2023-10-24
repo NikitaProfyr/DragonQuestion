@@ -1,13 +1,14 @@
 import React from 'react'
 import Footer from '../Components/Footer/Footer'
 import Header from '../Components/Header/Header'
-import QuizUserDetail from '../Components/QuizUserDetail/QuizUserDetail'
+import QuizUpdate from '../Components/QuizCUD/QuizUpdate'
+ 
 
 const QuizUserDetailPage = () => {
   return (
     <>
     <Header/>
-    <QuizUserDetail/>
+    <QuizUpdate/>
     <Footer/>
     </>
   )
