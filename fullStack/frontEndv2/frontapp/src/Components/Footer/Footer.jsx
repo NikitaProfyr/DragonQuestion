@@ -13,8 +13,8 @@ const Footer = () => {
                     <p>Почта:<span> IBD@gmail.com</span></p>
                     <p>Адрес:<span> г.Лос-Анджелес</span></p>
                 </div>
-                <div className="footer-right d-flex flex-column align-items-center justify-content-center">
-                    <img src={logo} alt="IBD" width="300px" />
+                <div className="footer-right d-flex flex-column align-items-end justify-content-center">
+                    <img src={logo} alt="IBD" width="50%" />
 
 
                 </div>

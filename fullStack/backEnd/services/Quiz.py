@@ -79,3 +79,6 @@ def createImageQuiz(image: UploadFile = File(...)):
         shutil.copyfileobj(image.file, buffer)
     return imgPath + image.filename
 
+
+def updataCurrentQuiz(quizData: QuizSchema, db: Session = Depends(get_db)):
+    pass
