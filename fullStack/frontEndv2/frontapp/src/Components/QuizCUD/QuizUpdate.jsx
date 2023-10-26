@@ -2,7 +2,7 @@ import React from 'react'
 import { useEffect } from 'react'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Navigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { getCurrentQuiz } from '../../Feutures/Actions/actionQuiz'
 import CarouselForm from './CarouselForm'
 import { Spinner } from 'react-bootstrap'
@@ -19,6 +19,7 @@ const QuizUpdate = () => {
     const quiz = useSelector(state => state.reducerQuiz.currentQuiz)
     const param = useParams()
     const dispatch = useDispatch()
+    const navigate = useNavigate()
     const user = useSelector(state => state.reducerUser.userInfo)
     const [index, setIndex] = useState(quiz.question.length - 1)
 
@@ -29,7 +30,6 @@ const QuizUpdate = () => {
 
     useEffect(() => {
         setIsLoading(false)
-        console.log(quiz)
     }, [quiz])
 
     const handleSubmit = (selectedIndex) => {
@@ -88,10 +88,10 @@ const QuizUpdate = () => {
         dispatch(addQuestionAction(quiz))
         // console.log(quiz);
     }
-    const removeQuiz = (e) => {
+    const removeQuiz = async (e) => {
         e.preventDefault()
-        QuizService.delQuiz(quiz.id, user.id)
-        return <Navigate to={ROUTES.QUIZ_LIST}/>
+        await QuizService.delQuiz(quiz.id, user.id)
+        return navigate(ROUTES.QUIZ_USER)   
     }
     const addQuiz = async (e) => {
         e.preventDefault()

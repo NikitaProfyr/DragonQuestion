@@ -5,18 +5,21 @@ import Carousel from 'react-bootstrap/Carousel';
 
 import galka from '../../image/icon300pn.png'
 import cross from '../../image/cross13.png'
+import { ROUTES } from '../../utils/routes'
 
 import './quiz-cud.css'
 
 import { addQuestionAction } from '../../Feutures/Actions/actionQuiz';
 import { useEffect } from 'react';
 import { QuizService } from '../../Services/QuizService';
+import { useNavigate } from 'react-router-dom';
  
 
 const QuizCreate = () => {
   const dispatch = useDispatch()
   const user = useSelector(state => state.reducerUser.userInfo)
   const quiz = useSelector(state => state.reducerQuiz.createQuiz)
+  const navigate = useNavigate()
   const [index, setIndex] = useState(quiz.question.length - 1)
 
   const handleSubmit = (selectedIndex) => {
@@ -85,7 +88,8 @@ const QuizCreate = () => {
     dispatch(addQuestionAction(quiz))
     QuizService.createQuiz(quiz, user.id).catch((error) => {
       alert(error)
-    })
+    });
+    return navigate(ROUTES.QUIZ_USER) 
   }
   return (
     <div className="bg-create-quiz">

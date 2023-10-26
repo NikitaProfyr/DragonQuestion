@@ -44,8 +44,8 @@ def deleteCurrentQuiz(quizData: int, idUser: int, db: Session = Depends(get_db))
     if not quizCheck:
         return HTTP_400_BAD_REQUEST
     quiz = delete(Quiz).where(Quiz.id == quizData, Quiz.authorId == idUser)
-
-    os.remove(quizCheck.image)
+    if os.path.isfile(quizCheck.image):
+        os.remove(quizCheck.image)
     db.execute(quiz)
     db.commit()
 
