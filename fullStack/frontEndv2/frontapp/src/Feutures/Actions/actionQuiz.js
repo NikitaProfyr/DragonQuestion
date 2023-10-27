@@ -1,5 +1,5 @@
 import { QuizService } from "../../Services/QuizService"
-import { GET_CURRENT_QUIZ, GET_QUIZ, GET_QUIZ_USER, CREATE_QUIZ } from "../Reducers/reducerQuiz"
+import { GET_CURRENT_QUIZ, GET_QUIZ, GET_QUIZ_USER, CREATE_QUIZ, UPDATE_CURRENT_QUIZ } from "../Reducers/reducerQuiz"
 
  
 
@@ -22,6 +22,13 @@ export const getUserQuiz = async (idUser, dispatch) => {
 export const addQuestionAction = (payload) => {
     return {
         type: CREATE_QUIZ,
+        payload: payload
+    }
+}
+
+export const updateQuestionAction = (payload) => {
+    return {
+        type: UPDATE_CURRENT_QUIZ,
         payload: payload
     }
 } 

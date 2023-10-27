@@ -44,26 +44,7 @@ export class QuizService {
             return '../../image/currentQuizDragon.png'
         })
     } 
-}
-
-
-export const validationQuiz = (quiz) => {
-    let cheack = true
-
-    // if(quiz.title === "" || quiz.description === "") {
-    //     cheack = false
-    // }
-    // quiz.question.map((item) => {
-    //     if(item.title === "" ) {
-    //         console.log(Object.size(item.answer))
-    //         cheack = false
-    //     };
-    //     item.answer.map((itemAnswer) => {
-    //         if(itemAnswer.title === ""){
-    //             cheack = false
-    //         };
-    //     })
-    // })
-    return cheack
-
+    static updateQuiz = async (quiz) => {
+        return await Api.put('/quiz/updatequiz/', quiz)
+    }
 }

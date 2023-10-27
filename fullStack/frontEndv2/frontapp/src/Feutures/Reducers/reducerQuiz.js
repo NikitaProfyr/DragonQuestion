@@ -4,6 +4,7 @@ export const GET_QUIZ = 'GET_QUIZ'
 export const GET_CURRENT_QUIZ = 'GET_QURRENT_QUIZ'
 export const GET_QUIZ_USER = 'GET_QUIZ_USER'
 export const CREATE_QUIZ = 'CREATE_QUIZ'
+export const UPDATE_CURRENT_QUIZ = 'UPDATE_CURRENT_QUIZ'
 
 const stateQuiz = {
     quiz: [],
@@ -14,9 +15,11 @@ const stateQuiz = {
         description: "",
         image:'testtest.jpg',
         question: [{
-            title:"",
+            id: "1",
+            title: "",
             answer:[{
-                title:"",
+                id: "1",
+                title: "",
                 right: false
             }]
         }]
@@ -38,6 +41,8 @@ export const reducerQuiz = (state = stateQuiz, action) => {
     const {type, payload} = action
 
     switch(type){
+        case UPDATE_CURRENT_QUIZ:
+            return {...state, currentQuiz:{...payload}}
         case CREATE_QUIZ:
             return {...state, createQuiz: {...payload}}
         case GET_QUIZ_USER:

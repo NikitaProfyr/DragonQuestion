@@ -5,13 +5,13 @@ from pydantic import BaseModel, Field, FilePath
 
 
 class AnswerSchema(BaseModel):
-    # id: int
+    id: int
     title: str
     right: bool
 
 
 class QuestionSchema(BaseModel):
-    # id: int
+    id: int
     title: str
     answer: List[AnswerSchema]
 

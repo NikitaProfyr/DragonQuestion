@@ -28,6 +28,7 @@ const QuizCreate = () => {
   const addAnswer = (e, item) => {
     e.preventDefault()
     item.answer.push({
+      id: "1",
       title: "",
       right: false
     })
@@ -49,6 +50,7 @@ const QuizCreate = () => {
   const addQuestion = (e) => {
     e.preventDefault()
     quiz.question.push({
+      id: "1",
       title: "",
       answer: []
     }

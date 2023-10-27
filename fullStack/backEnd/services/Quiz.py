@@ -8,9 +8,9 @@ from starlette import status
 from model.QuizSchema import QuestionSchema, QuizSchema, AnswerSchema
 from model.Quiz import Question, Quiz, Answer
 from model.Settings import get_db
-from sqlalchemy import select, delete
+from sqlalchemy import select, delete, update, values
 from fastapi import HTTPException, Depends, UploadFile, File, Form
-from starlette.status import HTTP_400_BAD_REQUEST
+from starlette.status import HTTP_400_BAD_REQUEST, HTTP_200_OK
 from model.UserSchema import UserLite, UserId
 
 
@@ -44,9 +44,22 @@ def deleteCurrentQuiz(quizData: int, idUser: int, db: Session = Depends(get_db))
     if not quizCheck:
         return HTTP_400_BAD_REQUEST
     quiz = delete(Quiz).where(Quiz.id == quizData, Quiz.authorId == idUser)
-    if os.path.isfile(quizCheck.image):
-        os.remove(quizCheck.image)
+    deleteImage(quizCheck.image)
+    # if os.path.isfile(quizCheck.image):
+    #     os.remove(quizCheck.image)
     db.execute(quiz)
+    db.commit()
+
+
+def deleteQuestion(questioId: int, db: Session = Depends(get_db)):
+    query = delete(Question).where(Question.id == questioId)
+    db.execute(query)
+    db.commit()
+
+
+def deleteQuestionCurrentQuiz(quizId, db: Session = Depends(get_db)):
+    query = delete(Question).where(Question.quizId == quizId)
+    db.execute(query)
     db.commit()
 
 
@@ -73,6 +86,11 @@ def selectUserQuiz(idUser: int, db: Session = Depends(get_db)):
     return quiz
 
 
+def deleteImage(imageUrl: str):
+    if os.path.isfile(imageUrl):
+        os.remove(imageUrl)
+
+
 def createImageQuiz(image: UploadFile = File(...)):
     imgPath = "media/quizImage/"
     with open(f"{imgPath}{image.filename}", "wb") as buffer:
@@ -80,5 +98,23 @@ def createImageQuiz(image: UploadFile = File(...)):
     return imgPath + image.filename
 
 
-def updataCurrentQuiz(quizData: QuizSchema, db: Session = Depends(get_db)):
-    pass
+def updateImage(quizData: int, db: Session = Depends(get_db)):
+    quiz = db.scalar(select(Quiz).where(Quiz.id == quizData.id))
+    if quiz.image == quizData.image:
+        return HTTP_200_OK
+    else:
+        deleteImage(quiz.image)
+
+
+
+def updateCurrentQuiz(quizData: QuizSchema, db: Session = Depends(get_db)):
+    query = (
+        update(Quiz)
+        .where(Quiz.id == quizData.id)
+        .values(title=quizData.title, description=quizData.description)
+    )
+    deleteQuestionCurrentQuiz(quizId=quizData.id, db=db)
+    for item in quizData.question:
+        createQuestion(idQuiz=quizData.id, questionData=item, db=db)
+    db.execute(query)
+    db.commit()
