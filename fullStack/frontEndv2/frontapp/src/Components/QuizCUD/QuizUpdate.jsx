@@ -22,6 +22,7 @@ const QuizUpdate = () => {
     const navigate = useNavigate()
     const user = useSelector(state => state.reducerUser.userInfo)
     const [index, setIndex] = useState(quiz.question.length - 1)
+    const [upgradeImg, setUpgradeImg] = useState(false)
     
     
     useEffect(() => {
@@ -79,11 +80,12 @@ const QuizUpdate = () => {
         dispatch(updateQuestionAction(quiz))
 
     }
-    const addImage = (e) => {
+    const addImage = async (e) => {
         const formData = new FormData();
         formData.append('image', e.target.files[0])
         // quiz.image = formData.get('file')
         quiz.image = formData
+        setUpgradeImg(true)
         // console.log(formData.get('file'));
         // console.log(quiz.image);
         dispatch(updateQuestionAction(quiz))
@@ -94,12 +96,16 @@ const QuizUpdate = () => {
         await QuizService.delQuiz(quiz.id, user.id)
         return navigate(ROUTES.QUIZ_USER)   
     }
-    const addQuiz = async (e) => {
+    const updateQuiz = async (e) => {
         e.preventDefault()
-        
         console.log(quiz)
-        dispatch(updateQuestionAction(quiz))
-        await QuizService.updateQuiz(quiz).catch((error) => {
+        
+        if(upgradeImg === true){
+            quiz.image = await QuizService.updateImage(quiz.id ,quiz.image)
+            dispatch(updateQuestionAction(quiz))
+        }
+        
+        await QuizService.updateCurrentQuiz(quiz).catch((error) => {
             alert(error)
         })
         return navigate(ROUTES.QUIZ_USER)
@@ -109,7 +115,7 @@ const QuizUpdate = () => {
         <div className="bg-create-quiz">
             <div className="container">
                 {isLoading === true ? <><Spinner></Spinner></> :
-                    <form onSubmit={(e) => (addQuiz(e))} className='row col-12 py-5 create-quiz-content'>
+                    <form onSubmit={(e) => (updateQuiz(e))} className='row col-12 py-5 create-quiz-content'>
                         <div className="d-flex col-4 flex-column form-create-quiz">
                             <input type="text" defaultValue={quiz.title} onChange={(e) => (quiz.title = e.target.value)} placeholder='Введите название опроса' />
                             <input type="text" defaultValue={quiz.description} onChange={(e) => (quiz.description = e.target.value)} placeholder='Введите описание' />
@@ -153,7 +159,7 @@ const QuizUpdate = () => {
                         <div className="buttons-group col-4">
                             <button onClick={addQuestion}>Добавить вопрос</button>
                             <button onClick={removeQuiz} >Удалить опрос</button>
-                            <button>Сохранить изменения</button>
+                            <button type='submit'>Сохранить изменения</button>
                         </div>
 
                     </form>

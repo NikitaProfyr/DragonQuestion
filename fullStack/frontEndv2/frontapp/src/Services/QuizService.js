@@ -44,7 +44,19 @@ export class QuizService {
             return '../../image/currentQuizDragon.png'
         })
     } 
-    static updateQuiz = async (quiz) => {
+    static updateCurrentQuiz = async (quiz) => {
+        console.log(quiz);
         return await Api.put('/quiz/updatequiz/', quiz)
     }
+    static updateImage = async(id, image) => {
+        console.log(id, image);
+        const data = await Api.put('/update/image', id, image)
+        .catch(
+            (error) => {console.log(error);}
+        )
+        return data.data
+    }
+
+
 }
+    

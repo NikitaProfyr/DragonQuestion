@@ -79,8 +79,7 @@ def selelctCurrentQuiz(idQuiz: int, db: Session = Depends(get_db)):
 
 
 def selectUserQuiz(idUser: int, db: Session = Depends(get_db)):
-    quiz = db.query(Quiz).options(joinedload(Quiz.question).joinedload(Question.answer)) \
-        .where(Quiz.authorId == idUser).all()
+    quiz = db.query(Quiz).options(joinedload(Quiz.question).joinedload(Question.answer)).where(Quiz.authorId == idUser).all()
     if not quiz:
         return None
     return quiz
@@ -98,23 +97,20 @@ def createImageQuiz(image: UploadFile = File(...)):
     return imgPath + image.filename
 
 
-def updateImage(quizData: int, db: Session = Depends(get_db)):
-    quiz = db.scalar(select(Quiz).where(Quiz.id == quizData.id))
-    if quiz.image == quizData.image:
-        return HTTP_200_OK
-    else:
-        deleteImage(quiz.image)
-
-
+def updateImageQuiz(quizId: int, image: UploadFile = File(...), db: Session = Depends(get_db)):
+    quiz = db.scalar((select(Quiz).where(Quiz.id == quizId)))
+    deleteImage(imageUrl=quiz.image)
+    return createImageQuiz(image=image)
 
 def updateCurrentQuiz(quizData: QuizSchema, db: Session = Depends(get_db)):
+    print("-----------------------------------------")
     query = (
         update(Quiz)
         .where(Quiz.id == quizData.id)
         .values(title=quizData.title, description=quizData.description)
     )
-    deleteQuestionCurrentQuiz(quizId=quizData.id, db=db)
-    for item in quizData.question:
-        createQuestion(idQuiz=quizData.id, questionData=item, db=db)
+    # deleteQuestionCurrentQuiz(quizId=quizData.id, db=db)
+    # for item in quizData.question:
+    #     createQuestion(idQuiz=quizData.id, questionData=item, db=db)
     db.execute(query)
     db.commit()

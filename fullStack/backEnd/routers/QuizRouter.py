@@ -8,7 +8,7 @@ from model.QuizSchema import QuizSchema
 from model.Settings import get_db
 from model.UserSchema import UserLite, UserId
 from services.Quiz import createQuiz, selectQuiz, selelctCurrentQuiz, deleteCurrentQuiz, selectUserQuiz, \
-    createImageQuiz, updateCurrentQuiz
+    createImageQuiz, updateCurrentQuiz, updateImageQuiz
 
 quizRouter = APIRouter(prefix='/quiz', tags=['опросы'])
 
@@ -51,10 +51,15 @@ def updateQuiz(quizData: QuizSchema, db: Session = Depends(get_db)):
     return updateCurrentQuiz(quizData=quizData, db=db)
 
 
+@quizRouter.put('/update/image')
+def updateImage(quizId: int, image: UploadFile = File(...), db: Session = Depends(get_db)):
+    return updateImageQuiz(quizId=quizId, image=image, db=db)
+
 @quizRouter.delete('/deletequiz/')
 def removeCurrentQuiz(quizData: int, idUser: int, db: Session = Depends(get_db)):
     """Удалить конкретный опрос"""
     return deleteCurrentQuiz(quizData=quizData, idUser=idUser, db=db)
+
 
 
 
