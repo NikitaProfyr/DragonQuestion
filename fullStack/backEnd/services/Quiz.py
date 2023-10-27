@@ -97,17 +97,18 @@ def createImageQuiz(image: UploadFile = File(...)):
     return imgPath + image.filename
 
 
-def updateImageQuiz(quizId: int, image: UploadFile = File(...), db: Session = Depends(get_db)):
+def updateImageQuiz(quizId: int = Form(...), image: UploadFile = File(...), db: Session = Depends(get_db)):
     quiz = db.scalar((select(Quiz).where(Quiz.id == quizId)))
     deleteImage(imageUrl=quiz.image)
     return createImageQuiz(image=image)
+
 
 def updateCurrentQuiz(quizData: QuizSchema, db: Session = Depends(get_db)):
     print("-----------------------------------------")
     query = (
         update(Quiz)
         .where(Quiz.id == quizData.id)
-        .values(title=quizData.title, description=quizData.description)
+        .values(title=quizData.title, description=quizData.description, image=quizData.image)
     )
     # deleteQuestionCurrentQuiz(quizId=quizData.id, db=db)
     # for item in quizData.question:

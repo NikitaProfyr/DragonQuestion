@@ -23,7 +23,7 @@ const QuizUpdate = () => {
     const user = useSelector(state => state.reducerUser.userInfo)
     const [index, setIndex] = useState(quiz.question.length - 1)
     const [upgradeImg, setUpgradeImg] = useState(false)
-    
+    const formData = new FormData()
     
     useEffect(() => {
         getCurrentQuiz(param.id, dispatch)
@@ -81,15 +81,11 @@ const QuizUpdate = () => {
 
     }
     const addImage = async (e) => {
-        const formData = new FormData();
-        formData.append('image', e.target.files[0])
-        // quiz.image = formData.get('file')
-        quiz.image = formData
+        // formData.append('image', e.target.files[0])
+        quiz.image = e.target.files[0]
         setUpgradeImg(true)
-        // console.log(formData.get('file'));
-        // console.log(quiz.image);
+        console.log(quiz.image);
         dispatch(updateQuestionAction(quiz))
-        // console.log(quiz);
     }
     const removeQuiz = async (e) => {
         e.preventDefault()
@@ -99,12 +95,14 @@ const QuizUpdate = () => {
     const updateQuiz = async (e) => {
         e.preventDefault()
         console.log(quiz)
+        formData.append('quizId', quiz.id)
+        formData.append('image', quiz.image)
+        console.log(formData.get('image'));
         
         if(upgradeImg === true){
-            quiz.image = await QuizService.updateImage(quiz.id ,quiz.image)
+            quiz.image = await QuizService.updateImage(formData)
             dispatch(updateQuestionAction(quiz))
         }
-        
         await QuizService.updateCurrentQuiz(quiz).catch((error) => {
             alert(error)
         })

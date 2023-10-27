@@ -40,7 +40,10 @@ export class QuizService {
     }
     static getImage = async (imgUrl) => {
         console.log(`/quiz/image/${imgUrl}`);
-        return await Api.get(`/quiz/image/${imgUrl}`).catch(() => {
+        const data = await Api.get(`/quiz/image/?urlImage=` + imgUrl)
+        console.log(data);
+        return data
+        .catch(() => {
             return '../../image/currentQuizDragon.png'
         })
     } 
@@ -48,9 +51,10 @@ export class QuizService {
         console.log(quiz);
         return await Api.put('/quiz/updatequiz/', quiz)
     }
-    static updateImage = async(id, image) => {
-        console.log(id, image);
-        const data = await Api.put('/update/image', id, image)
+    static updateImage = async(formdata) => {
+        console.log(formdata.get('quizId'));
+        console.log(formdata.get('image'));
+        const data = await Api.put('/quiz/update/image', formdata, {headers:{'Content-type':'multipart/form-data'}})
         .catch(
             (error) => {console.log(error);}
         )

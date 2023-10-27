@@ -52,7 +52,7 @@ def updateQuiz(quizData: QuizSchema, db: Session = Depends(get_db)):
 
 
 @quizRouter.put('/update/image')
-def updateImage(quizId: int, image: UploadFile = File(...), db: Session = Depends(get_db)):
+def updateImage(quizId: int = Form(...), image: UploadFile = File(...), db: Session = Depends(get_db)):
     return updateImageQuiz(quizId=quizId, image=image, db=db)
 
 @quizRouter.delete('/deletequiz/')
