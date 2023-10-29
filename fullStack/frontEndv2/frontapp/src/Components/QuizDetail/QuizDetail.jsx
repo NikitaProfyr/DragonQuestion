@@ -6,7 +6,7 @@ import './quiz-detail.css'
 import { useEffect, useState } from 'react'
 
 import drakon from '../../image/currentQuizDragon.png'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { getCurrentQuiz } from '../../Feutures/Actions/actionQuiz'
 
 const QuizDetail = () => {
@@ -41,7 +41,7 @@ const QuizDetail = () => {
           <div className="right-content">
             <div className="img-block">
               <img src={"http://127.0.0.1:8000/quiz/image/?urlImage=" + quiz.image} height="200px" alt="" />
-              <Button className='d-block w-100 quizButton'>Пройти тест</Button>
+              <Button className='d-block w-100 quizButton'> <Link to={}>Пройти тест</Link> </Button>
             </div>
           </div>
           </>

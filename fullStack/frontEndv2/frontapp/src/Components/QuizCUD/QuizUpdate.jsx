@@ -40,6 +40,7 @@ const QuizUpdate = () => {
     const addAnswer = (e, item) => {
         e.preventDefault()
         item.answer.push({
+            id: "1",
             title: "",
             right: false
         })
@@ -61,6 +62,7 @@ const QuizUpdate = () => {
     const addQuestion = (e) => {
         e.preventDefault()
         quiz.question.push({
+            id: "1",
             title: "",
             answer: []
         }
@@ -97,8 +99,8 @@ const QuizUpdate = () => {
         console.log(quiz)
         formData.append('quizId', quiz.id)
         formData.append('image', quiz.image)
-        console.log(formData.get('image'));
-        
+        // console.log(formData.get('image'));
+        console.log(quiz);
         if(upgradeImg === true){
             quiz.image = await QuizService.updateImage(formData)
             dispatch(updateQuestionAction(quiz))

@@ -110,8 +110,8 @@ def updateCurrentQuiz(quizData: QuizSchema, db: Session = Depends(get_db)):
         .where(Quiz.id == quizData.id)
         .values(title=quizData.title, description=quizData.description, image=quizData.image)
     )
-    # deleteQuestionCurrentQuiz(quizId=quizData.id, db=db)
-    # for item in quizData.question:
-    #     createQuestion(idQuiz=quizData.id, questionData=item, db=db)
+    deleteQuestionCurrentQuiz(quizId=quizData.id, db=db)
+    for item in quizData.question:
+        createQuestion(idQuiz=quizData.id, questionData=item, db=db)
     db.execute(query)
     db.commit()

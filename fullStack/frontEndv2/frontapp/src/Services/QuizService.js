@@ -39,7 +39,7 @@ export class QuizService {
         return data.data
     }
     static getImage = async (imgUrl) => {
-        console.log(`/quiz/image/${imgUrl}`);
+        // console.log(`/quiz/image/${imgUrl}`);
         const data = await Api.get(`/quiz/image/?urlImage=` + imgUrl)
         console.log(data);
         return data
