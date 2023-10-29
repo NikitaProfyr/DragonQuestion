@@ -38,3 +38,12 @@ class Quiz(Base):
 
     author = relationship('User', backref='Quiz', cascade='all, delete')
     question = relationship('Question', backref='Quiz', cascade='all, delete', passive_deletes=True)
+
+
+class QuizResults(Base):
+    __tablename__ = 'QuizResults'
+
+    id = Column(Integer, autoincrement=True, primary_key=True, nullable=False)
+    user = Column(Integer, ForeignKey('User.id', ondelete='CASCADE'))
+    quiz = Column(Integer, ForeignKey('User.id', ondelete='CASCADE'))
+    result = Column(Integer)

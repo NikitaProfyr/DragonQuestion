@@ -60,7 +60,12 @@ export class QuizService {
         )
         return data.data
     }
-
+    static createQuizResults = (userId, quizId, result) => {
+        const data = {
+            userId: userId,
+            
+        }
+    }
 
 }
     

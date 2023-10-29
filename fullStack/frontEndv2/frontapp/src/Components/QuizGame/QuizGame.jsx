@@ -27,7 +27,7 @@ const QuizGame = () => {
 
     const onClickAnswer = (answer) => {
         // console.log(quiz.question.length)
-        console.log(rightAnswerCount);
+        console.log(answer.right);
         if(answer.right === true){
             console.log(answer)
             setRightAnswerCount(rightAnswerCount + 1)

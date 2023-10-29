@@ -4,17 +4,17 @@ from fastapi import APIRouter, Depends, UploadFile, File, Form
 from sqlalchemy.orm import Session
 from starlette.responses import FileResponse
 
-from model.QuizSchema import QuizSchema
+from model.QuizSchema import QuizSchema, QuizBaseSchema
 from model.Settings import get_db
 from model.UserSchema import UserLite, UserId
-from services.Quiz import createQuiz, selectQuiz, selelctCurrentQuiz, deleteCurrentQuiz, selectUserQuiz, \
-    createImageQuiz, updateCurrentQuiz, updateImageQuiz
+from services.Quiz import createQuiz, selectQuizJoined, selelctCurrentQuiz, deleteCurrentQuiz, selectUserQuiz, \
+    createImageQuiz, updateCurrentQuiz, updateImageQuiz, selectQuiz, createQuizResults
 
 quizRouter = APIRouter(prefix='/quiz', tags=['опросы'])
 
 
 @quizRouter.get('/getquiz')
-def getQuiz(db: Session = Depends(get_db)) -> List[QuizSchema]:
+def getQuiz(db: Session = Depends(get_db)) -> List[QuizBaseSchema]:
     """Получить все опросы"""
     return selectQuiz(db=db)
 
@@ -34,6 +34,12 @@ def getUserQuiz(idUser: int, db: Session = Depends(get_db)) -> List[QuizSchema] 
 @quizRouter.get('/image/', response_class=FileResponse)
 def getQuizImage(urlImage: str):
     return urlImage
+
+
+@quizRouter.post('/create-result')
+def addQuizResult(userId: UserId, quizId: int, result: int, db: Session = Depends(get_db)):
+    pass
+    # return createQuizResults(userId=userId,)
 
 
 @quizRouter.post('/createquiz')

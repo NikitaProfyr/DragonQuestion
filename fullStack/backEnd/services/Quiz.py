@@ -6,7 +6,7 @@ from sqlalchemy.orm import Session, joinedload
 from starlette import status
 
 from model.QuizSchema import QuestionSchema, QuizSchema, AnswerSchema
-from model.Quiz import Question, Quiz, Answer
+from model.Quiz import Question, Quiz, Answer, QuizResults
 from model.Settings import get_db
 from sqlalchemy import select, delete, update, values
 from fastapi import HTTPException, Depends, UploadFile, File, Form
@@ -38,6 +38,12 @@ def createQuiz(quizData: QuizSchema, userData: UserId, db: Session = Depends(get
         createQuestion(idQuiz=quiz.id, questionData=itemQuistion, db=db)
 
 
+def createQuizResults(userId: UserId, quizId: int, result: int, db: Session = Depends(get_db)):
+    result = QuizResults(user=userId.id, quiz=quizId, result=result)
+    db.add(result)
+    db.commit()
+
+
 def deleteCurrentQuiz(quizData: int, idUser: int, db: Session = Depends(get_db)):
 
     quizCheck = db.scalar(select(Quiz).where(Quiz.id == quizData, Quiz.authorId == idUser))
@@ -63,8 +69,13 @@ def deleteQuestionCurrentQuiz(quizId, db: Session = Depends(get_db)):
     db.commit()
 
 
-def selectQuiz(db: Session = Depends(get_db)):
+def selectQuizJoined(db: Session = Depends(get_db)):
     quiz = db.query(Quiz).options(joinedload(Quiz.question).joinedload(Question.answer)).all()
+    return quiz
+
+
+def selectQuiz(db: Session = Depends(get_db)):
+    quiz = db.query(Quiz).all()
     return quiz
 
 
@@ -104,7 +115,6 @@ def updateImageQuiz(quizId: int = Form(...), image: UploadFile = File(...), db: 
 
 
 def updateCurrentQuiz(quizData: QuizSchema, db: Session = Depends(get_db)):
-    print("-----------------------------------------")
     query = (
         update(Quiz)
         .where(Quiz.id == quizData.id)
