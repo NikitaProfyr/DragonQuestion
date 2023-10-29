@@ -8,6 +8,7 @@ export const ROUTES = {
     QUIZ_DETAIL: "/quiz" + "/:id",
     QUIZ_USER: "/quiz-uzer",
     QUIZ_USER_DETAIL: "/quiz-user" ,
-    QUIZ_CREATE: "/quiz-create"
+    QUIZ_CREATE: "/quiz-create",
+    QUIZ_GAME: "/quiz-game"
 } 
 

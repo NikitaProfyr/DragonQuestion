@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react'
 import drakon from '../../image/currentQuizDragon.png'
 import { Link, useParams } from 'react-router-dom'
 import { getCurrentQuiz } from '../../Feutures/Actions/actionQuiz'
+import { ROUTES } from '../../utils/routes'
 
 const QuizDetail = () => {
   const [isLoading, setIsLoading] = useState(true)
@@ -41,7 +42,7 @@ const QuizDetail = () => {
           <div className="right-content">
             <div className="img-block">
               <img src={"http://127.0.0.1:8000/quiz/image/?urlImage=" + quiz.image} height="200px" alt="" />
-              <Button className='d-block w-100 quizButton'> <Link to={}>Пройти тест</Link> </Button>
+              <Link to={ROUTES.QUIZ_GAME + `/${quiz.id}`}><Button className='d-block w-100 quizButton'>Пройти тест</Button></Link> 
             </div>
           </div>
           </>

@@ -16,6 +16,7 @@ import QuizDetailPage from '../../Page/QuizDetailPage'
 import QuizUserPage from '../../Page/QuizUserPage'
 import QuizCreatePage from '../../Page/QuizCreatePage'
 import QuizUpdatePage from '../../Page/QuizUpdatePage'
+import QuizGamePage from '../../Page/QuizGamePage'
  
 const PublicRoutes = [
   {
@@ -78,6 +79,7 @@ const AppRoutes = () => {
         <Route path={ROUTES.QUIZ_USER} element = {<QuizUserPage/>} />
         <Route path={ROUTES.QUIZ_USER_DETAIL + "/:id"} element = {<QuizUpdatePage/>} />
         <Route path={ROUTES.QUIZ_CREATE} element = {<QuizCreatePage/>} />
+        <Route path={ROUTES.QUIZ_GAME + "/:id"} element={<QuizGamePage/>} />
       </Routes>
     </BrowserRouter>
   )

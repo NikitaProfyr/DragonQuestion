@@ -27,7 +27,6 @@ const QuizUpdate = () => {
     
     useEffect(() => {
         getCurrentQuiz(param.id, dispatch)
-        console.log(quiz);
     }, [])
 
     useEffect(() => {
