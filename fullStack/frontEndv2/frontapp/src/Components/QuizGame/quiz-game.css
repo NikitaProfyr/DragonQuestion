@@ -2,10 +2,42 @@
     cursor: pointer;
     align-items: center;
     border-radius: 50%;
-    width: 35px;
-    height: 35px;
-    background-color: rgb(16, 158, 214);
-    border: 1px solid rgb(174, 0, 255);
+    width: 40px;
+    height: 40px;
     display: flex;
     justify-content: center;
+    background-color: #ffffff;
+}
+.bg-quiz-game {
+    min-height: calc(100vh - 80px);
+    background: rgb(191,191,191);
+    background: linear-gradient(135deg, rgba(191,191,191,0.35) 0%, rgba(198,100,181,0.3) 100%), url('../../image/whitepurpleDragon.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    color: #e690df;
+    font-size: 22px;
+    font-weight: bold;
+}
+.title-game {
+    color: #90B1E6;
+    font-weight: bold;
+    font-size: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    padding-top: 5%;
+}
+.answer-game {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff;
+    width: 100%;
+    min-height: 50px;
+    margin-top: 5%;
+    border-radius: 10px;
+}
+.title-question-quiz-game {
+    color: #00aeff;
+    font-weight: 600;
 }
