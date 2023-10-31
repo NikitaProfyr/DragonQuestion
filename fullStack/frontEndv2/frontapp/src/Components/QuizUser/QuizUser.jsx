@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import './quiz-user.css'
 import { useEffect } from 'react'
-import { getUserQuiz } from '../../Feutures/Actions/actionQuiz'
+import { getUserQuiz, setBaseCurrentQuiz } from '../../Feutures/Actions/actionQuiz'
 import { useState } from 'react'
 import CurrentQuizUser from '../CurrentQuiz/CurrentQuizUser'
 
@@ -20,6 +20,7 @@ const QuizUser = () => {
   console.log(quiz);
 
   useEffect(() => {
+    dispatch(setBaseCurrentQuiz())
     getUserQuiz(user.id, dispatch)
   }, [])
 

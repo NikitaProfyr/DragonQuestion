@@ -29,7 +29,7 @@ const QuizDetail = () => {
   return (
     <div className="bg-quiz-detail">
       <div className="wrapper">
-        <Container fluid className='d-flex justify-content-between'>
+        <div className='container d-flex justify-content-between'>
           {isLoading ? 
             <Spinner></Spinner>
           :
@@ -48,7 +48,7 @@ const QuizDetail = () => {
           </>
           }
           
-        </Container>
+        </div>
       </div>
     </div>
   )

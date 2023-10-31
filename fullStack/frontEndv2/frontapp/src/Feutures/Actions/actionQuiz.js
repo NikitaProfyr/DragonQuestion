@@ -1,5 +1,5 @@
 import { QuizService } from "../../Services/QuizService"
-import { GET_CURRENT_QUIZ, GET_QUIZ, GET_QUIZ_USER, CREATE_QUIZ, UPDATE_CURRENT_QUIZ } from "../Reducers/reducerQuiz"
+import { GET_CURRENT_QUIZ, GET_QUIZ, GET_QUIZ_USER, CREATE_QUIZ, UPDATE_CURRENT_QUIZ, BaseCurrentQuiz } from "../Reducers/reducerQuiz"
 
  
 
@@ -31,4 +31,11 @@ export const updateQuestionAction = (payload) => {
         type: UPDATE_CURRENT_QUIZ,
         payload: payload
     }
-} 
+}
+
+export const setBaseCurrentQuiz = () => {
+    return {
+        type: GET_CURRENT_QUIZ,
+        payload: BaseCurrentQuiz,
+    }
+}

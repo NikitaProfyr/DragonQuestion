@@ -1,0 +1,11 @@
+.question-number-item{
+    cursor: pointer;
+    align-items: center;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    background-color: rgb(16, 158, 214);
+    border: 1px solid rgb(174, 0, 255);
+    display: flex;
+    justify-content: center;
+}

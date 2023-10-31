@@ -6,6 +6,22 @@ export const GET_QUIZ_USER = 'GET_QUIZ_USER'
 export const CREATE_QUIZ = 'CREATE_QUIZ'
 export const UPDATE_CURRENT_QUIZ = 'UPDATE_CURRENT_QUIZ'
 
+export const BaseCurrentQuiz = {
+    id:"1",
+    title: "",
+    description: "",
+    image:'testtest.jpg',
+    question: [{
+        id: "1",
+        title: "",
+        answer:[{
+            id: "1",
+            title: "",
+            right: false
+        }]
+    }]
+} 
+
 const stateQuiz = {
     quiz: [],
     quizUser: [],
