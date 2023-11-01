@@ -45,5 +45,5 @@ class QuizResults(Base):
 
     id = Column(Integer, autoincrement=True, primary_key=True, nullable=False)
     user = Column(Integer, ForeignKey('User.id', ondelete='CASCADE'))
-    quiz = Column(Integer, ForeignKey('User.id', ondelete='CASCADE'))
+    quiz = Column(Integer, ForeignKey('Quiz.id', ondelete='CASCADE'))
     result = Column(Integer)

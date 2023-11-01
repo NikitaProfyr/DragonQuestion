@@ -37,7 +37,7 @@ def getQuizImage(urlImage: str):
 
 
 @quizRouter.post('/create-result')
-def addQuizResult(userId: UserId, quizId: int, result: int, db: Session = Depends(get_db)):
+def addQuizResult(userId: int, quizId: int, result: int, db: Session = Depends(get_db)):
     return createQuizResults(userId=userId, quizId=quizId, result=result, db=db)
 
 

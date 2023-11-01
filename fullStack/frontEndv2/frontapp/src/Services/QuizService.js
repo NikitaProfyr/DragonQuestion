@@ -60,11 +60,9 @@ export class QuizService {
         )
         return data.data
     }
-    static createQuizResults = (userId, quizId, result) => {
-        const data = {
-            userId: userId,
-            
-        }
+    static createQuizResults = async (userId, quizId, result) => {
+        return await Api.post(`/quiz/create-result?userId=${userId}&quizId=${quizId}&result=${result}` 
+        )
     }
 
 }

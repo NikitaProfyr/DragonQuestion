@@ -5,9 +5,10 @@ import { Spinner } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
 import { getCurrentQuiz } from '../../Feutures/Actions/actionQuiz'
+import './quiz-game.css'
+import { QuizService } from '../../Services/QuizService'
 import { ROUTES } from '../../utils/routes'
 
-import './quiz-game.css'
 
 const QuizGame = () => {
     const [isLoading, setIsLoading] = useState(true)
@@ -17,7 +18,9 @@ const QuizGame = () => {
     const quiz = useSelector(state => state.reducerQuiz.currentQuiz)
     const dispatch = useDispatch()
     const [step, setStep] = useState(0)
-    const [answerUser, setRightAnswerCount] = useState(0)
+    const [answersUser, setAnswerUser] = useState([])
+    const [userAnswerRight, setUserAnswerRight] = useState([])
+
 
     useEffect(() => {
         getCurrentQuiz(param.id, dispatch)
@@ -27,17 +30,35 @@ const QuizGame = () => {
         setIsLoading(false)
     }, [quiz])
 
+    const onSubmitQuestion = async () => {
+        setAnswerUser(answersUser.filter(item => item.right === false))
+        answersUser.map((item) => {
+
+            if (item.right === true) {
+                userAnswerRight.push(item)
+            }
+
+        })
+        let allRightAnswer = 0
+        quiz.question.map((item) => {
+            allRightAnswer = allRightAnswer + item.answer.filter(i => i.right === true).length
+        })
+
+        QuizService.createQuizResults(user.id, quiz.id, Math.floor((userAnswerRight.length / allRightAnswer) * 100))
+        return navigate(ROUTES.QUIZ_LIST)
+    }
+
     const onClickAnswer = (answer) => {
-        // console.log(quiz.question.length)
-        console.log(answer.right);
-        if (answer.right === true) {
-            console.log(answer)
+        if (answersUser.includes(answer) === false) {
+            answersUser.push(answer)
+
         }
-        if (step === quiz.question.length - 1) {
-            // alert(`тест пройден, кол-во правильных ответов:${rightAnswerCount}`)
-            return navigate(ROUTES.QUIZ_LIST)
+        else {
+            const index = answersUser.indexOf(answer)
+            delete answersUser[index]
+
         }
-        // setStep(step + 1)
+        setAnswerUser(answersUser.filter(item => item !== null))
     }
 
     return (
@@ -55,11 +76,37 @@ const QuizGame = () => {
                         <h2 className='title-question-quiz-game mt-5'>{quiz.question[step].title}</h2>
                         <div className="row">
                             {quiz.question[step].answer.map((item, index) => (
-                                <div className="d-flex flex-column justify-content-center align-items-center col-md-6 col-12 ">
-                                    <div className='answer-game' key={index} onClick={() => (onClickAnswer(item))}>{item.title}</div>
-                                </div>
+                                answersUser.includes(item) === false ?
+                                    <div className="d-flex flex-column justify-content-center align-items-center col-md-6 col-12 ">
+                                        <div className='answer-game' key={index} onClick={() => (onClickAnswer(item))}>{item.title}</div>
+                                    </div>
+                                    :
+                                    <div className="d-flex flex-column justify-content-center align-items-center col-md-6 col-12 ">
+                                        <div className='answer-game active' key={index} onClick={() => (onClickAnswer(item))}>{item.title}</div>
+                                    </div>
                             ))}
                         </div>
+                        <div className="row">
+                            {step === 0 ?
+                                <>
+
+                                    <div className="col-6"></div>
+                                    <div onClick={() => (setStep(step + 1))} className="d-flex flex-column justify-content-center align-items-center col-md-6 col-12"> <div className="button-next-question">Следующий вопрос</div> </div>
+
+                                </> :
+                                <>
+                                    <div onClick={() => (setStep(step - 1))} className="d-flex flex-column justify-content-center align-items-center col-md-6 col-12"><div className="button-next-question">Предыдущий опрос</div></div>
+                                    {step + 1 === quiz.question.length ?
+                                        <div onClick={() => (onSubmitQuestion())} className="d-flex flex-column justify-content-center align-items-center col-md-6 col-12"> <div className="button-next-question">Завершить опрос</div> </div>
+                                        :
+                                        <div onClick={() => (setStep(step + 1))} className="d-flex flex-column justify-content-center align-items-center col-md-6 col-12"> <div className="button-next-question">Следующий вопрос</div> </div>
+                                    }
+
+
+                                </>
+                            }
+                        </div>
+
                     </div>
                 </div>
             }

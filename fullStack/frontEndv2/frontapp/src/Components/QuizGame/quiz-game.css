@@ -41,3 +41,18 @@
     color: #00aeff;
     font-weight: 600;
 }
+.button-next-question {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff;
+    min-height: 50px;
+    margin-top: 5%;
+    border-radius: 10px;
+    width: 100%;
+}
+.answer-game.active {
+    -webkit-box-shadow: 0px 0px 7px 4px rgba(0, 255, 0, 0.5);
+    -moz-box-shadow: 0px 0px 7px 4px rgba(0, 255, 0, 0.5);
+    box-shadow: 0px 0px 10px 4px rgba(0, 255, 0, 0.5);
+}

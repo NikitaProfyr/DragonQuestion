@@ -38,8 +38,8 @@ def createQuiz(quizData: QuizSchema, userData: UserId, db: Session = Depends(get
         createQuestion(idQuiz=quiz.id, questionData=itemQuistion, db=db)
 
 
-def createQuizResults(userId: UserId, quizId: int, result: int, db: Session = Depends(get_db)):
-    result = QuizResults(user=userId.id, quiz=quizId, result=result)
+def createQuizResults(userId: int, quizId: int, result: int, db: Session = Depends(get_db)):
+    result = QuizResults(user=userId, quiz=quizId, result=result)
     db.add(result)
     db.commit()
 
