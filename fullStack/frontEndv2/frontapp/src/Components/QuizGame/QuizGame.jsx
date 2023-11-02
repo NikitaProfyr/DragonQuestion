@@ -44,7 +44,7 @@ const QuizGame = () => {
             allRightAnswer = allRightAnswer + item.answer.filter(i => i.right === true).length
         })
 
-        QuizService.createQuizResults(user.id, quiz.id, Math.floor((userAnswerRight.length / allRightAnswer) * 100))
+        await QuizService.createQuizResults(user.id, quiz.id, Math.floor(((userAnswerRight.length / allRightAnswer) * 100) * (userAnswerRight.length /  answersUser.length)))
         return navigate(ROUTES.QUIZ_LIST)
     }
 

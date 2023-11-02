@@ -39,11 +39,12 @@ def createQuiz(quizData: QuizSchema, userData: UserId, db: Session = Depends(get
 
 
 def createQuizResults(userId: int, quizId: int, result: int, db: Session = Depends(get_db)):
-    quiz = db.scalar(select(QuizResults).where(userId == userId, quizId == quizId))
+    quiz = db.scalar(select(QuizResults).where(QuizResults.userId == userId, QuizResults.quizId == quizId))
     if quiz:
         quiz.result = result
     else:
         quiz = QuizResults(userId=userId, quizId=quizId, result=result)
+
     db.add(quiz)
     db.commit()
 

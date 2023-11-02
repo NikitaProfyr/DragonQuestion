@@ -12,7 +12,7 @@ const CurrentQuizUser = ({props}) => {
     const [quiz, setQuiz] = useState(props)
 
     return  (    
-      <Tilt options={{ scale: 2, speed: 1000, max: 60 }} style = {{}}>
+      <Tilt className="current-quiz-xxxtentacion" options={{ scale: 2, speed: 1000, max: 60 }} style = {{}}>
         <Link 
         to={ROUTES.QUIZ_USER_DETAIL + `/${quiz.id}`} 
         className="d-flex flex-column h-100 current-quiz"

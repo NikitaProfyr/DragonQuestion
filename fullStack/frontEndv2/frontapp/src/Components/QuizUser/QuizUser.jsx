@@ -25,8 +25,10 @@ const QuizUser = () => {
 
   useEffect(() => {
     dispatch(setBaseCurrentQuiz())
-    getQuizResultAction(user.id, dispatch)
     getUserQuiz(user.id, dispatch)
+  }, [])
+  useEffect(() =>{
+    getQuizResultAction(user.id, dispatch)
   }, [])
 
   useEffect(() => {
