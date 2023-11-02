@@ -24,16 +24,6 @@ const CurrentQuiz = ({ props }) => {
       <p className='title-description m-0 text-break'>{quiz.description}</p>
       </Link>
     </Tilt>
-    
-    
-    // <Link
-    //   to={ROUTES.QUIZ_CURRENT + `/${quiz.id}`}
-    //   className="d-flex flex-column h-100 current-quiz"
-    // >
-    //   <img className='current-quiz-img' src={CurrentQuizDragon} alt="" />
-    //   <p className='title fs-5 fw-bold text-break'>{quiz.title}</p>
-    //   <p className='fs-5 fw-bold text-break'>{quiz.description}</p>
-    // </Link>
   )
 }
 

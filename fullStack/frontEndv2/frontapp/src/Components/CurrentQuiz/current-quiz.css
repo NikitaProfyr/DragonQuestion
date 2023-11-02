@@ -15,7 +15,6 @@
     z-index: 1;
 
 }
-
 .title-quiz{
     display: flex;
     justify-content: center;
@@ -51,4 +50,21 @@
     align-self: center;
     opacity: 0.9;
     height: 200px;
+}
+.progress{
+    height: 20px;
+    width: 100%;
+    border-radius: 0;
+    background: rgb(221,221,221); background: linear-gradient(135deg, rgba(221,221,221,1) 0%, rgba(164,164,164,1) 100%);
+}
+.progress-bar{
+    background: rgb(25,93,224);
+    background: linear-gradient(120deg, rgba(25,93,224,1) 0%, rgba(76,165,239,1) 100%);
+}
+.progress-result{
+    color: aliceblue;
+    position: absolute;
+    /* top: 50%; */
+    left: 50%;
+    transform: translate(-50%, 0);
 }

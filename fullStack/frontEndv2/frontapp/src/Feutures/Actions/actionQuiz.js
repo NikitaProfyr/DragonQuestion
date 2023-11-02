@@ -1,5 +1,5 @@
 import { QuizService } from "../../Services/QuizService"
-import { GET_CURRENT_QUIZ, GET_QUIZ, GET_QUIZ_USER, CREATE_QUIZ, UPDATE_CURRENT_QUIZ, BaseCurrentQuiz } from "../Reducers/reducerQuiz"
+import { GET_CURRENT_QUIZ, GET_QUIZ, GET_QUIZ_USER, CREATE_QUIZ, UPDATE_CURRENT_QUIZ, BaseCurrentQuiz, GET_QUIZ_RESULT } from "../Reducers/reducerQuiz"
 
  
 
@@ -38,4 +38,12 @@ export const setBaseCurrentQuiz = () => {
         type: GET_CURRENT_QUIZ,
         payload: BaseCurrentQuiz,
     }
+}
+
+export const getQuizResultAction = async (userId, dispatch) => {
+    const data = await QuizService.getQuizResultsUser(userId)
+    dispatch({
+        type: GET_QUIZ_RESULT,
+        payload: data
+    })
 }

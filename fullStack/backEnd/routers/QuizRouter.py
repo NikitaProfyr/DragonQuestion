@@ -8,7 +8,7 @@ from model.QuizSchema import QuizSchema, QuizBaseSchema
 from model.Settings import get_db
 from model.UserSchema import UserLite, UserId
 from services.Quiz import createQuiz, selectQuizJoined, selelctCurrentQuiz, deleteCurrentQuiz, selectUserQuiz, \
-    createImageQuiz, updateCurrentQuiz, updateImageQuiz, selectQuiz, createQuizResults
+    createImageQuiz, updateCurrentQuiz, updateImageQuiz, selectQuiz, createQuizResults, selectQuizResultsUser
 
 quizRouter = APIRouter(prefix='/quiz', tags=['опросы'])
 
@@ -29,6 +29,11 @@ def getCurrentQuiz(idQuiz: int, db: Session = Depends(get_db)) -> QuizSchema:
 def getUserQuiz(idUser: int, db: Session = Depends(get_db)) -> List[QuizSchema] | None:
     """Получить созданные опросы конкретного пользователя"""
     return selectUserQuiz(idUser=idUser, db=db)
+
+
+@quizRouter.get('/result')
+def getResultQuizUser(idUser: int, db: Session = Depends(get_db)):
+    return selectQuizResultsUser(idUser=idUser, db=db)
 
 
 @quizRouter.get('/image/', response_class=FileResponse)
@@ -59,6 +64,7 @@ def updateQuiz(quizData: QuizSchema, db: Session = Depends(get_db)):
 @quizRouter.put('/update/image')
 def updateImage(quizId: int = Form(...), image: UploadFile = File(...), db: Session = Depends(get_db)):
     return updateImageQuiz(quizId=quizId, image=image, db=db)
+
 
 @quizRouter.delete('/deletequiz/')
 def removeCurrentQuiz(quizData: int, idUser: int, db: Session = Depends(get_db)):

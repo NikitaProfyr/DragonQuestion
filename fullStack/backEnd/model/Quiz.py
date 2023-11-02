@@ -44,6 +44,9 @@ class QuizResults(Base):
     __tablename__ = 'QuizResults'
 
     id = Column(Integer, autoincrement=True, primary_key=True, nullable=False)
-    user = Column(Integer, ForeignKey('User.id', ondelete='CASCADE'))
-    quiz = Column(Integer, ForeignKey('Quiz.id', ondelete='CASCADE'))
+    userId = Column(Integer, ForeignKey('User.id', ondelete='CASCADE'))
+    quizId = Column(Integer, ForeignKey('Quiz.id', ondelete='CASCADE'))
     result = Column(Integer)
+
+    user = relationship('User', backref='QuizResults')
+    quiz = relationship('Quiz', backref='QuizResults')

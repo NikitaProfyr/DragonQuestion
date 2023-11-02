@@ -39,8 +39,12 @@ def createQuiz(quizData: QuizSchema, userData: UserId, db: Session = Depends(get
 
 
 def createQuizResults(userId: int, quizId: int, result: int, db: Session = Depends(get_db)):
-    result = QuizResults(user=userId, quiz=quizId, result=result)
-    db.add(result)
+    quiz = db.scalar(select(QuizResults).where(userId == userId, quizId == quizId))
+    if quiz:
+        quiz.result = result
+    else:
+        quiz = QuizResults(userId=userId, quizId=quizId, result=result)
+    db.add(quiz)
     db.commit()
 
 
@@ -91,6 +95,13 @@ def selelctCurrentQuiz(idQuiz: int, db: Session = Depends(get_db)):
 
 def selectUserQuiz(idUser: int, db: Session = Depends(get_db)):
     quiz = db.query(Quiz).options(joinedload(Quiz.question).joinedload(Question.answer)).where(Quiz.authorId == idUser).all()
+    if not quiz:
+        return None
+    return quiz
+
+
+def selectQuizResultsUser(idUser: int, db: Session = Depends(get_db)):
+    quiz = db.query(QuizResults).options(joinedload(QuizResults.quiz)).where(QuizResults.userId == idUser and QuizResults.quizId == Quiz.id).all()
     if not quiz:
         return None
     return quiz
