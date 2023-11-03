@@ -21,6 +21,6 @@ class Token(Base):
     __tablename__ = "Token"
 
     id = Column(Integer, primary_key=True, index=True)
-    accesToken = Column(String, unique=True, index=True)
+    refreshToken = Column(String, unique=True, index=True)
     userId = Column(Integer, ForeignKey("User.id"))
     User = relationship("User", back_populates="Token")

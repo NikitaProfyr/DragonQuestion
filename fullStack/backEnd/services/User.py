@@ -9,7 +9,7 @@ from starlette import status
 from starlette.status import HTTP_400_BAD_REQUEST, HTTP_200_OK
 
 from model.Settings import get_db
-from model.User import User
+from model.User import User, Token
 from model.UserSchema import UserBase, UserCreate, UserLite, UserUpdate
 from security import pwdContext, SECRET_KEY, ALGORITHM, oauth2Scheme
 
@@ -35,7 +35,7 @@ def createUser(db: Session, userSchema: UserCreate):
     user.hashedPassword = hashedPassword
     db.add(user)
     db.commit()
-    return {"status": 201}
+    return user
 
 
 def authenticated(db: Session, userSchema: UserCreate):
@@ -54,15 +54,33 @@ def authenticated(db: Session, userSchema: UserCreate):
     return user
 
 
-def createAccessToken(data: dict, expires_delta: timedelta | None = None):
+def createToken(data: dict, expiresDelta: timedelta | None = None):
     toEncode = data.copy()
-    if expires_delta:
-        expire = datetime.utcnow() + expires_delta
+    if expiresDelta:
+        expire = datetime.utcnow() + expiresDelta
     else:
         expire = datetime.utcnow() + timedelta(minutes=15)
     toEncode.update({"exp": expire})
     encodedJwt = jwt.encode(toEncode, SECRET_KEY, algorithm=ALGORITHM)
     return encodedJwt
+
+
+def saveRefreshToken(userId: int, token: str, db: Session = Depends(get_db)):
+    refreshToken = db.scalar(select(Token).where(userId == userId))
+    if refreshToken:
+        refreshToken.refreshToken = token
+    else:
+        refreshToken = Token(refreshToken=token, userId=userId)
+    db.add(refreshToken)
+    db.commit()
+
+
+def selectCurrentToken(userId: str, db: Session = Depends(get_db)) -> str:
+    refreshToken = db.scalar(select(Token).where(userId == userId))
+    if not refreshToken:
+        raise HTTP_400_BAD_REQUEST
+    return refreshToken
+
 
 
 def getCurrentUser(token: Annotated[str, Depends(oauth2Scheme)], db: Session = Annotated[str, Depends(get_db)]):

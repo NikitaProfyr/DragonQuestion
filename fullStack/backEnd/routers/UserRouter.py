@@ -4,8 +4,8 @@ from sqlalchemy.orm import Session
 from starlette.status import HTTP_401_UNAUTHORIZED
 from model.UserSchema import UserCreate, TokenSchema, UserUpdate
 from model.Settings import get_db
-from security import ACCESS_TOKEN_EXPIRE_MINUTES
-from services.User import createUser, authenticated, createAccessToken, getCurrentUser, updateUser
+from security import ACCESS_TOKEN_EXPIRE_MINUTES, REFRESH_TOKEN_EXPIRE_MINUTES
+from services.User import createUser, authenticated, createToken, getCurrentUser, updateUser, saveRefreshToken
 
 userRouter = APIRouter(tags=["users"])
 
@@ -20,7 +20,7 @@ def authorization(userData: UserCreate, db: Session = Depends(get_db)):
             headers={"WWW-Authenticate": "Bearer"},
         )
     accessTokenExpires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
-    accessToken = createAccessToken(data={"sub": user.userName}, expires_delta=accessTokenExpires)
+    accessToken = createToken(data={"sub": user.userName}, expiresDelta=accessTokenExpires)
     user = getCurrentUser(accessToken, db=db)
 
     return {"user": user, "accessToken": accessToken, "tokenType": "bearer"}
@@ -28,7 +28,15 @@ def authorization(userData: UserCreate, db: Session = Depends(get_db)):
 
 @userRouter.post('/logup')
 def registration(userData: UserCreate, db: Session = Depends(get_db)):
-    return createUser(db=db, userSchema=userData)
+    try:
+        pass
+    except HTTPException:
+        pass
+    refreshTokenExpires = timedelta(days=REFRESH_TOKEN_EXPIRE_MINUTES)
+    refreshToken = createToken(data={"sub": userData.userName}, expiresDelta=refreshTokenExpires)
+    user = createUser(db=db, userSchema=userData)
+    saveRefreshToken(userId=user.id, token=refreshToken, db=db)
+    return {"status": 200}
 
 
 @userRouter.post('/getUser')
