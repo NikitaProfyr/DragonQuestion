@@ -3,7 +3,7 @@ from typing import Annotated
 
 from fastapi import HTTPException, Depends
 from jose import jwt, JWTError
-from sqlalchemy import select, update
+from sqlalchemy import select, update, delete
 from sqlalchemy.orm import Session
 from starlette import status
 from starlette.status import HTTP_400_BAD_REQUEST, HTTP_200_OK
@@ -39,7 +39,6 @@ def createUser(db: Session, userSchema: UserCreate):
 
 
 def authenticated(db: Session, userSchema: UserCreate):
-    # user = db.scalar(select(User).where(User.userName == userSchema.userName))
     user = getUser(db=db, userShema=userSchema)
     if not user:
         raise HTTPException(
@@ -51,6 +50,8 @@ def authenticated(db: Session, userSchema: UserCreate):
             status_code=HTTP_400_BAD_REQUEST,
             detail="Не правильный пароль"
         )
+
+
     return user
 
 
@@ -63,6 +64,11 @@ def createToken(data: dict, expiresDelta: timedelta | None = None):
     toEncode.update({"exp": expire})
     encodedJwt = jwt.encode(toEncode, SECRET_KEY, algorithm=ALGORITHM)
     return encodedJwt
+
+
+def deleteRefreshToken(token: str, db: Session = Depends(get_db)):
+    db.scalar(delete(Token).where(Token.refreshToken == token))
+    db.commit()
 
 
 def saveRefreshToken(userId: int, token: str, db: Session = Depends(get_db)):
