@@ -39,7 +39,7 @@ const HeaderUser = () => {
                         <Link to={ROUTES.QUIZ_LIST}><img src={LogoImg} height="40" alt="Logo" /></Link>
                     </div>
                     <div className="nav-bar d-flex justify-content-end w-100">
-                        <Link to="/authorization" className="link-quiz">Опросы</Link>
+                        <Link to={ROUTES.QUIZ_LIST} className="link-quiz">Опросы</Link>
                         <Link to={ROUTES.QUIZ_USER}>Мои опросы</Link>
                         <Link to={ROUTES.USER_SETTING}>{user.userName}</Link>
                         <Link to={ROUTES.HOME} onClick={ onClickLogOut } >Выйди</Link>

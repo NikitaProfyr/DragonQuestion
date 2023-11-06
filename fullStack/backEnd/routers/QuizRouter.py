@@ -1,16 +1,17 @@
-from typing import List, Annotated
+from typing import List
 
 from fastapi import APIRouter, Depends, UploadFile, File, Form
 from sqlalchemy.orm import Session
 from starlette.responses import FileResponse
 
+from middleware.Token import CheckAuthMiddleware
 from model.QuizSchema import QuizSchema, QuizBaseSchema
 from model.Settings import get_db
-from model.UserSchema import UserLite, UserId
-from services.Quiz import createQuiz, selectQuizJoined, selelctCurrentQuiz, deleteCurrentQuiz, selectUserQuiz, \
+from model.UserSchema import UserId
+from services.Quiz import createQuiz, selelctCurrentQuiz, deleteCurrentQuiz, selectUserQuiz, \
     createImageQuiz, updateCurrentQuiz, updateImageQuiz, selectQuiz, createQuizResults, selectQuizResultsUser
 
-quizRouter = APIRouter(prefix='/quiz', tags=['опросы'])
+quizRouter = APIRouter(prefix='/quiz', tags=['Quiz'], dependencies=[Depends(CheckAuthMiddleware)])
 
 
 @quizRouter.get('/getquiz')

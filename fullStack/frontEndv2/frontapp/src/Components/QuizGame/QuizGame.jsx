@@ -51,7 +51,6 @@ const QuizGame = () => {
     const onClickAnswer = (answer) => {
         if (answersUser.includes(answer) === false) {
             answersUser.push(answer)
-
         }
         else {
             const index = answersUser.indexOf(answer)

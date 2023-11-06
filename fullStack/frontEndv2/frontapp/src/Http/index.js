@@ -13,7 +13,7 @@ const ApiWithToken = axios.create({
     withCredentials: true,
     baseURL: ApiUrl,
     headers: {
-        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        Authorization: localStorage.getItem('accessToken'),
         'Content-Type': 'application/json',
     },
     

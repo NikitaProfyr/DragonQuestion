@@ -1,14 +1,16 @@
 from datetime import timedelta
-from fastapi import APIRouter, Depends, HTTPException, Response, Request, Cookie
+from fastapi import APIRouter, Depends, HTTPException, Response, Request
 from sqlalchemy.orm import Session
-from starlette.status import HTTP_401_UNAUTHORIZED
+from starlette.status import HTTP_401_UNAUTHORIZED, HTTP_200_OK
 from model.UserSchema import UserCreate, TokenSchema, UserUpdate
 from model.Settings import get_db
 from security import ACCESS_TOKEN_EXPIRE_MINUTES, REFRESH_TOKEN_EXPIRE_DEYS
 from services.User import createUser, authenticated, createToken, getCurrentUser, updateUser, saveRefreshToken, \
-    selectCurrentToken
+    selectCurrentToken, deleteRefreshToken
+
 
 userRouter = APIRouter(tags=["users"])
+
 
 
 @userRouter.post('/login')
@@ -33,13 +35,15 @@ def authorization(userData: UserCreate, response: Response, db: Session = Depend
 @userRouter.post('/logup')
 def registration(userData: UserCreate, db: Session = Depends(get_db)):
     user = createUser(db=db, userSchema=userData)
-    return {"status": 200}
+    return HTTP_200_OK
 
 
 @userRouter.post('/logout')
-def logout(response: Response):
-    # нужно удалить рефреш токен из бд
+def logout(request: Request, response: Response, db: Session = Depends(get_db)):
+    refreshToken = request.cookies.get('refreshToken')
+    deleteRefreshToken(token=refreshToken, db=db)
     response.delete_cookie('refreshToken')
+    return HTTP_200_OK
 
 
 @userRouter.post('/getUser')

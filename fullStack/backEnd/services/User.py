@@ -50,8 +50,6 @@ def authenticated(db: Session, userSchema: UserCreate):
             status_code=HTTP_400_BAD_REQUEST,
             detail="Не правильный пароль"
         )
-
-
     return user
 
 
@@ -67,7 +65,7 @@ def createToken(data: dict, expiresDelta: timedelta | None = None):
 
 
 def deleteRefreshToken(token: str, db: Session = Depends(get_db)):
-    db.scalar(delete(Token).where(Token.refreshToken == token))
+    db.execute(delete(Token).where(Token.refreshToken == token))
     db.commit()
 
 
