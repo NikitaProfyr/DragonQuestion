@@ -2,7 +2,7 @@ from fastapi import FastAPI, Request, Depends
 from starlette.middleware.cors import CORSMiddleware
 
 from routers.UserRouter import userRouter
-from routers.QuizRouter import quizRouter
+from routers.QuizRouter import quizPrivateRouter, quizPublicRouter
 
 app = FastAPI(
     title="IBD App",
@@ -21,17 +21,6 @@ app.add_middleware(
     allow_headers=["*"],  # Разрешить любые заголовки
 )
 
-
-# @app.middleware('http')
-# async def checkAuthorization(request: Request, call_next):
-#     authorizationHeader = request.headers.get('Authorization')
-#     if not authorizationHeader:
-#         print("huuuuuuuuuy")
-#         print("huuuuuuuuuy")
-#     response = await call_next(request)
-#     return response
-
-
 # регистрация роутеров
 
 app.include_router(
@@ -40,5 +29,9 @@ app.include_router(
 )
 
 app.include_router(
-    router=quizRouter,
+    router=quizPrivateRouter,
+)
+
+app.include_router(
+    router=quizPublicRouter,
 )

@@ -2,7 +2,7 @@ from datetime import timedelta, datetime
 from typing import Annotated
 
 from fastapi import HTTPException, Depends
-from jose import jwt, JWTError
+from jose import jwt, JWTError, jws
 from sqlalchemy import select, update, delete
 from sqlalchemy.orm import Session
 from starlette import status
@@ -86,6 +86,18 @@ def selectCurrentToken(userId: str, db: Session = Depends(get_db)) -> str:
     return refreshToken
 
 
+def validateRefreshToken(token: str, db: Session = Depends(get_db)):
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        return payload
+    except JWTError:
+        db.scalar(delete(Token).where(Token.refreshToken == token))
+        db.commit()
+        return None
+
+
+# def validateAccess
+
 
 def getCurrentUser(token: Annotated[str, Depends(oauth2Scheme)], db: Session = Annotated[str, Depends(get_db)]):
     credentialsException = HTTPException(
@@ -95,14 +107,14 @@ def getCurrentUser(token: Annotated[str, Depends(oauth2Scheme)], db: Session = A
     )
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        userName = payload.get("sub")
-        if userName is None:
+        userName = payload.get("userName")
+        if not userName:
             raise credentialsException
         tokenData = UserBase(userName=userName)
     except JWTError:
         raise credentialsException
     user = getUser(db=db, userShema=tokenData)
-    if user is None:
+    if not user:
         raise credentialsException
     return user
 

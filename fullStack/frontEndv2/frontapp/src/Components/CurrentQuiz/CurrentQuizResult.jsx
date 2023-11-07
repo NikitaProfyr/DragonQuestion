@@ -18,7 +18,7 @@ const CurrentQuizResult = ({ props }) => {
       to={ROUTES.QUIZ_CURRENT + `/${quiz.quiz.id}`}
       className="d-flex flex-column h-100 current-quiz"
     >
-      <img className='current-quiz-img' src={"http://127.0.0.1:8000/quiz/image/?urlImage=" + quiz.quiz.image} alt="ИЗОБРАЖЕНИЕ ДРАКОНА" />
+      <img className='current-quiz-img' src={"http://127.0.0.1:8000/quiz-public/image/?urlImage=" + quiz.quiz.image} alt="ИЗОБРАЖЕНИЕ ДРАКОНА" />
       <p className='title-quiz m-0 text-break'>{quiz.quiz.title}</p>
       <p className='title-description m-0 text-break'>{quiz.quiz.description}</p>
       <div className="progress">

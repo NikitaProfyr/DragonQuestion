@@ -6,17 +6,6 @@ export default class AuthService {
         localStorage.setItem('accessToken', data.accessToken)
         localStorage.setItem('user', JSON.stringify(data.user))
         return data
-
-        
-        // return Api.post('/users/login', {userName, password})
-        // .then(response => {
-        //     localStorage.setItem('accessToken', response.data.accessToken)
-        //     localStorage.setItem('user', JSON.stringify(response.data.user))
-        //     return Promise.resolve(response)
-        // })
-        // .catch(e => {
-        //     return Promise.reject(e)
-        // }) 
     }
 
     static logup(userName, password){    
@@ -38,9 +27,10 @@ export default class AuthService {
         return answer
     }
 
-    static logout(){
+    static logout = async () => {
         localStorage.removeItem('accessToken')
         localStorage.removeItem('user')
+        return await Api.post('/users/logout')
     }
 
     static getUserInfo(accessToken){

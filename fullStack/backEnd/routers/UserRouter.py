@@ -1,13 +1,12 @@
 from datetime import timedelta
-from fastapi import APIRouter, Depends, HTTPException, Response, Request
+from fastapi import APIRouter, Depends, HTTPException, Response, Request, Cookie
 from sqlalchemy.orm import Session
-from starlette.status import HTTP_401_UNAUTHORIZED, HTTP_200_OK
-from model.UserSchema import UserCreate, TokenSchema, UserUpdate
+from starlette.status import HTTP_401_UNAUTHORIZED, HTTP_200_OK, HTTP_410_GONE
+from model.UserSchema import UserCreate, TokenSchema, UserUpdate, UserBase
 from model.Settings import get_db
 from security import ACCESS_TOKEN_EXPIRE_MINUTES, REFRESH_TOKEN_EXPIRE_DEYS
 from services.User import createUser, authenticated, createToken, getCurrentUser, updateUser, saveRefreshToken, \
-    selectCurrentToken, deleteRefreshToken
-
+    selectCurrentToken, deleteRefreshToken, validateRefreshToken
 
 userRouter = APIRouter(tags=["users"])
 
@@ -36,6 +35,18 @@ def authorization(userData: UserCreate, response: Response, db: Session = Depend
 def registration(userData: UserCreate, db: Session = Depends(get_db)):
     user = createUser(db=db, userSchema=userData)
     return HTTP_200_OK
+
+
+@userRouter.get('/refresh')
+def refresh(request: Request, db: Session = Depends(get_db)):
+    refreshToken = request.cookies.get('refreshToken')
+
+    refreshToken = validateRefreshToken(token=refreshToken, db=db)
+    if not refreshToken:
+        return HTTPException(status_code=HTTP_410_GONE, detail="не валидный refresh token")
+    accessToken = createToken({"userName": refreshToken.get('sub')})
+    return {'accessToken': accessToken}
+
 
 
 @userRouter.post('/logout')
