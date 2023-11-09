@@ -2,33 +2,33 @@ from datetime import timedelta, datetime
 from typing import Annotated
 
 from fastapi import HTTPException, Depends
-from jose import jwt, JWTError, jws
-from sqlalchemy import select, update, delete
+from jose import jwt, JWTError
+from sqlalchemy import select, update, delete, or_
 from sqlalchemy.orm import Session
 from starlette import status
-from starlette.status import HTTP_400_BAD_REQUEST, HTTP_200_OK
+from starlette.status import HTTP_400_BAD_REQUEST, HTTP_401_UNAUTHORIZED, HTTP_200_OK
 
 from model.Settings import get_db
 from model.User import User, Token
-from model.UserSchema import UserBase, UserCreate, UserLite, UserUpdate
+from model.UserSchema import UserBase, UserCreate, UserUpdate, UserId
 from security import pwdContext, SECRET_KEY, ALGORITHM, oauth2Scheme
 
 
 def getUser(db: Session, userShema: UserBase):
-    user = db.scalar(select(User).where(User.userName == userShema.userName))
+    user = db.scalar(select(User).where(or_(User.userName == userShema.userName)))
     if not user:
         raise HTTPException(
-            status_code=HTTP_400_BAD_REQUEST,
-            detail="Пользователь с таким именем не найден."
+            status_code=HTTP_401_UNAUTHORIZED,
+            detail="Пользователь с таким именем не найден.",
         )
     return user
 
 
 def createUser(db: Session, userSchema: UserCreate):
-    if db.scalar(select(User).where(User.userName == userSchema.userName)):
+    if db.scalar(select(User).where(or_(User.userName == userSchema.userName))):
         raise HTTPException(
-            status_code=HTTP_400_BAD_REQUEST,
-            detail="Пользователь с таким именем уже зарегистрирован"
+            status_code=HTTP_401_UNAUTHORIZED,
+            detail="Пользователь с таким именем уже зарегистрирован",
         )
     hashedPassword = pwdContext.hash(userSchema.password)
     user = User(userName=userSchema.userName)
@@ -42,13 +42,12 @@ def authenticated(db: Session, userSchema: UserCreate):
     user = getUser(db=db, userShema=userSchema)
     if not user:
         raise HTTPException(
-            status_code=HTTP_400_BAD_REQUEST,
-            detail="Пользователь с таким именем не найден"
+            status_code=HTTP_401_UNAUTHORIZED,
+            detail="Пользователь с таким именем не найден",
         )
     if not pwdContext.verify(userSchema.password, user.hashedPassword):
         raise HTTPException(
-            status_code=HTTP_400_BAD_REQUEST,
-            detail="Не правильный пароль"
+            status_code=HTTP_401_UNAUTHORIZED, detail="Не правильный пароль"
         )
     return user
 
@@ -65,12 +64,12 @@ def createToken(data: dict, expiresDelta: timedelta | None = None):
 
 
 def deleteRefreshToken(token: str, db: Session = Depends(get_db)):
-    db.execute(delete(Token).where(Token.refreshToken == token))
+    db.execute(delete(Token).where(or_(Token.refreshToken == token)))
     db.commit()
 
 
 def saveRefreshToken(userId: int, token: str, db: Session = Depends(get_db)):
-    refreshToken = db.scalar(select(Token).where(userId == userId))
+    refreshToken = db.scalar(select(Token).where(or_(Token.userId == userId)))
     if refreshToken:
         refreshToken.refreshToken = token
     else:
@@ -80,7 +79,7 @@ def saveRefreshToken(userId: int, token: str, db: Session = Depends(get_db)):
 
 
 def selectCurrentToken(userId: str, db: Session = Depends(get_db)) -> str:
-    refreshToken = db.scalar(select(Token).where(userId == userId))
+    refreshToken = db.scalar(select(Token).where(or_(userId == userId)))
     if not refreshToken:
         raise HTTP_400_BAD_REQUEST
     return refreshToken
@@ -91,15 +90,23 @@ def validateRefreshToken(token: str, db: Session = Depends(get_db)):
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         return payload
     except JWTError:
-        db.scalar(delete(Token).where(Token.refreshToken == token))
+        db.scalar(delete(Token).where(or_(Token.refreshToken == token)))
         db.commit()
         return None
 
 
-# def validateAccess
+def deleteUser(userId: UserId, db: Session = Depends(get_db)):
+    try:
+        db.scalar(delete(User).where(or_(User.id == userId.id)))
+        return HTTP_200_OK
+    except HTTPException:
+        return HTTPException(status_code=HTTP_400_BAD_REQUEST)
 
 
-def getCurrentUser(token: Annotated[str, Depends(oauth2Scheme)], db: Session = Annotated[str, Depends(get_db)]):
+def getCurrentUser(
+    token: Annotated[str, Depends(oauth2Scheme)],
+    db: Session = Annotated[str, Depends(get_db)],
+):
     credentialsException = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Не удалось проверить учетные данные",
@@ -120,13 +127,17 @@ def getCurrentUser(token: Annotated[str, Depends(oauth2Scheme)], db: Session = A
 
 
 def updateUser(db: Session, user: UserUpdate):
-    query = (update(User)
-             .where(User.id == user.id)
-             .values(userName=user.userName,
-                     firstName=user.firstName,
-                     lastName=user.lastName,
-                     email=user.email))
+    query = (
+        update(User)
+        .where(or_(User.id == user.id))
+        .values(
+            userName=user.userName,
+            firstName=user.firstName,
+            lastName=user.lastName,
+            email=user.email,
+        )
+    )
     db.execute(query)
     db.commit()
-    user = db.scalar(select(User).where(User.id == user.id))
+    user = db.scalar(select(User).where(or_(User.id == user.id)))
     return user

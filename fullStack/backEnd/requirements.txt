@@ -12,3 +12,6 @@ python-jose
 alembic
 python-dotenv
 python-multipart
+httpx
+pytest
+jose

@@ -8,8 +8,10 @@ from model.Settings import get_db
 from services.User import getCurrentUser
 
 
-def CheckAuthMiddleware(request: Request, response: Response, db: Session = Depends(get_db)):
-    authorizationHeader = request.headers.get('Authorization')
+def CheckAuthMiddleware(
+    request: Request, response: Response, db: Session = Depends(get_db)
+):
+    authorizationHeader = request.headers.get("Authorization")
     if not authorizationHeader:
         raise HTTPException(
             status_code=401,

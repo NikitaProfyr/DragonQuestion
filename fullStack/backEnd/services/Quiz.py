@@ -1,5 +1,5 @@
 import shutil
-from typing import List
+
 import os
 
 from sqlalchemy.orm import Session, joinedload
@@ -8,19 +8,23 @@ from starlette import status
 from model.QuizSchema import QuestionSchema, QuizSchema, AnswerSchema
 from model.Quiz import Question, Quiz, Answer, QuizResults
 from model.Settings import get_db
-from sqlalchemy import select, delete, update, values
+from sqlalchemy import select, delete, update
 from fastapi import HTTPException, Depends, UploadFile, File, Form
-from starlette.status import HTTP_400_BAD_REQUEST, HTTP_200_OK
-from model.UserSchema import UserLite, UserId
+from starlette.status import HTTP_400_BAD_REQUEST
+from model.UserSchema import UserId
 
 
-def createAnswer(idQuestion: int, anwerData: AnswerSchema, db: Session = Depends(get_db)):
+def createAnswer(
+    idQuestion: int, anwerData: AnswerSchema, db: Session = Depends(get_db)
+):
     anwer = Answer(title=anwerData.title, right=anwerData.right, questionId=idQuestion)
     db.add(anwer)
     db.commit()
 
 
-def createQuestion(idQuiz: int, questionData: QuestionSchema, db: Session = Depends(get_db)):
+def createQuestion(
+    idQuiz: int, questionData: QuestionSchema, db: Session = Depends(get_db)
+):
     question = Question(title=questionData.title, quizId=idQuiz)
     db.add(question)
     db.commit()
@@ -30,7 +34,12 @@ def createQuestion(idQuiz: int, questionData: QuestionSchema, db: Session = Depe
 
 
 def createQuiz(quizData: QuizSchema, userData: UserId, db: Session = Depends(get_db)):
-    quiz = Quiz(title=quizData.title, description=quizData.description, image=quizData.image, authorId=userData.id)
+    quiz = Quiz(
+        title=quizData.title,
+        description=quizData.description,
+        image=quizData.image,
+        authorId=userData.id,
+    )
     db.add(quiz)
     db.commit()
 
@@ -38,8 +47,14 @@ def createQuiz(quizData: QuizSchema, userData: UserId, db: Session = Depends(get
         createQuestion(idQuiz=quiz.id, questionData=itemQuistion, db=db)
 
 
-def createQuizResults(userId: int, quizId: int, result: int, db: Session = Depends(get_db)):
-    quiz = db.scalar(select(QuizResults).where(QuizResults.userId == userId, QuizResults.quizId == quizId))
+def createQuizResults(
+    userId: int, quizId: int, result: int, db: Session = Depends(get_db)
+):
+    quiz = db.scalar(
+        select(QuizResults).where(
+            QuizResults.userId == userId, QuizResults.quizId == quizId
+        )
+    )
     if quiz:
         quiz.result = result
     else:
@@ -50,8 +65,9 @@ def createQuizResults(userId: int, quizId: int, result: int, db: Session = Depen
 
 
 def deleteCurrentQuiz(quizData: int, idUser: int, db: Session = Depends(get_db)):
-
-    quizCheck = db.scalar(select(Quiz).where(Quiz.id == quizData, Quiz.authorId == idUser))
+    quizCheck = db.scalar(
+        select(Quiz).where(Quiz.id == quizData, Quiz.authorId == idUser)
+    )
     if not quizCheck:
         return HTTP_400_BAD_REQUEST
     quiz = delete(Quiz).where(Quiz.id == quizData, Quiz.authorId == idUser)
@@ -75,7 +91,11 @@ def deleteQuestionCurrentQuiz(quizId, db: Session = Depends(get_db)):
 
 
 def selectQuizJoined(db: Session = Depends(get_db)):
-    quiz = db.query(Quiz).options(joinedload(Quiz.question).joinedload(Question.answer)).all()
+    quiz = (
+        db.query(Quiz)
+        .options(joinedload(Quiz.question).joinedload(Question.answer))
+        .all()
+    )
     return quiz
 
 
@@ -89,20 +109,30 @@ def selelctCurrentQuiz(idQuiz: int, db: Session = Depends(get_db)):
     if not currentQuiz:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail=f"Опрос с идентифекатором: '{idQuiz}', не найден."
+            detail=f"Опрос с идентифекатором: '{idQuiz}', не найден.",
         )
     return currentQuiz
 
 
 def selectUserQuiz(idUser: int, db: Session = Depends(get_db)):
-    quiz = db.query(Quiz).options(joinedload(Quiz.question).joinedload(Question.answer)).where(Quiz.authorId == idUser).all()
+    quiz = (
+        db.query(Quiz)
+        .options(joinedload(Quiz.question).joinedload(Question.answer))
+        .where(Quiz.authorId == idUser)
+        .all()
+    )
     if not quiz:
         return None
     return quiz
 
 
 def selectQuizResultsUser(idUser: int, db: Session = Depends(get_db)):
-    quiz = db.query(QuizResults).options(joinedload(QuizResults.quiz)).where(QuizResults.userId == idUser and QuizResults.quizId == Quiz.id).all()
+    quiz = (
+        db.query(QuizResults)
+        .options(joinedload(QuizResults.quiz))
+        .where(QuizResults.userId == idUser and QuizResults.quizId == Quiz.id)
+        .all()
+    )
     if not quiz:
         return None
     return quiz
@@ -120,7 +150,11 @@ def createImageQuiz(image: UploadFile = File(...)):
     return imgPath + image.filename
 
 
-def updateImageQuiz(quizId: int = Form(...), image: UploadFile = File(...), db: Session = Depends(get_db)):
+def updateImageQuiz(
+    quizId: int = Form(...),
+    image: UploadFile = File(...),
+    db: Session = Depends(get_db),
+):
     quiz = db.scalar((select(Quiz).where(Quiz.id == quizId)))
     deleteImage(imageUrl=quiz.image)
     return createImageQuiz(image=image)
@@ -130,7 +164,9 @@ def updateCurrentQuiz(quizData: QuizSchema, db: Session = Depends(get_db)):
     query = (
         update(Quiz)
         .where(Quiz.id == quizData.id)
-        .values(title=quizData.title, description=quizData.description, image=quizData.image)
+        .values(
+            title=quizData.title, description=quizData.description, image=quizData.image
+        )
     )
     deleteQuestionCurrentQuiz(quizId=quizData.id, db=db)
     for item in quizData.question:

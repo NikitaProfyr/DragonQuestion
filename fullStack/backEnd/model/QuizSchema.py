@@ -1,7 +1,7 @@
 from typing import List
 
-from fastapi import UploadFile, File, Form
-from pydantic import BaseModel, Field, FilePath
+
+from pydantic import BaseModel
 
 
 class AnswerSchema(BaseModel):

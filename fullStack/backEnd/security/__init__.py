@@ -2,7 +2,7 @@ from fastapi.security import APIKeyHeader
 from passlib.context import CryptContext
 from fastapi.security import OAuth2PasswordBearer
 
-oauth2Scheme = OAuth2PasswordBearer(tokenUrl='token')
+oauth2Scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 pwdContext = CryptContext(schemes=["bcrypt"], deprecated="auto")
 

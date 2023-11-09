@@ -1,19 +1,44 @@
 from datetime import timedelta
-from fastapi import APIRouter, Depends, HTTPException, Response, Request, Cookie
+from fastapi import APIRouter, Depends, HTTPException, Response, Request
 from sqlalchemy.orm import Session
 from starlette.status import HTTP_401_UNAUTHORIZED, HTTP_200_OK, HTTP_410_GONE
-from model.UserSchema import UserCreate, TokenSchema, UserUpdate, UserBase
+
+from middleware.Token import CheckAuthMiddleware
+from model.UserSchema import UserCreate, UserUpdate, UserId
 from model.Settings import get_db
 from security import ACCESS_TOKEN_EXPIRE_MINUTES, REFRESH_TOKEN_EXPIRE_DEYS
-from services.User import createUser, authenticated, createToken, getCurrentUser, updateUser, saveRefreshToken, \
-    selectCurrentToken, deleteRefreshToken, validateRefreshToken
+from services.User import (
+    createUser,
+    authenticated,
+    createToken,
+    getCurrentUser,
+    updateUser,
+    saveRefreshToken,
+    deleteRefreshToken,
+    validateRefreshToken, deleteUser,
+)
 
-userRouter = APIRouter(tags=["users"])
+userPublicRouter = APIRouter(tags=["UserPublic"])
+userPrivateRouter = APIRouter(tags=["UserPrivate"], dependencies=[Depends(CheckAuthMiddleware)])
 
 
+@userPublicRouter.get("/refresh")
+def refresh(request: Request, db: Session = Depends(get_db)):
+    refreshToken = request.cookies.get("refreshToken")
 
-@userRouter.post('/login')
-def authorization(userData: UserCreate, response: Response, db: Session = Depends(get_db)):
+    refreshToken = validateRefreshToken(token=refreshToken, db=db)
+    if not refreshToken:
+        return HTTPException(
+            status_code=HTTP_410_GONE, detail="не валидный refresh token"
+        )
+    accessToken = createToken({"userName": refreshToken.get("sub")})
+    return {"accessToken": accessToken}
+
+
+@userPublicRouter.post("/login")
+def authorization(
+    userData: UserCreate, response: Response, db: Session = Depends(get_db)
+):
     user = authenticated(db=db, userSchema=userData)
     if not user:
         raise HTTPException(
@@ -23,45 +48,48 @@ def authorization(userData: UserCreate, response: Response, db: Session = Depend
         )
     accessTokenExpires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     refreshTokenExpires = timedelta(days=REFRESH_TOKEN_EXPIRE_DEYS)
-    accessToken = createToken(data={"sub": user.userName}, expiresDelta=accessTokenExpires)
-    refreshToken = createToken(data={"sub": user.userName}, expiresDelta=refreshTokenExpires)
+    accessToken = createToken(
+        data={"sub": user.userName}, expiresDelta=accessTokenExpires
+    )
+    refreshToken = createToken(
+        data={"sub": user.userName}, expiresDelta=refreshTokenExpires
+    )
     saveRefreshToken(userId=user.id, token=refreshToken, db=db)
-    response.set_cookie(key="refreshToken", value=refreshToken, max_age=24 * 30 * 60 * 60 * 1000, httponly=True)
+    response.set_cookie(
+        key="refreshToken",
+        value=refreshToken,
+        max_age=24 * 30 * 60 * 60 * 1000,
+        httponly=True,
+    )
+    response.headers["Authorization"] = accessToken
     print(user.id)  # Я не знаю почему, но без принта эта движуха не работает
     return {"user": user, "accessToken": accessToken, "refreshToken": refreshToken}
 
 
-@userRouter.post('/logup')
+@userPublicRouter.post("/logup")
 def registration(userData: UserCreate, db: Session = Depends(get_db)):
     user = createUser(db=db, userSchema=userData)
     return HTTP_200_OK
 
 
-@userRouter.get('/refresh')
-def refresh(request: Request, db: Session = Depends(get_db)):
-    refreshToken = request.cookies.get('refreshToken')
-
-    refreshToken = validateRefreshToken(token=refreshToken, db=db)
-    if not refreshToken:
-        return HTTPException(status_code=HTTP_410_GONE, detail="не валидный refresh token")
-    accessToken = createToken({"userName": refreshToken.get('sub')})
-    return {'accessToken': accessToken}
-
-
-
-@userRouter.post('/logout')
+@userPublicRouter.post("/logout")
 def logout(request: Request, response: Response, db: Session = Depends(get_db)):
-    refreshToken = request.cookies.get('refreshToken')
+    refreshToken = request.cookies.get("refreshToken")
     deleteRefreshToken(token=refreshToken, db=db)
-    response.delete_cookie('refreshToken')
+    response.delete_cookie("refreshToken")
     return HTTP_200_OK
 
 
-@userRouter.post('/getUser')
+@userPublicRouter.post("/getUser")
 def currentUser(token, db: Session = Depends(get_db)):
     return getCurrentUser(token, db=db)
 
 
-@userRouter.put('/updateUser')
+@userPrivateRouter.put("/updateUser")
 def updateUserData(userData: UserUpdate, db: Session = Depends(get_db)) -> UserUpdate:
     return updateUser(db=db, user=userData)
+
+
+@userPrivateRouter.delete("/delete")
+def deleteUserData(userId: UserId, db: Session = Depends(get_db)):
+    deleteUser(userId=userId, db=db)
