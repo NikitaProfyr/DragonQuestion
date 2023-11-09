@@ -27,7 +27,7 @@ def getUser(db: Session, userShema: UserBase):
 def createUser(db: Session, userSchema: UserCreate):
     if db.scalar(select(User).where(or_(User.userName == userSchema.userName))):
         raise HTTPException(
-            status_code=HTTP_401_UNAUTHORIZED,
+            status_code=HTTP_400_BAD_REQUEST,
             detail="Пользователь с таким именем уже зарегистрирован",
         )
     hashedPassword = pwdContext.hash(userSchema.password)
@@ -95,9 +95,10 @@ def validateRefreshToken(token: str, db: Session = Depends(get_db)):
         return None
 
 
-def deleteUser(userId: UserId, db: Session = Depends(get_db)):
+def deleteUser(userId: int, db: Session = Depends(get_db)):
     try:
-        db.scalar(delete(User).where(or_(User.id == userId.id)))
+        db.execute(delete(User).where(or_(User.id == userId)))  # <== НАДО ПОФИКСИТЬ (СДЕЛАТЬ УДАЛЕНИЕ ЕДИНСТВЕННОГО ЭКЗЕМПЛЯРА)
+        db.commit()
         return HTTP_200_OK
     except HTTPException:
         return HTTPException(status_code=HTTP_400_BAD_REQUEST)

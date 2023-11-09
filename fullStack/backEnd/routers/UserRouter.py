@@ -91,5 +91,5 @@ def updateUserData(userData: UserUpdate, db: Session = Depends(get_db)) -> UserU
 
 
 @userPrivateRouter.delete("/delete")
-def deleteUserData(userId: UserId, db: Session = Depends(get_db)):
+def deleteUserData(userId: int, db: Session = Depends(get_db)):
     deleteUser(userId=userId, db=db)

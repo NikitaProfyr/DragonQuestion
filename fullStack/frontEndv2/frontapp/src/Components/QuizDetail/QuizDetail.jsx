@@ -9,6 +9,7 @@ import drakon from '../../image/currentQuizDragon.png'
 import { Link, useParams } from 'react-router-dom'
 import { getCurrentQuiz } from '../../Feutures/Actions/actionQuiz'
 import { ROUTES } from '../../utils/routes'
+import Tilt from 'react-vanilla-tilt'
 
 const QuizDetail = () => {
   const [isLoading, setIsLoading] = useState(true)

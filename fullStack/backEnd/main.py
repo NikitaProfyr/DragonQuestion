@@ -25,10 +25,12 @@ app.add_middleware(
 
 app.include_router(
     router=userPublicRouter,
+    prefix="/users",
 )
 
 app.include_router(
     router=userPrivateRouter,
+    prefix="/users",
 )
 
 app.include_router(

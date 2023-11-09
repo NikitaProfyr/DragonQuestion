@@ -13,7 +13,7 @@ class User(Base):
     firstName = Column(String, nullable=True)
     lastName = Column(String, nullable=True)
 
-    Token = relationship("Token", back_populates="User")
+    Token = relationship("Token", back_populates="User", cascade="all, delete")
     quiz = relationship("Quiz", backref="User")
 
 
@@ -22,5 +22,5 @@ class Token(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     refreshToken = Column(String, unique=True, index=True)
-    userId = Column(Integer, ForeignKey("User.id"))
+    userId = Column(Integer, ForeignKey("User.id", ondelete="CASCADE"))
     User = relationship("User", back_populates="Token")
