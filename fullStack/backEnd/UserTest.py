@@ -38,8 +38,6 @@ def testAuthorization():
 
 def testDeleteUser():
     response = client.post(f"/users/getUser?token={testToken}")
-    # testIdUser = {"id": f"{response.json().get('id')}"}
-
     response = client.delete(f"/users/delete?userId={response.json().get('id')}", headers={"Authorization": testToken})
     assert response.status_code == 200
 

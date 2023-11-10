@@ -43,7 +43,7 @@ const QuizDetail = () => {
               </div>
               <div className="right-content mt-5 col-md-6 col-12">
                 <div className="img-block">
-                  <img className='rounded' src={"http://127.0.0.1:8000/quiz/image/?urlImage=" + quiz.image} width="100%" alt="" />
+                  <img className='rounded' src={"http://127.0.0.1:8000/quiz-public/image/?urlImage=" + quiz.image} width="100%" alt="" />
                   <Link className='text-decoration-none' to={ROUTES.QUIZ_GAME + `/${quiz.id}`}> <button className='d-block w-100 quizButton'>Пройти тест</button> </Link>
                 </div>
               </div>

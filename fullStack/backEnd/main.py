@@ -1,5 +1,9 @@
 from fastapi import FastAPI, Request, Depends
+from fastapi_cache.backends.redis import RedisBackend
 from starlette.middleware.cors import CORSMiddleware
+
+from fastapi_cache import FastAPICache
+from redis import asyncio as aioredis
 
 from routers.UserRouter import userPublicRouter, userPrivateRouter
 from routers.QuizRouter import quizPrivateRouter, quizPublicRouter
@@ -40,3 +44,9 @@ app.include_router(
 app.include_router(
     router=quizPublicRouter,
 )
+
+
+@app.on_event("startup")
+async def startup_event():
+    redis = aioredis.from_url("redis://localhost", encoding="utf8", decode_responses=True)
+    FastAPICache.init(RedisBackend(redis), prefix="fastapi-cache")

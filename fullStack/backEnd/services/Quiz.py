@@ -2,6 +2,7 @@ import shutil
 
 import os
 
+from fastapi_cache.decorator import cache
 from sqlalchemy.orm import Session, joinedload
 from starlette import status
 

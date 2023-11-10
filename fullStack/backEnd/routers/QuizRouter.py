@@ -1,8 +1,10 @@
 from typing import List
 
 from fastapi import APIRouter, Depends, UploadFile, File, Form
+from fastapi_cache.decorator import cache
 from sqlalchemy.orm import Session
 from starlette.responses import FileResponse
+from starlette import status
 
 from middleware.Token import CheckAuthMiddleware
 from model.QuizSchema import QuizSchema, QuizBaseSchema
@@ -27,7 +29,9 @@ quizPrivateRouter = APIRouter(
 quizPublicRouter = APIRouter(prefix="/quiz-public", tags=["QuizPublic"])
 
 
+
 @quizPrivateRouter.get("/getquiz")
+@cache(expire=60)
 def getQuiz(db: Session = Depends(get_db)) -> List[QuizBaseSchema]:
     """Получить все опросы"""
     return selectQuiz(db=db)
@@ -62,7 +66,8 @@ def addQuizResult(userId: int, quizId: int, result: int, db: Session = Depends(g
 
 @quizPrivateRouter.post("/createquiz")
 def addQuiz(quiz: QuizSchema, userId: UserId, db: Session = Depends(get_db)):
-    return createQuiz(quizData=quiz, userData=userId, db=db)
+    createQuiz(quizData=quiz, userData=userId, db=db)  # Нужно добавить celery.task
+    return {"status": status.HTTP_201_CREATED}
 
 
 @quizPrivateRouter.post("/download/image")
