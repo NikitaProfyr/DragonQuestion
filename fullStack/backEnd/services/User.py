@@ -97,7 +97,9 @@ def validateRefreshToken(token: str, db: Session = Depends(get_db)):
 
 def deleteUser(userId: int, db: Session = Depends(get_db)):
     try:
-        db.execute(delete(User).where(or_(User.id == userId)))  # <== НАДО ПОФИКСИТЬ (СДЕЛАТЬ УДАЛЕНИЕ ЕДИНСТВЕННОГО ЭКЗЕМПЛЯРА)
+        db.execute(
+            delete(User).where(or_(User.id == userId))
+        )  # <== НАДО ПОФИКСИТЬ (СДЕЛАТЬ УДАЛЕНИЕ ЕДИНСТВЕННОГО ЭКЗЕМПЛЯРА)
         db.commit()
         return HTTP_200_OK
     except HTTPException:

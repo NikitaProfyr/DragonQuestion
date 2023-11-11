@@ -1,6 +1,6 @@
 from typing import List
 
-from fastapi import APIRouter, Depends, UploadFile, File, Form
+from fastapi import APIRouter, Depends, UploadFile, File, Form, BackgroundTasks
 from fastapi_cache.decorator import cache
 from sqlalchemy.orm import Session
 from starlette.responses import FileResponse
@@ -11,7 +11,6 @@ from model.QuizSchema import QuizSchema, QuizBaseSchema
 from model.Settings import get_db
 from model.UserSchema import UserId
 from services.Quiz import (
-    createQuiz,
     selelctCurrentQuiz,
     deleteCurrentQuiz,
     selectUserQuiz,
@@ -20,8 +19,9 @@ from services.Quiz import (
     updateImageQuiz,
     selectQuiz,
     createQuizResults,
-    selectQuizResultsUser,
+    selectQuizResultsUser, createQuiz,
 )
+from tasks.task import printTask
 
 quizPrivateRouter = APIRouter(
     prefix="/quiz", tags=["QuizPrivate"], dependencies=[Depends(CheckAuthMiddleware)]
@@ -29,12 +29,12 @@ quizPrivateRouter = APIRouter(
 quizPublicRouter = APIRouter(prefix="/quiz-public", tags=["QuizPublic"])
 
 
-
 @quizPrivateRouter.get("/getquiz")
-@cache(expire=60)
+# @cache(expire=60)
 def getQuiz(db: Session = Depends(get_db)) -> List[QuizBaseSchema]:
     """Получить все опросы"""
     return selectQuiz(db=db)
+    # return selectQuiz.delay(db=db)
 
 
 @quizPrivateRouter.get("/getquiz/{idQuiz}")
@@ -65,8 +65,11 @@ def addQuizResult(userId: int, quizId: int, result: int, db: Session = Depends(g
 
 
 @quizPrivateRouter.post("/createquiz")
-def addQuiz(quiz: QuizSchema, userId: UserId, db: Session = Depends(get_db)):
-    createQuiz(quizData=quiz, userData=userId, db=db)  # Нужно добавить celery.task
+def addQuiz(quiz: QuizSchema, userId: UserId, backgroundTask: BackgroundTasks, db: Session = Depends(get_db)):
+    createQuiz(quizData=quiz, userData=userId, db=db)  # Нужно добавить celery.tasks
+    printTest="huyHuyHuyhuyHuyHuyhuyHuyHuyhuyHuyHuyhuyHuyHuyhuyHuyHuy"
+    printTask.delay(printTest)
+    # createQuiz.delay(quizData=quiz, userData=userId, db=db)  celery
     return {"status": status.HTTP_201_CREATED}
 
 

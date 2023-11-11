@@ -15,11 +15,14 @@ from services.User import (
     updateUser,
     saveRefreshToken,
     deleteRefreshToken,
-    validateRefreshToken, deleteUser,
+    validateRefreshToken,
+    deleteUser,
 )
 
 userPublicRouter = APIRouter(tags=["UserPublic"])
-userPrivateRouter = APIRouter(tags=["UserPrivate"], dependencies=[Depends(CheckAuthMiddleware)])
+userPrivateRouter = APIRouter(
+    tags=["UserPrivate"], dependencies=[Depends(CheckAuthMiddleware)]
+)
 
 
 @userPublicRouter.get("/refresh")
@@ -49,10 +52,10 @@ def authorization(
     accessTokenExpires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     refreshTokenExpires = timedelta(days=REFRESH_TOKEN_EXPIRE_DEYS)
     accessToken = createToken(
-        data={"sub": user.userName}, expiresDelta=accessTokenExpires
+        data={"userName": user.userName}, expiresDelta=accessTokenExpires
     )
     refreshToken = createToken(
-        data={"sub": user.userName}, expiresDelta=refreshTokenExpires
+        data={"userName": user.userName}, expiresDelta=refreshTokenExpires
     )
     saveRefreshToken(userId=user.id, token=refreshToken, db=db)
     response.set_cookie(

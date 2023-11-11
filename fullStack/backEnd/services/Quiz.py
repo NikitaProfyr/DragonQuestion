@@ -2,7 +2,6 @@ import shutil
 
 import os
 
-from fastapi_cache.decorator import cache
 from sqlalchemy.orm import Session, joinedload
 from starlette import status
 
@@ -12,7 +11,9 @@ from model.Settings import get_db
 from sqlalchemy import select, delete, update
 from fastapi import HTTPException, Depends, UploadFile, File, Form
 from starlette.status import HTTP_400_BAD_REQUEST
+
 from model.UserSchema import UserId
+from tasks.task import celeryApp
 
 
 def createAnswer(
@@ -32,20 +33,6 @@ def createQuestion(
 
     for itemAnswer in questionData.answer:
         createAnswer(idQuestion=question.id, anwerData=itemAnswer, db=db)
-
-
-def createQuiz(quizData: QuizSchema, userData: UserId, db: Session = Depends(get_db)):
-    quiz = Quiz(
-        title=quizData.title,
-        description=quizData.description,
-        image=quizData.image,
-        authorId=userData.id,
-    )
-    db.add(quiz)
-    db.commit()
-
-    for itemQuistion in quizData.question:
-        createQuestion(idQuiz=quiz.id, questionData=itemQuistion, db=db)
 
 
 def createQuizResults(
@@ -100,6 +87,7 @@ def selectQuizJoined(db: Session = Depends(get_db)):
     return quiz
 
 
+# @celeryApp.tasks
 def selectQuiz(db: Session = Depends(get_db)):
     quiz = db.query(Quiz).all()
     return quiz
@@ -174,3 +162,18 @@ def updateCurrentQuiz(quizData: QuizSchema, db: Session = Depends(get_db)):
         createQuestion(idQuiz=quizData.id, questionData=item, db=db)
     db.execute(query)
     db.commit()
+
+
+@celeryApp.task
+def createQuiz(quizData: QuizSchema, userData: UserId, db: Session = Depends(get_db)):
+    quiz = Quiz(
+        title=quizData.title,
+        description=quizData.description,
+        image=quizData.image,
+        authorId=userData.id,
+    )
+    db.add(quiz)
+    db.commit()
+
+    for itemQuistion in quizData.question:
+        createQuestion(idQuiz=quiz.id, questionData=itemQuistion, db=db)
