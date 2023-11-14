@@ -14,5 +14,5 @@ git branch -M main
 git push -u origin main
 
 ### Для поключения celery и flower:
-celery -A task.task:celeryApp worker --loglevel=INFO --pool=solo  
-celery -A task.task:celeryApp flower
+celery -A tasks.task:celeryApp worker --loglevel=INFO --pool=solo  
+celery -A tasks.task:celeryApp flower

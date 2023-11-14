@@ -1,6 +1,18 @@
 from celery import Celery
 
-celeryApp = Celery("tasks", broker="redis://localhost:6379")
+celeryApp = Celery("tasks", broker="redis://127.0.0.1:6379")
+
+
+
+
 @celeryApp.task
-def printTask(text):
-    print(text)
+def eblanTask():
+    print("huy")
+    print("huy")
+    print("huy")
+    print("huy")
+    print("huy")
+    print("huy")
+    print("huy")
+    print("huy")
+    print("huy")

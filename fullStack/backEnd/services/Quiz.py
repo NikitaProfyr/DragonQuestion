@@ -8,7 +8,7 @@ from starlette import status
 from model.QuizSchema import QuestionSchema, QuizSchema, AnswerSchema
 from model.Quiz import Question, Quiz, Answer, QuizResults
 from model.Settings import get_db
-from sqlalchemy import select, delete, update
+from sqlalchemy import select, delete, update, and_
 from fastapi import HTTPException, Depends, UploadFile, File, Form
 from starlette.status import HTTP_400_BAD_REQUEST
 
@@ -40,7 +40,7 @@ def createQuizResults(
 ):
     quiz = db.scalar(
         select(QuizResults).where(
-            QuizResults.userId == userId, QuizResults.quizId == quizId
+            and_(QuizResults.userId == userId, QuizResults.quizId == quizId)
         )
     )
     if quiz:
@@ -165,15 +165,19 @@ def updateCurrentQuiz(quizData: QuizSchema, db: Session = Depends(get_db)):
 
 
 @celeryApp.task
-def createQuiz(quizData: QuizSchema, userData: UserId, db: Session = Depends(get_db)):
-    quiz = Quiz(
-        title=quizData.title,
-        description=quizData.description,
-        image=quizData.image,
-        authorId=userData.id,
-    )
-    db.add(quiz)
-    db.commit()
-
-    for itemQuistion in quizData.question:
-        createQuestion(idQuiz=quiz.id, questionData=itemQuistion, db=db)
+def createQuiz(name):
+    # def createQuiz(quizData: dict, userData: dict):
+    print(name)
+    print("=============================")
+    print("=============================")
+    # quiz = Quiz(
+    #     title=quizData.title,
+    #     description=quizData.description,
+    #     image=quizData.image,
+    #     authorId=userData.id,
+    # )
+    # db.add(quiz)
+    # db.commit()
+    #
+    # for itemQuistion in quizData.question:
+    #     createQuestion(idQuiz=quiz.id, questionData=itemQuistion, db=db)
