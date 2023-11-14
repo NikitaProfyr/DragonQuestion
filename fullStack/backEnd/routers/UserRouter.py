@@ -34,7 +34,7 @@ def refresh(request: Request, db: Session = Depends(get_db)):
         return HTTPException(
             status_code=HTTP_410_GONE, detail="не валидный refresh token"
         )
-    accessToken = createToken({"userName": refreshToken.get("sub")})
+    accessToken = createToken({"userName": refreshToken.get("userName")})
     return {"accessToken": accessToken}
 
 

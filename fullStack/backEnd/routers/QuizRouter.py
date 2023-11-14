@@ -19,9 +19,8 @@ from services.Quiz import (
     updateImageQuiz,
     selectQuiz,
     createQuizResults,
-    selectQuizResultsUser, createQuiz,
-)
-from tasks.task import eblanTask
+    selectQuizResultsUser, )
+from tasks.task import eblanTask, createQuiz
 
 quizPrivateRouter = APIRouter(
     prefix="/quiz", tags=["QuizPrivate"], dependencies=[Depends(CheckAuthMiddleware)]
@@ -30,7 +29,7 @@ quizPublicRouter = APIRouter(prefix="/quiz-public", tags=["QuizPublic"])
 
 
 @quizPrivateRouter.get("/getquiz")
-# @cache(expire=60)
+@cache(expire=60)
 def getQuiz(db: Session = Depends(get_db)) -> List[QuizBaseSchema]:
     """Получить все опросы"""
     return selectQuiz(db=db)
@@ -66,11 +65,11 @@ def addQuizResult(userId: int, quizId: int, result: int, db: Session = Depends(g
 
 @quizPrivateRouter.post("/createquiz")
 def addQuiz(quiz: QuizSchema, userId: UserId, backgroundTask: BackgroundTasks, db: Session = Depends(get_db)):
-    # createQuiz(quizData=quiz, userData=userId, db=db)  # Нужно добавить celery.tasks
+    createQuiz.delay(quiz=quiz.model_dump(), user=userId.model_dump())  # Нужно добавить celery.tasks
 
-    # createQuiz.delay(quizData=quiz.model_dump(), userData=userId.model_dump(), db=db)  # celery
-    createQuiz.delay("huy")  # celery
-    eblanTask.delay()
+    # createQuiz.delay(quizData=quiz.model_dump(), userData=userId.model_dump())  # celery
+    # createQuiz.delay("huy")  # celery
+    # eblanTask.delay()
     return {"status": status.HTTP_201_CREATED}
 
 

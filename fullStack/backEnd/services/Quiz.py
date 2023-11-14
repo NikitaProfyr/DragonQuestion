@@ -12,9 +12,6 @@ from sqlalchemy import select, delete, update, and_
 from fastapi import HTTPException, Depends, UploadFile, File, Form
 from starlette.status import HTTP_400_BAD_REQUEST
 
-from model.UserSchema import UserId
-from tasks.task import celeryApp
-
 
 def createAnswer(
     idQuestion: int, anwerData: AnswerSchema, db: Session = Depends(get_db)
@@ -164,20 +161,4 @@ def updateCurrentQuiz(quizData: QuizSchema, db: Session = Depends(get_db)):
     db.commit()
 
 
-@celeryApp.task
-def createQuiz(name):
-    # def createQuiz(quizData: dict, userData: dict):
-    print(name)
-    print("=============================")
-    print("=============================")
-    # quiz = Quiz(
-    #     title=quizData.title,
-    #     description=quizData.description,
-    #     image=quizData.image,
-    #     authorId=userData.id,
-    # )
-    # db.add(quiz)
-    # db.commit()
-    #
-    # for itemQuistion in quizData.question:
-    #     createQuestion(idQuiz=quiz.id, questionData=itemQuistion, db=db)
+# @celeryApp.task

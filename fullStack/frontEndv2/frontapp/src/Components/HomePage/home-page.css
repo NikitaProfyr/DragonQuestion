@@ -1,7 +1,9 @@
 .bg-content-block-1{
     height: calc(100vh - 80px);
     background: rgb(191,208,236);
-    background: linear-gradient(90deg, rgba(191,208,236,0.35) 0%, rgba(144,177,230,0.35) 100%);
+    background: linear-gradient(90deg, rgba(191,208,236,0.35) 0%, rgba(144,177,230,0.35) 100%), url('../../image/drakonEgor.png');
+    background-repeat: no-repeat;
+    background-position: center;
     width: 100%;
     overflow-y: hidden;
     box-sizing: border-box;
@@ -24,7 +26,7 @@
 }
 
 .text-content-block-1 p{
-    font-size: 36px;
+    font-size: calc(16px + 20 * (100vw / 1920));
     color: #FFFFFF;
     margin-top: 7vw;
     font-weight: bold;
@@ -41,7 +43,7 @@
 .h2-text-content-block-1{
     margin-top: 10vh;
     color: white;
-    font-size: 96px;
+    font-size: calc(40px + 56 * (100vw / 1920));
     font-weight: bold;
 
 }
@@ -76,11 +78,11 @@
     align-items: center;
     justify-content: right;
     color: #90B1E6;
-    font-size: 96px;
+    font-size: calc(40px + 56 * (100vw / 1920));
     font-weight: bold;
 }
 .content-top-group p{
-    font-size: 35px;
+    font-size: calc(16px + 20 * (100vw / 1920));
     color: #C867D3;
 }
 .content-buttom-2 {
@@ -91,7 +93,7 @@
 }
 .content-left-2 {
     color: #FFFFFF;
-    font-size: 96px;
+    font-size: calc(36px + 60 * (100vw / 1920));
     font-weight: bold;
 }
 
@@ -102,12 +104,13 @@
     justify-content: center;
     align-items: center;
     height: 100px;
-    width: 400px;
+    width: 100%;
+    text-align: center;
     border-radius: 30px;
     margin-right: 10%;
     color: #FFFFFF;
     text-decoration: none;
-    font-size: 48px;
+    font-size: calc(22px + 26 * (100vw / 1920));
     font-weight: bold;
 }
 .content-right-2:active {
