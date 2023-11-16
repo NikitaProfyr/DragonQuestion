@@ -63,14 +63,14 @@ def addQuizResult(userId: int, quizId: int, result: int, db: Session = Depends(g
     return createQuizResults(userId=userId, quizId=quizId, result=result, db=db)
 
 
-@quizPrivateRouter.post("/createquiz")
-def addQuiz(quiz: QuizSchema, userId: UserId, backgroundTask: BackgroundTasks, db: Session = Depends(get_db)):
-    createQuiz.delay(quiz=quiz.model_dump(), user=userId.model_dump())  # Нужно добавить celery.tasks
-
-    # createQuiz.delay(quizData=quiz.model_dump(), userData=userId.model_dump())  # celery
-    # createQuiz.delay("huy")  # celery
-    # eblanTask.delay()
-    return {"status": status.HTTP_201_CREATED}
+# @quizPrivateRouter.post("/createquiz")
+# def addQuiz(quiz: QuizSchema, userId: UserId, backgroundTask: BackgroundTasks, db: Session = Depends(get_db)):
+#     createQuiz.delay(quiz=quiz.model_dump(), user=userId.model_dump())  # Нужно добавить celery.tasks
+#
+#     # createQuiz.delay(quizData=quiz.model_dump(), userData=userId.model_dump())  # celery
+#     # createQuiz.delay("huy")  # celery
+#     # eblanTask.delay()
+#     return {"status": status.HTTP_201_CREATED}
 
 
 @quizPrivateRouter.post("/download/image")
