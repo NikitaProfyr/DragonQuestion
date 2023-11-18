@@ -1,4 +1,5 @@
 .idea
-/fullStack/backEnd/venv
-/fullStack/frontEndv2/node_modules
-/fullStack/frontEndv2/frontapp/node_modules
+/fullStack/back-end/venv
+/fullStack/frontEnd/node_modules
+/fullStack/front-endv2/frontapp/node_modules
+/fullStack/front-endv2/node_modules
