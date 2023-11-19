@@ -7,6 +7,10 @@ from redis import asyncio as aioredis
 
 from routers.UserRouter import userPublicRouter, userPrivateRouter
 from routers.QuizRouter import quizPrivateRouter, quizPublicRouter
+from dotenv import load_dotenv
+from os import getenv
+
+load_dotenv()
 
 app = FastAPI(
     title="IBD App",
@@ -49,6 +53,7 @@ app.include_router(
 @app.on_event("startup")
 async def startup_event():
     redis = aioredis.from_url(
-        "redis://redis", encoding="utf8", decode_responses=True
+        # "redis://redis", encoding="utf8", decode_responses=True
+        f"redis://{getenv('REDIS_HOST')}", encoding="utf8", decode_responses=True
     )
     FastAPICache.init(RedisBackend(redis), prefix="fastapi-cache")

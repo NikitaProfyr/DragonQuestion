@@ -1,6 +1,7 @@
 import axios from "axios";
 
-export const ApiUrl = 'http://localhost:8000'
+// export const ApiUrl = 'http://localhost:8000'
+export const ApiUrl = 'http://127.0.0.1:8000'
 
 let Api = null;
 

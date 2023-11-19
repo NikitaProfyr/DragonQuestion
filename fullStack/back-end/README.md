@@ -19,4 +19,10 @@ celery -A tasks.task:celeryApp flower
 
 ### Для поключения запуска docker-compose
 
-docker compose up --build dq
+docker compose up --build dq-client
+
+
+migration/env.py
+model/Settings.py
+mian.py # Redis
+Alembic.ini

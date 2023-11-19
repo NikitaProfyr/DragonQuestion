@@ -87,6 +87,8 @@ def selectCurrentToken(userId: str, db: Session = Depends(get_db)) -> str:
 
 def validateRefreshToken(token: str, db: Session = Depends(get_db)):
     try:
+        print(token)
+        print(token)
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         return payload
     except JWTError:
@@ -107,7 +109,8 @@ def deleteUser(userId: int, db: Session = Depends(get_db)):
 
 
 def getCurrentUser(
-    token: Annotated[str, Depends(oauth2Scheme)],
+    # token: Annotated[str, Depends(oauth2Scheme)],
+    token: str,
     db: Session = Annotated[str, Depends(get_db)],
 ):
     credentialsException = HTTPException(

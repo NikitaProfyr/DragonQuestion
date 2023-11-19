@@ -17,7 +17,7 @@ def CheckAuthMiddleware(
             status_code=401,
             detail="Пользователь не авторизован",
         )
-    user = getCurrentUser(authorizationHeader, db=db)
+    user = getCurrentUser(token=authorizationHeader, db=db)
     if not user:
         raise HTTPException(
             status_code=401,

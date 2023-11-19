@@ -3,8 +3,8 @@ import Api from "../Http";
 export default class AuthService {
     static login = async (userName, password) => {
         const {data} = await Api.post('/users/login', {userName, password})
-        localStorage.setItem('accessToken', data.accessToken)
-        localStorage.setItem('user', JSON.stringify(data.user))
+        await localStorage.setItem('accessToken', data.accessToken)
+        await localStorage.setItem('user', JSON.stringify(data.user))
         return data
     }
 
@@ -30,6 +30,7 @@ export default class AuthService {
     static logout = async () => {
         localStorage.removeItem('accessToken')
         localStorage.removeItem('user')
+        
         return await Api.post('/users/logout')
     }
 

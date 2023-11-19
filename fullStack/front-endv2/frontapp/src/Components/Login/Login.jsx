@@ -17,11 +17,14 @@ const Login = () => {
     const dispatch = useDispatch()
     const onClickLogin = async (e) => {
         e.preventDefault()
-        await loginAction(userName, password, dispatch)
+        const actionData = await loginAction(userName, password, dispatch)
         .catch(() => {
             alert('Не правильный логин или пароль.')
         })
-        return await navigate(ROUTES.QUIZ_LIST)
+        if(actionData != undefined){
+            dispatch(actionData)
+            return await navigate(ROUTES.QUIZ_LIST)
+        }
     }
     
     return (
