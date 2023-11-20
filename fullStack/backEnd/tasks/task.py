@@ -30,18 +30,19 @@ def eblanTask():
 @celeryApp.task
 def createQuiz(quiz: dict, user: dict):
     pass
-    # quizData = quiz
-    # userData = user
-    # print(quizData, userData)
-    # db = get_db()
-    # quiz = Quiz(
-    #     title=quizData.get('title'),
-    #     description=quizData.get('description'),
-    #     image=quizData.get('image'),
-    #     authorId=userData.get('id'),
-    # )
-    # db.add(quiz)
-    # db.commit()
+    quizData = quiz
+    userData = user
+    print(quizData, userData)
+    db = get_db()
+    quiz = Quiz(
+        title=quizData.get('title'),
+        description=quizData.get('description'),
+        image=quizData.get('image'),
+        authorId=userData.get('id'),
+    )
+    db.add(quiz)
+    db.commit()
+    db.close()
     #
     # for itemQuistion in quizData.question:
     #     createQuestion(idQuiz=quiz.id, questionData=itemQuistion, db=db)
