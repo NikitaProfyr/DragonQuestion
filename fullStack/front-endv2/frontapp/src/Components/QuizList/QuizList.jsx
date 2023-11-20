@@ -14,7 +14,7 @@ const QuizList = () => {
   const [isLoading, setIsLoading] = useState(true)
   const quiz = useSelector(state => state.reducerQuiz.quiz)
   const dispatch = useDispatch()
-  console.log(quiz[0]);
+  // console.log(quiz);
 
   useEffect(() => {
     setIsLoading(false)
@@ -30,11 +30,17 @@ const QuizList = () => {
     <div className="bg-quiz-list overflow-hidden">
         <div className="container">
           <div className='row py-4'>
-            {quiz[0].items.map((item, index) => (
-              <div className='col-12 col-sm-6 col-md-4 col-lg-4 col-xl-3 mb-4'>
-                <CurrentQuiz key={index} props={item} />
-              </div>)
-            )}
+            {isLoading === false ?
+              quiz[0].items.map((item, index) => (
+                <div className='col-12 col-sm-6 col-md-4 col-lg-4 col-xl-3 mb-4'>
+                  <CurrentQuiz key={index} props={item} />
+                </div>)
+              )
+              // <h2>Succes</h2>
+              :
+              <Spinner/>
+            }
+            
           </div>
         </div>
       </div>  
