@@ -21,17 +21,23 @@ from services.Quiz import (
     createQuizResults,
     selectQuizResultsUser, createQuiz, )
 
+from fastapi_pagination import Page
+
 quizPrivateRouter = APIRouter(
-    prefix="/quiz", tags=["QuizPrivate"], dependencies=[Depends(CheckAuthMiddleware)]
+    # prefix="/quiz", tags=["QuizPrivate"], dependencies=[Depends(CheckAuthMiddleware)]
+    prefix="/quiz", tags=["QuizPrivate"]
 )
 quizPublicRouter = APIRouter(prefix="/quiz-public", tags=["QuizPublic"])
 
 
-@quizPrivateRouter.get("/getquiz")
+
+
+@quizPrivateRouter.get("/getquiz", response_model=Page[QuizBaseSchema])
 @cache(expire=60)
-def getQuiz(db: Session = Depends(get_db)) -> List[QuizBaseSchema]:
+def getQuiz(db: Session = Depends(get_db)):
     """Получить все опросы"""
     return selectQuiz(db=db)
+
 
 
 @quizPrivateRouter.get("/getquiz/{idQuiz}")

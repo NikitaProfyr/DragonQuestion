@@ -65,7 +65,7 @@ export const reducerQuiz = (state = stateQuiz, action) => {
         case GET_QUIZ_USER:
             return {...state, quizUser: payload}
         case GET_QUIZ:
-            return {...state, quiz: [...payload]}
+            return {...state, quiz: [payload]}
         case GET_CURRENT_QUIZ:
             return {...state, currentQuiz: payload}
         case GET_QUIZ_RESULT:

@@ -87,8 +87,6 @@ def selectCurrentToken(userId: str, db: Session = Depends(get_db)) -> str:
 
 def validateRefreshToken(token: str, db: Session = Depends(get_db)):
     try:
-        print(token)
-        print(token)
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         return payload
     except JWTError:

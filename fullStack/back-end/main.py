@@ -10,6 +10,8 @@ from routers.QuizRouter import quizPrivateRouter, quizPublicRouter
 from dotenv import load_dotenv
 from os import getenv
 
+from fastapi_pagination import add_pagination
+
 load_dotenv()
 
 app = FastAPI(
@@ -18,6 +20,7 @@ app = FastAPI(
     contact={"name": "Toporov Denis, Profyr Nikita"},
 )
 
+add_pagination(app)
 
 app.add_middleware(
     CORSMiddleware,

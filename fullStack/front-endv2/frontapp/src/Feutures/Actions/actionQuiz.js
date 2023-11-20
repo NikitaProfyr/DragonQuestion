@@ -4,8 +4,8 @@ import { GET_CURRENT_QUIZ, GET_QUIZ, GET_QUIZ_USER, CREATE_QUIZ, UPDATE_CURRENT_
  
 
 
-export const getQuizAction = async (dispatch) => {
-    const data = await QuizService.getQuiz()
+export const getQuizAction = async (dispatch,page, size) => {
+    const data = await QuizService.getQuiz(page, size)
     dispatch({type: GET_QUIZ, payload: data})
 }
 

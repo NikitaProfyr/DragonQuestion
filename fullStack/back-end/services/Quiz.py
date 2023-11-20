@@ -2,13 +2,15 @@ import shutil
 
 import os
 
+from fastapi_pagination import add_pagination
+from fastapi_pagination.ext.sqlalchemy import paginate
 from sqlalchemy.orm import Session, joinedload
 from starlette import status
 
 from model.QuizSchema import QuestionSchema, QuizSchema, AnswerSchema
 from model.Quiz import Question, Quiz, Answer, QuizResults
 from model.Settings import get_db
-from sqlalchemy import select, delete, update, and_
+from sqlalchemy import select, delete, update, and_, asc
 from fastapi import HTTPException, Depends, UploadFile, File, Form
 from starlette.status import HTTP_400_BAD_REQUEST, HTTP_201_CREATED
 
@@ -47,9 +49,6 @@ def createQuiz(quizData: QuizSchema, user: UserId, db: Session = Depends(get_db)
 
     for item in quizData.question:
         createQuestion(idQuiz=quiz.id, questionData=item, db=db)
-
-
-
 
 
 def createQuizResults(
@@ -105,8 +104,7 @@ def selectQuizJoined(db: Session = Depends(get_db)):
 
 
 def selectQuiz(db: Session = Depends(get_db)):
-    quiz = db.query(Quiz).all()
-    return quiz
+    return paginate(conn=db, query=select(Quiz).order_by(Quiz.id))
 
 
 def selelctCurrentQuiz(idQuiz: int, db: Session = Depends(get_db)):
