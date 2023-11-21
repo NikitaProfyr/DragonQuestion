@@ -1,12 +1,11 @@
 import { QuizService } from "../../Services/QuizService"
-import { GET_CURRENT_QUIZ, GET_QUIZ, GET_QUIZ_USER, CREATE_QUIZ, UPDATE_CURRENT_QUIZ, BaseCurrentQuiz, GET_QUIZ_RESULT } from "../Reducers/reducerQuiz"
+import { GET_CURRENT_QUIZ, GET_QUIZ, GET_QUIZ_USER, CREATE_QUIZ, UPDATE_CURRENT_QUIZ, BaseCurrentQuiz, GET_QUIZ_RESULT, CLEAR_QUIZ } from "../Reducers/reducerQuiz"
 
  
 
 
 export const getQuizAction = async (dispatch, page, size) => {
     const data = await QuizService.getQuiz(page, size)
-    console.log(data);
     dispatch({type: GET_QUIZ, payload: data})
 }
 

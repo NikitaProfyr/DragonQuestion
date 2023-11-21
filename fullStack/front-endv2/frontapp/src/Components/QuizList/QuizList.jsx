@@ -18,16 +18,17 @@ const QuizList = () => {
   const quiz = useSelector(state => state.reducerQuiz.quiz)
   const dispatch = useDispatch()
   // console.log(quiz);
+
   useEffect(() => {
-    if(quiz[0] !== undefined){
+    if(quiz !== undefined){
       setIsLoading(false)
-      setTotalPage(quiz[0].pages)
+      setTotalPage(quiz.pages)
     }
   }, [quiz])
 
   useEffect(() => {
     if(fetching && currentPage <= totalPage){
-      getQuizAction(dispatch, currentPage, 4)
+      getQuizAction(dispatch, currentPage, 8)
       setFetching(false)
       setCurrentPage(currentPage + 1)
     }
@@ -41,7 +42,7 @@ const QuizList = () => {
   },[])
 
   const scrollHandler = (e) =>{
-    if((e.target.documentElement.scrollHeight - (e.target.documentElement.scrollTop + window.innerHeight)) < 1){
+    if((e.target.documentElement.scrollHeight - (e.target.documentElement.scrollTop + window.innerHeight)) < 10){
       setFetching(true)
     }
   }
@@ -52,7 +53,7 @@ const QuizList = () => {
         <div className="container">
           <div className='row py-4'>
             {isLoading === false ?
-              quiz[0].items.map((item, index) => (
+              quiz.items.map((item, index) => (
                 <div key={index} className='col-12 col-sm-6 col-md-4 col-lg-4 col-xl-3 mb-4'>
                   <CurrentQuiz key={item.id} props={item} />
                 </div>)

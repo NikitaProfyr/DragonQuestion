@@ -6,6 +6,8 @@ export const CREATE_QUIZ = 'CREATE_QUIZ'
 export const UPDATE_CURRENT_QUIZ = 'UPDATE_CURRENT_QUIZ'
 export const GET_QUIZ_RESULT = 'GET_QUIZ_RESULT'
 
+
+
 export const BaseCurrentQuiz = {
     id:"1",
     title: "",
@@ -70,8 +72,24 @@ export const reducerQuiz = (state = stateQuiz, action) => {
         case GET_QUIZ_USER:
             return {...state, quizUser: payload}
         case GET_QUIZ:
+            payload.items = payload.items.filter(newItem => !state.quiz.items.some(item => 
+                item.id === newItem.id && item.name === newItem.name
+              ));
+            return {...state, 
+                quiz: {
+                    items: [...state.quiz.items, ...payload.items],
+                    page: payload.page,
+                    pages: payload.pages,
+                    size: payload.size,
+                } 
+            }
+            // }
+          
+            // for(var i = 1; i < state.quiz.items.length; i++){
+            //   if()  
+            // }
             
-            return {...state, quiz: [payload]}
+
         case GET_CURRENT_QUIZ:
             return {...state, currentQuiz: payload}
         case GET_QUIZ_RESULT:
