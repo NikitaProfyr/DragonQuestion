@@ -20,18 +20,20 @@ const QuizUser = () => {
   const [isLoading, setIsLoading] = useState(true)
 
   const dispatch = useDispatch()
-  console.log(quizResults);
+  // console.log(quizResults);
 
   useEffect(() => {
     dispatch(setBaseCurrentQuiz())
-    getUserQuiz(user.id, dispatch)
+    getUserQuiz(dispatch, user.id, 1, 4)
   }, [])
   useEffect(() =>{
     getQuizResultAction(user.id, dispatch)
   }, [])
 
   useEffect(() => {
-    setIsLoading(false)
+    if(quiz.items !== undefined){
+      setIsLoading(false)
+    } 
   }, [quiz, quizResults])
 
   return (
@@ -51,14 +53,14 @@ const QuizUser = () => {
               <Tab.Content>
                 <Tab.Pane eventKey="#user-quiz">
                   <div className="row">
-                    {quiz === null ?
+                    {quiz.items === undefined ?
                       <div className='col-12'>вопросов нет</div>
                       :
                       <>
                         {isLoading ?
                           <div><Spinner></Spinner></div>
                           :
-                          <>{quiz.map((item) => (
+                          <>{quiz.items.map((item) => (
                             <div className='col-md-6 col-xl-4 col-12 mb-4'>
                               <CurrentQuizUser key={item.id} props={item}></CurrentQuizUser>
                             </div>

@@ -23,7 +23,12 @@ export const BaseCurrentQuiz = {
 } 
 
 const stateQuiz = {
-    quiz: [],
+    quiz: {
+        items:[],
+        page: 0,
+        pages: 0,
+        size: 0,
+    },
     quizUser: [],
     createQuiz: {
         id:"1",
@@ -65,6 +70,7 @@ export const reducerQuiz = (state = stateQuiz, action) => {
         case GET_QUIZ_USER:
             return {...state, quizUser: payload}
         case GET_QUIZ:
+            
             return {...state, quiz: [payload]}
         case GET_CURRENT_QUIZ:
             return {...state, currentQuiz: payload}

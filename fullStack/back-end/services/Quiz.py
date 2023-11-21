@@ -10,7 +10,7 @@ from starlette import status
 from model.QuizSchema import QuestionSchema, QuizSchema, AnswerSchema
 from model.Quiz import Question, Quiz, Answer, QuizResults
 from model.Settings import get_db
-from sqlalchemy import select, delete, update, and_, asc
+from sqlalchemy import select, delete, update, and_, asc, or_
 from fastapi import HTTPException, Depends, UploadFile, File, Form
 from starlette.status import HTTP_400_BAD_REQUEST, HTTP_201_CREATED
 
@@ -118,15 +118,8 @@ def selelctCurrentQuiz(idQuiz: int, db: Session = Depends(get_db)):
 
 
 def selectUserQuiz(idUser: int, db: Session = Depends(get_db)):
-    quiz = (
-        db.query(Quiz)
-        .options(joinedload(Quiz.question).joinedload(Question.answer))
-        .where(Quiz.authorId == idUser)
-        .all()
-    )
-    if not quiz:
-        return None
-    return quiz
+    query = select(Quiz).where(or_(Quiz.authorId == idUser)).order_by(Quiz.id)
+    return paginate(conn=db, query=query)
 
 
 def selectQuizResultsUser(idUser: int, db: Session = Depends(get_db)):

@@ -4,8 +4,9 @@ import { GET_CURRENT_QUIZ, GET_QUIZ, GET_QUIZ_USER, CREATE_QUIZ, UPDATE_CURRENT_
  
 
 
-export const getQuizAction = async (dispatch,page, size) => {
+export const getQuizAction = async (dispatch, page, size) => {
     const data = await QuizService.getQuiz(page, size)
+    console.log(data);
     dispatch({type: GET_QUIZ, payload: data})
 }
 
@@ -14,8 +15,8 @@ export const getCurrentQuiz = async (idQuiz, dispatch) => {
     dispatch({type: GET_CURRENT_QUIZ, payload: data})
 }
 
-export const getUserQuiz = async (idUser, dispatch) => {
-    const data = await QuizService.getUserQuiz(idUser)
+export const getUserQuiz = async (dispatch, idUser, page, size) => {
+    const data = await QuizService.getUserQuiz(idUser, page, size)
     dispatch({type: GET_QUIZ_USER, payload: data})
 }
 

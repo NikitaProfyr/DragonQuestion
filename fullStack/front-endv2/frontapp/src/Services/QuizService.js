@@ -9,8 +9,8 @@ export class QuizService {
         const { data } = await Api.get(`quiz/getquiz/${idQuiz}`)
         return data
     }
-    static getUserQuiz = async (idUser) => {
-        const { data } = await Api.get(`/quiz/getquiz/user/${idUser}`)
+    static getUserQuiz = async (idUser, page, size) => {
+        const { data } = await Api.get(`/quiz/getquiz/user/${idUser}?page=${page}&size=${size}`)
             .catch(() => ({}))
         return data
     }

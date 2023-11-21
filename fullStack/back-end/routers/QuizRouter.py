@@ -24,8 +24,8 @@ from services.Quiz import (
 from fastapi_pagination import Page
 
 quizPrivateRouter = APIRouter(
-    prefix="/quiz", tags=["QuizPrivate"], dependencies=[Depends(CheckAuthMiddleware)]
-    # prefix="/quiz", tags=["QuizPrivate"]
+    # prefix="/quiz", tags=["QuizPrivate"], dependencies=[Depends(CheckAuthMiddleware)]
+    prefix="/quiz", tags=["QuizPrivate"]
 )
 quizPublicRouter = APIRouter(prefix="/quiz-public", tags=["QuizPublic"])
 
@@ -46,8 +46,8 @@ def getCurrentQuiz(idQuiz: int, db: Session = Depends(get_db)) -> QuizSchema:
     return selelctCurrentQuiz(idQuiz=idQuiz, db=db)
 
 
-@quizPrivateRouter.get("/getquiz/user/{idUser}")
-def getUserQuiz(idUser: int, db: Session = Depends(get_db)) -> List[QuizSchema] | None:
+@quizPrivateRouter.get("/getquiz/user/{idUser}", response_model=Page[QuizBaseSchema])
+def getUserQuiz(idUser: int, db: Session = Depends(get_db)) -> Page[QuizBaseSchema] | None:
     """Получить созданные опросы конкретного пользователя"""
     return selectUserQuiz(idUser=idUser, db=db)
 
