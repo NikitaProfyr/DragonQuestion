@@ -16,20 +16,20 @@ import QuizCreatePage from '../../Page/QuizCreatePage'
 import QuizUpdatePage from '../../Page/QuizUpdatePage'
 import QuizGamePage from '../../Page/QuizGamePage'
  
-// const PublicRoutes = [
-//   {
-//       patch: ROUTES.HOME,
-//       Component: IndexPage,
-//   },
-//   {
-//       patch: ROUTES.LOGIN,
-//       Component: LoginPage,
-//   },
-//   {
-//       patch: ROUTES.REGISTRATION,
-//       Component: RegistrationPage,
-//   },
-// ]
+const PublicRoutes = [
+  {
+      patch: ROUTES.HOME,
+      Component: IndexPage,
+  },
+  {
+      patch: ROUTES.LOGIN,
+      Component: LoginPage,
+  },
+  {
+      patch: ROUTES.REGISTRATION,
+      Component: RegistrationPage,
+  },
+]
 
 // const PrivateRoutes = [
 //   {

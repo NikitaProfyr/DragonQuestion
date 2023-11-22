@@ -11,8 +11,41 @@
     background: rgb(107,160,244);
     background: linear-gradient(135deg, rgba(107,160,244,1) 0%, rgba(218,81,234,1) 100%);
     border: 0;
+}   
+
+.list-group-item.active:hover{
+    color: white;
 }
 
 .list-group-item{
+    border: 0;
+    color: rgb(25,93,224);;
+}
+.list-group-item:hover{
+    color: #e600ff;
+}
+.pagination-item{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 30px;
+    height: 30px;
+    backdrop-filter: blur(4px);
+    background-color: rgba(255, 255, 255, 0.2);
+    -webkit-box-shadow: 0px 0px 10px 4px rgba(34, 60, 80, 0.2);
+    -moz-box-shadow: 0px 0px 10px 4px rgba(34, 60, 80, 0.2);
+    box-shadow: 0px 0px 10px 4px rgba(34, 60, 80, 0.2);
+    border: 0;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.pagination-item.active{
+    backdrop-filter: blur(4px);
+    background-color: rgb(230, 0, 255, 0.3);
+    -webkit-box-shadow: 0px 0px 10px 4px rgba(34, 60, 80, 0.2);
+    -moz-box-shadow: 0px 0px 10px 4px rgba(34, 60, 80, 0.2);
+    box-shadow: 0px 0px 10px 4px rgba(34, 60, 80, 0.2);
     border: 0;
 }

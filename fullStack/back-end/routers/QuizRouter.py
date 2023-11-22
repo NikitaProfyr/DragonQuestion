@@ -7,7 +7,7 @@ from starlette.responses import FileResponse
 from starlette import status
 
 from middleware.Token import CheckAuthMiddleware
-from model.QuizSchema import QuizSchema, QuizBaseSchema
+from model.QuizSchema import QuizSchema, QuizBaseSchema, QuizResult
 from model.Settings import get_db
 from model.UserSchema import UserId
 from services.Quiz import (
@@ -24,8 +24,8 @@ from services.Quiz import (
 from fastapi_pagination import Page
 
 quizPrivateRouter = APIRouter(
-    prefix="/quiz", tags=["QuizPrivate"], dependencies=[Depends(CheckAuthMiddleware)]
-    # prefix="/quiz", tags=["QuizPrivate"]
+    # prefix="/quiz", tags=["QuizPrivate"], dependencies=[Depends(CheckAuthMiddleware)]
+    prefix="/quiz", tags=["QuizPrivate"]
 )
 quizPublicRouter = APIRouter(prefix="/quiz-public", tags=["QuizPublic"])
 
@@ -52,7 +52,7 @@ def getUserQuiz(idUser: int, db: Session = Depends(get_db)) -> Page[QuizBaseSche
     return selectUserQuiz(idUser=idUser, db=db)
 
 
-@quizPrivateRouter.get("/result")
+@quizPrivateRouter.get("/result", response_model=Page[QuizResult])
 def getResultQuizUser(idUser: int, db: Session = Depends(get_db)):
     return selectQuizResultsUser(idUser=idUser, db=db)
 

@@ -40,8 +40,8 @@ export const setBaseCurrentQuiz = () => {
     }
 }
 
-export const getQuizResultAction = async (userId, dispatch) => {
-    const data = await QuizService.getQuizResultsUser(userId)
+export const getQuizResultAction = async (userId, dispatch, page, size) => {
+    const data = await QuizService.getQuizResultsUser(userId, page, size)
     dispatch({
         type: GET_QUIZ_RESULT,
         payload: data

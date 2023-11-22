@@ -126,12 +126,13 @@ def selectQuizResultsUser(idUser: int, db: Session = Depends(get_db)):
     quiz = (
         db.query(QuizResults)
         .options(joinedload(QuizResults.quiz))
-        .where(QuizResults.userId == idUser and QuizResults.quizId == Quiz.id)
+        .where()
         .all()
     )
-    if not quiz:
-        return None
-    return quiz
+
+    return paginate(conn=db, query=select(QuizResults).where(and_(
+        QuizResults.userId == idUser, QuizResults.quizId == Quiz.id
+    )))
 
 
 def deleteImage(imageUrl: str):

@@ -33,5 +33,6 @@ class QuizSchema(QuizBaseSchema):
 
 class QuizResult(BaseModel):
     id: int
-    user: int
-    quiz: List[QuizBaseSchema]
+    userId: int
+    result: int
+    quiz: QuizBaseSchema

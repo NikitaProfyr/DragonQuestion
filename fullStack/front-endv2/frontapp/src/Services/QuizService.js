@@ -64,8 +64,8 @@ export class QuizService {
         return await Api.post(`/quiz/create-result?userId=${userId}&quizId=${quizId}&result=${result}` 
         )
     }
-    static getQuizResultsUser = async (userId) => {
-        const {data} = await Api.get(`/quiz/result?idUser=${userId}`)
+    static getQuizResultsUser = async (userId, page, size) => {
+        const {data} = await Api.get(`/quiz/result?idUser=${userId}&page=${page}&size=${size}`)
         return data
     }
 }

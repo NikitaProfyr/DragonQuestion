@@ -20,21 +20,30 @@ const QuizUser = () => {
   const [isLoading, setIsLoading] = useState(true)
 
   const dispatch = useDispatch()
-  // console.log(quizResults);
+  console.log(quizResults);
 
   useEffect(() => {
     dispatch(setBaseCurrentQuiz())
-    getUserQuiz(dispatch, user.id, 1, 4)
+    getUserQuiz(dispatch, user.id, 1, 6)
   }, [])
-  useEffect(() =>{
-    getQuizResultAction(user.id, dispatch)
+  useEffect(() => {
+    getQuizResultAction(user.id, dispatch, 1, 6)
   }, [])
 
   useEffect(() => {
-    if(quiz.items !== undefined){
+    if (quiz.items !== undefined && quizResults.items !== undefined) {
       setIsLoading(false)
-    } 
+    }
   }, [quiz, quizResults])
+
+  const onClickPagination = (item) => {
+    console.log(item);
+    getUserQuiz(dispatch, user.id, item, 6)
+  }
+  const onClickPaginationQuizResult = (item) => {
+    console.log(item);
+    getQuizResultAction(user.id, dispatch, item, 6)
+  }
 
   return (
     <div className="bg-quiz-user">
@@ -60,27 +69,55 @@ const QuizUser = () => {
                         {isLoading ?
                           <div><Spinner></Spinner></div>
                           :
-                          <>{quiz.items.map((item) => (
-                            <div className='col-md-6 col-xl-4 col-12 mb-4'>
-                              <CurrentQuizUser key={item.id} props={item}></CurrentQuizUser>
-                            </div>
-                          ))}</>
+                          <>
+                            {quiz.items.map((item, index) => (
+                              <div key={index} className='col-md-6 col-xl-4 col-12 mb-4'>
+                                <CurrentQuizUser key={item.id} props={item}></CurrentQuizUser>
+                              </div>
+                            ))}
+                          </>
                         }
                       </>
                     }
                   </div>
+                  <div className="d-flex justify-content-center align-items-center">
+                    {quiz.pages !== 1 ?
+                      Array.from({ length: quiz.pages }, (_, index) => (
+                        <>{quiz.page === index + 1 ?
+                          <div
+                            onClick={() => (onClickPagination(index + 1))}
+                            key={index}
+                            className="pagination-item active mx-2"
+                          >
+                            {index + 1}
+                          </div>
+                          :
+                          <div
+                            onClick={() => (onClickPagination(index + 1))}
+                            key={index}
+                            className="pagination-item mx-2"
+                          >
+                            {index + 1}
+                          </div>
+                        }</>
+
+                      ))
+                      :
+                      <></>
+                    }
+                  </div>
                 </Tab.Pane>
                 <Tab.Pane eventKey="#result-quiz">
-                <div className="row">
-                    {quizResults === null ?
+                  <div className="row">
+                    {quizResults === undefined ?
                       <div className='col-12'>нет пройденных опросов</div>
                       :
                       <>
                         {isLoading ?
                           <div><Spinner></Spinner></div>
                           :
-                          <>{quizResults.map((item) => (
-                            <div className='col-md-6 col-xl-4 col-12 mb-4'>
+                          <>{quizResults.items.map((item, index) => (
+                            <div key={index} className='col-md-6 col-xl-4 col-12 mb-4'>
                               <CurrentQuizResult key={item.id} props={item}></CurrentQuizResult>
                             </div>
                           ))}</>
@@ -88,6 +125,32 @@ const QuizUser = () => {
                       </>
                     }
                   </div>
+                  <div className="d-flex justify-content-center align-items-center">
+                    {quizResults.pages !== 1 ?
+                      Array.from({ length: quizResults.pages }, (_, index) => (
+                        <>{quizResults.page === index + 1 ?
+                          <div
+                            onClick={() => (onClickPaginationQuizResult(index + 1))}
+                            key={index}
+                            className="pagination-item active mx-2"
+                          >
+                            {index + 1}
+                          </div>
+                          :
+                          <div
+                            onClick={() => (onClickPaginationQuizResult(index + 1))}
+                            key={index}
+                            className="pagination-item mx-2"
+                          >
+                            {index + 1}
+                          </div>
+                        }</>
+
+                      ))
+                      :
+                      <></>
+                    }
+                  </div>  
                 </Tab.Pane>
               </Tab.Content>
             </div>
