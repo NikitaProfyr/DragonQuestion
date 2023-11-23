@@ -28,7 +28,9 @@ userPrivateRouter = APIRouter(
 @userPublicRouter.get("/refresh")
 def refresh(request: Request, db: Session = Depends(get_db)):
     refreshToken = request.cookies.get("refreshToken")
-
+    print(refreshToken)
+    print(request.cookies)
+    print("refreshToken")
     refreshToken = validateRefreshToken(token=refreshToken, db=db)
     if not refreshToken:
         return HTTPException(

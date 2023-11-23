@@ -87,11 +87,13 @@ def selectCurrentToken(userId: str, db: Session = Depends(get_db)) -> str:
 
 def validateRefreshToken(token: str, db: Session = Depends(get_db)):
     try:
+        print(token)
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        print(payload)
         return payload
     except JWTError:
-        db.scalar(delete(Token).where(or_(Token.refreshToken == token)))
-        db.commit()
+        # db.scalar(delete(Token).where(or_(Token.refreshToken == token)))
+        # db.commit()
         return None
 
 
@@ -107,8 +109,8 @@ def deleteUser(userId: int, db: Session = Depends(get_db)):
 
 
 def getCurrentUser(
-    # token: Annotated[str, Depends(oauth2Scheme)],
-    token: str,
+    token: Annotated[str, Depends(oauth2Scheme)],
+    # token: str,
     db: Session = Annotated[str, Depends(get_db)],
 ):
     credentialsException = HTTPException(

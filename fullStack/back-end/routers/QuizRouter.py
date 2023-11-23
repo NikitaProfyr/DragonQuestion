@@ -24,8 +24,8 @@ from services.Quiz import (
 from fastapi_pagination import Page
 
 quizPrivateRouter = APIRouter(
-    # prefix="/quiz", tags=["QuizPrivate"], dependencies=[Depends(CheckAuthMiddleware)]
-    prefix="/quiz", tags=["QuizPrivate"]
+    prefix="/quiz", tags=["QuizPrivate"], dependencies=[Depends(CheckAuthMiddleware)]
+    # prefix="/quiz", tags=["QuizPrivate"]
 )
 quizPublicRouter = APIRouter(prefix="/quiz-public", tags=["QuizPublic"])
 

@@ -6,7 +6,7 @@ export const ApiUrl = 'http://127.0.0.1:8000'
 let Api = null;
 
 const ApiWithOutToken = axios.create({
-    // withCredentials: true,
+    withCredentials: true,
     baseURL: ApiUrl,
 })
 
@@ -26,7 +26,7 @@ ApiWithToken.interceptors.response.use((config) => {
     const originalRequest = error.config
     if(error.response.status === 401){
         try {
-            const accessToken = await ApiWithOutToken.get('/users/refresh', {withCredentials: true})
+            const accessToken = await ApiWithOutToken.get('/users/refresh')
             console.log(accessToken.data.accessToken);
             localStorage.setItem('accessToken', accessToken.data.accessToken)
             return await ApiWithToken.request(originalRequest)
