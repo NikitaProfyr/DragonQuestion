@@ -1,35 +1,14 @@
 .bg-content-user-settings {
     background: linear-gradient(135deg, rgba(221,144,230,0.2) 10%, rgba(144,177,230,0.2) 100%), url('../../image/whitepurpleDragon.png');
     background-position: center;
-    background-repeat: no-repeat; 
-    height: calc(100vh - 80px);
-    display: flex;
-    justify-content: center;
+    background-repeat: no-repeat;
+    background-size: contain; 
+    min-height: calc(100vh - 80px);
 }
-
-/* .bg-dragon-settings {
-    transform: rotate(-70deg);
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    left: 500px;
-    top: 100px;
-    margin: auto;
-    z-index: 0;
-
-} */
-
-.all-content-user-settings {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-}
-
-.security-block-settings {
+.form-setting {
     float: right;
     height: 675px;
-    width: 420px;
+    width: 60%;
     background-color: rgba(255, 255, 255, 0.2);
     backdrop-filter: blur(5px);
     border-radius: 15px;
@@ -39,15 +18,45 @@
     display: flex;
     justify-content: center;
 }
-
-.button-user-settings {
-    float: right;
-    display: flex;
-    justify-content: space-between;
-    width: 420px;
-    margin-top: 40px;
+.box-settings-content {
+    width: 80%;
+    color: #79A8F4;
+    font-weight: bold;
 }
-.button-user-settings button {
+.box-settings-content h1 {
+    font-size: calc(16px + 8 * (100vw / 1920));
+    font-weight: bold;
+    color: #79A8F4;
+}
+.box-settings-content h2 {
+    font-size: calc(12px + 8 * (100vw / 1920));
+    font-weight: bold;
+    color: #79A8F4;
+}
+.box-settings-content h3 {
+    font-size: calc(6px + 8 * (100vw / 1920));
+    font-weight: bold;
+    color: #79A8F4;
+}
+.box-settings-content input {
+    display: block;
+    background: #fff;
+    height: 40px;
+    width: 100%;
+    border-radius: 5px;
+    color: #79A8F4;
+    border: none;
+    font-size: 24px;
+    font-weight: bold;
+    z-index: 100;
+    text-align: center;
+    margin-top: 50px;
+    outline: none;
+    caret-color: #DD90E6;
+}
+
+
+.button {
     border: none;
     background-color: #79A8F4;
     height: 32px;
@@ -58,7 +67,7 @@
     font-weight: bold;
 }
 
-.button-user-settings .gradient-button-settings {
+.button{
     background: rgb(107,160,244);
     background: linear-gradient(135deg, rgba(107,160,244,1) 0%, rgba(218,81,234,1) 100%);
 }
@@ -67,65 +76,9 @@
     -moz-box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.5) inset;
     box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.5) inset;
 }
-.content-security-block {
-    display: block;
-    width: 300px;
-}
 
-.change-password-block {
-    margin-top: 50px;
-}
 
-.change-password-block input{
-    height: 40px;
-    width: 300px;
-    background-color: #fff;
-    border-radius: 5px;
-    border: none;
-    font-size: 20px;
-    color: #90B1E6;
-    text-align: center;
-    caret-color: #DD90E6;
-    outline: none;
-}
-.change-password-block button {
-    border: none;
-    background-color: #79A8F4;
-    height: 40px;
-    width: 300px;
-    border-radius: 5px;
-    z-index: 50;
-    color: #fff;
-    font-weight: bold;
-    margin-top: 25px;
-}
-.change-password-block h1 {
-    font-size: 24px;
-    font-weight: bold;
-    color: #90B1E6;
-}
-.change-password-block h2 {
-    font-size: 20px;
-    font-weight: bold;
-    color: #90B1E6;
-    margin-top: 20px;
-}
-.change-password-block h3 {
-    font-size: 14px;
-    font-weight: bold;
-    color: #90B1E6;
-    margin-top: 10px;
-}
-.account-deletion-block {
-    margin-top: 135px;
-}
-.account-deletion-block h2{
-    font-size: 20px;
-    font-weight: bold;
-    color: #90B1E6;
-    display: flex;
-    justify-content: center;
-}
+
 .account-deletion-block button {
     height: 40px;
     width: 300px;
@@ -137,27 +90,4 @@
     color: #fff;
     font-size: 18px;
     font-weight: bold;
-}
-.account-deletion-block button:active {
-    -webkit-box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.5) inset;
-    -moz-box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.5) inset;
-    box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.5) inset;
-}
-.right-content-settings {
-    height: calc(100vh - 80px);
-    width: 50%;
-    display: flex;
-    align-items: center;
-
-
-}
-.right-content-align {
-    display: block;
-}
-.left-content-settings {
-    background-color: bisque;
-    width: 50%;
-    height: calc(100vh - 80px);
-    display: flex;
-    align-items: center;
 }
