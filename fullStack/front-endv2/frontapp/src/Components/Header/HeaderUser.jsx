@@ -21,11 +21,6 @@ const HeaderUser = () => {
         }
     }, [user]) 
 
-
-    const onClickLogOut = () => {
-        logoutAction(dispatch)
-    }
-
     if (loader){
         // return <Spinner animation='grow'/>
     }
@@ -41,7 +36,6 @@ const HeaderUser = () => {
                         <Link to={ROUTES.QUIZ_LIST} className="link-quiz">Опросы</Link>
                         <Link to={ROUTES.QUIZ_USER}>Мои опросы</Link>
                         <Link to={ROUTES.USER_SETTING}>{user.userName}</Link>
-                        <Link to={ROUTES.HOME} onClick={ onClickLogOut } >Выйди</Link>
                     </div>
                 </div>
             </div>

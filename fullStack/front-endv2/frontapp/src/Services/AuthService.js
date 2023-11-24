@@ -7,7 +7,10 @@ export default class AuthService {
         await localStorage.setItem('user', JSON.stringify(data.user))
         return data
     }
-
+    static deleteCurrentUser = async (userId) => {
+        console.log('da', userId);
+        return await Api.delete(`/users/delete?userId=${userId}`)
+    }
     static logup(userName, password){    
         const userData = {
             userName: userName,
