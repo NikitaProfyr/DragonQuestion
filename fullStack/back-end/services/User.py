@@ -3,7 +3,7 @@ from typing import Annotated
 
 from fastapi import HTTPException, Depends
 from jose import jwt, JWTError
-from sqlalchemy import select, update, delete, or_
+from sqlalchemy import select, update, delete, or_, and_
 from sqlalchemy.orm import Session
 from starlette import status
 from starlette.status import HTTP_400_BAD_REQUEST, HTTP_401_UNAUTHORIZED, HTTP_200_OK
@@ -133,13 +133,17 @@ def getCurrentUser(
 
 
 def updateUser(db: Session, user: UserUpdate):
+    # currentUser = db.scalar(select(User).where(or_(User.userName == user.userName)))
+    # if currentUser.id != User.id:
+    #     return HTTPException(
+    #         status_code=404,
+    #         detail="Пользователь с таким username или email уже существует."
+    #     )
     query = (
         update(User)
         .where(or_(User.id == user.id))
         .values(
             userName=user.userName,
-            firstName=user.firstName,
-            lastName=user.lastName,
             email=user.email,
         )
     )

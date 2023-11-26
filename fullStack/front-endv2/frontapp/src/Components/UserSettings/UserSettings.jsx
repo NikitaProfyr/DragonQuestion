@@ -10,8 +10,11 @@ import AuthService from '../../Services/AuthService';
 
 const UserSettings = () => {
     const [cheackDel, setCheackDel] = useState(false)
+    
     const dispatch = useDispatch()
     const user = useSelector(state => state.reducerUser.userInfo)
+    const [userName, setUserName] = useState(user.userName)
+    const [email, setEmail] = useState(user.email)
     const navigate = useNavigate();
     const deleteUser = async () => {
         console.log(user)
@@ -24,6 +27,11 @@ const UserSettings = () => {
     const logOut = () => {
         logoutAction(dispatch)
         return navigate(ROUTES.HOME)
+    }
+    const userUpdateData = (e) => {
+        e.preventDefault()
+        console.log(email, userName)
+        AuthService.updateUserData(userName, user.id ,email)
     }
     return (
         <div className="bg-content-user-settings">
@@ -55,12 +63,12 @@ const UserSettings = () => {
                         <div className="form-setting d-flex justify-content-center align-items-center">
                             <div className="box-settings-content pink-color-title d-flex flex-column">
                                 <h1 color="#DD90E6">ЛИЧНЫЕ ДАННЫЕ</h1>
-                                <form>
+                                <form onSubmit={(e) => (userUpdateData(e)) }>
                                     <h3>ИМЯ ПРОФИЛЯ</h3>
-                                    <input type="text" defaultValue={user.userName} />
+                                    <input type="text" onChange={(e) => {setUserName(e.target.value)}} defaultValue={user.userName} />
                                     <h3 color="#DD90E6">EMAIL</h3>
-                                    <input type="text" />
-                                    <button className="save-new-password-button">
+                                    <input type="text" onChange={(e) => {setEmail(e.target.value)}} defaultValue={user.email} />
+                                    <button type="submit" className="save-new-password-button">
                                         Сохранить
                                     </button>
                                 </form>

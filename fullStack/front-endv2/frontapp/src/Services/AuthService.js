@@ -29,7 +29,15 @@ export default class AuthService {
         console.log(answer, "3232")
         return answer
     }
-
+    static updateUserData = async (userName, id,email) => {
+        const userData = {
+            email: email,
+            id: id,
+            userName: userName,
+        }
+        const {data} = await Api.put('/users/updateUser', userData)
+        return data
+    }
     static logout = async () => {
         localStorage.removeItem('accessToken')
         localStorage.removeItem('user')
