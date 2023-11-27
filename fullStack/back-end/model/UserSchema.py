@@ -38,3 +38,9 @@ class UserUpdate(UserLite):
 
 class TokenSchema(BaseModel):
     accesToken: str
+
+
+class UpdatePasswordSchema(BaseModel):
+    id: int
+    oldPassword: str
+    newPassword: str

@@ -4,7 +4,7 @@ from sqlalchemy.orm import Session
 from starlette.status import HTTP_401_UNAUTHORIZED, HTTP_200_OK, HTTP_410_GONE
 
 from middleware.Token import CheckAuthMiddleware
-from model.UserSchema import UserCreate, UserUpdate, UserId
+from model.UserSchema import UserCreate, UserUpdate, UserId, UpdatePasswordSchema
 from model.Settings import get_db
 from security import ACCESS_TOKEN_EXPIRE_MINUTES, REFRESH_TOKEN_EXPIRE_DEYS
 from services.User import (
@@ -16,7 +16,7 @@ from services.User import (
     saveRefreshToken,
     deleteRefreshToken,
     validateRefreshToken,
-    deleteUser,
+    deleteUser, updatePassword,
 )
 
 userPublicRouter = APIRouter(tags=["UserPublic"])
@@ -92,11 +92,41 @@ def currentUser(token, db: Session = Depends(get_db)):
     return getCurrentUser(token, db=db)
 
 
-@userPrivateRouter.put("/updateUser")
-def updateUserData(userData: UserUpdate, db: Session = Depends(get_db)) -> UserUpdate:
-    return updateUser(db=db, user=userData)
+@userPrivateRouter.put("/update/user")
+def updateUserData(userData: UserUpdate, request: Request, response: Response, db: Session = Depends(get_db)):
+    refreshToken = request.cookies.get("refreshToken")
+    deleteRefreshToken(token=refreshToken, db=db)
+    response.delete_cookie("refreshToken")
+    user = updateUser(db=db, user=userData)
+    accessTokenExpires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    refreshTokenExpires = timedelta(days=REFRESH_TOKEN_EXPIRE_DEYS)
+    accessToken = createToken(
+        data={"userName": user.userName}, expiresDelta=accessTokenExpires
+    )
+    refreshToken = createToken(
+        data={"userName": user.userName}, expiresDelta=refreshTokenExpires
+    )
+    saveRefreshToken(userId=user.id, token=refreshToken, db=db)
+    response.set_cookie(
+        key="refreshToken",
+        value=refreshToken,
+        max_age=24 * 30 * 60 * 60 * 1000,
+        httponly=True,
+    )
+    response.headers["Authorization"] = accessToken
+
+    return {"user": {
+        "id": user.id,
+        "userName": user.userName,
+        "email": user.email,
+    }, "accessToken": accessToken, "refreshToken": refreshToken}
 
 
 @userPrivateRouter.delete("/delete")
 def deleteUserData(userId: int, db: Session = Depends(get_db)):
     deleteUser(userId=userId, db=db)
+
+
+@userPrivateRouter.post("/update/password")
+def updatePasswordData(userData: UpdatePasswordSchema, db: Session = Depends(get_db)):
+    updatePassword(userData=userData, db=db)

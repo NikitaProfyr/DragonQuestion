@@ -35,12 +35,22 @@ export default class AuthService {
             id: id,
             userName: userName,
         }
-        const {data} = await Api.put('/users/updateUser', userData).catch((err) => {
+        const {data} = await Api.put('/users/update/user', userData).catch((err) => {
             return err
         })
+        localStorage.removeItem('accessToken')
         localStorage.removeItem('user')
-        localStorage.setItem('user', JSON.stringify(data))
+        localStorage.setItem('accessToken', data.accessToken)
+        localStorage.setItem('user', JSON.stringify(data.user))
         return data
+    }
+    static updateUserPasswordDataTravisScott = async (id, oldPassword, newPassword) => {
+        const userData = {
+            id: id,
+            oldPassword: oldPassword,
+            newPassword: newPassword,
+          }
+        return await Api.post("/users/update/password", userData)
     }
     static logout = async () => {
         localStorage.removeItem('accessToken')

@@ -9,22 +9,23 @@ import AuthService from '../../Services/AuthService';
 
 
 const UserSettings = () => {
-    const [cheackDel, setCheackDel] = useState(false)
-    
     const dispatch = useDispatch()
     const user = useSelector(state => state.reducerUser.userInfo)
     const [userName, setUserName] = useState(user.userName)
     const [email, setEmail] = useState(user.email)
+    const [oldPassword, setOldPassword] = useState()
+    const [newPassword1, setNewPassword1] = useState()
+    const [newPassword2, setNewPassword2] = useState()
     const navigate = useNavigate();
-    console.log();
+
 
     const deleteUser = async () => {
-        console.log(user)
-        await AuthService.deleteCurrentUser(user.id)
-        logoutAction(dispatch)
-        return navigate(ROUTES.HOME)
-        
-        // нужно добавить подтверждение let cheack = confirm("Вы точно хотите удалить аккаунт?") при ok == true
+        const cheack = window.confirm("Вы точно хотите удалить аккаунт?")
+        if (cheack === true) {
+            await AuthService.deleteCurrentUser(user.id)
+            logoutAction(dispatch)
+            return navigate(ROUTES.HOME)
+        }
     }
     const logOut = () => {
         logoutAction(dispatch)
@@ -32,9 +33,14 @@ const UserSettings = () => {
     }
     const userUpdateData = async (e) => {
         e.preventDefault()
-        console.log(email, userName)
-        // const userData =  AuthService.updateUserData(userName, user.id ,email)
-        updateUserAction(dispatch, userName, user.id ,email)  
+        updateUserAction(dispatch, userName, user.id, email)
+    }
+    const updatePasswordUser = async (e) => {
+        e.preventDefault()
+        if( newPassword1 !== newPassword2){
+            return alert('Пароли должны совпадать.')
+        }
+        AuthService.updateUserPasswordDataTravisScott(user.id, oldPassword, newPassword1)
     }
     return (
         <div className="bg-content-user-settings">
@@ -45,14 +51,14 @@ const UserSettings = () => {
                             <div className="box-settings-content d-flex flex-column">
                                 <h1>БЕЗОПАСТНОСТЬ</h1>
                                 <h2>СМЕНА ПАРОЛЯ</h2>
-                                <form>
+                                <form onSubmit={(e) => (updatePasswordUser(e))}>
                                     <h3>ТЕКУЩИЙ ПАРОЛЬ</h3>
-                                    <input type="password" />
+                                    <input type="password" onChange={(e) => { setOldPassword(e.target.value) }} />
                                     <h3>НОВЫЙ ПАРОЛЬ</h3>
-                                    <input type="password" />
+                                    <input type="password" onChange={(e) => { setNewPassword1(e.target.value) }} />
                                     <h3>ПОДТВЕРДИТЕ НОВЫЙ ПАРОЛЬ</h3>
-                                    <input type="password" />
-                                    <button className="save-new-password-button">
+                                    <input type="password" onChange={(e) => { setNewPassword2(e.target.value) }} />
+                                    <button type="submit" className="save-new-password-button">
                                         Сохранить
                                     </button>
                                 </form>
@@ -66,11 +72,11 @@ const UserSettings = () => {
                         <div className="form-setting d-flex justify-content-center align-items-center">
                             <div className="box-settings-content pink-color-title d-flex flex-column">
                                 <h1 color="#DD90E6">ЛИЧНЫЕ ДАННЫЕ</h1>
-                                <form onSubmit={(e) => (userUpdateData(e)) }>
+                                <form onSubmit={(e) => (userUpdateData(e))}>
                                     <h3>ИМЯ ПРОФИЛЯ</h3>
-                                    <input type="text" onChange={(e) => {setUserName(e.target.value)}} defaultValue={user.userName} />
+                                    <input type="text" onChange={(e) => { setUserName(e.target.value) }} defaultValue={user.userName} />
                                     <h3 color="#DD90E6">EMAIL</h3>
-                                    <input type="text" onChange={(e) => {setEmail(e.target.value)}} defaultValue={user.email} />
+                                    <input type="text" onChange={(e) => { setEmail(e.target.value) }} defaultValue={user.email} />
                                     <button type="submit" className="save-new-password-button">
                                         Сохранить
                                     </button>

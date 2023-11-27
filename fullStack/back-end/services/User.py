@@ -10,7 +10,7 @@ from starlette.status import HTTP_400_BAD_REQUEST, HTTP_401_UNAUTHORIZED, HTTP_2
 
 from model.Settings import get_db
 from model.User import User, Token
-from model.UserSchema import UserBase, UserCreate, UserUpdate, UserId
+from model.UserSchema import UserBase, UserCreate, UserUpdate, UserId, UpdatePasswordSchema
 from security import pwdContext, SECRET_KEY, ALGORITHM, oauth2Scheme
 
 
@@ -153,10 +153,31 @@ def updateUser(db: Session, user: UserUpdate):
         db.execute(query)
         db.commit()
         updatedUser = db.execute(select(User).where(or_(User.id == user.id))).scalar()
+        # token = createToken({"userName": existingUser.userName})
+        # responseData = UserUpdate(
+        #     id=updatedUser.id,
+        #     userName=updatedUser.userName,
+        #     email=updatedUser.email
+        # )
         return updatedUser
+        # return {"user": responseData, "accessToken": token}
     except Exception as ex:
+        print(Exception)
         db.rollback()
         raise HTTPException(
             status_code=500,
             detail="Произошла ошибка при обновлении пользователя."
         ) from ex
+
+
+def updatePassword(userData: UpdatePasswordSchema, db: Session = Depends(get_db)):
+
+    user = db.scalar(select(User).where(or_(User.id == userData.id)))
+    if not pwdContext.verify(userData.oldPassword, user.hashedPassword):
+        raise HTTPException(
+            status_code=HTTP_401_UNAUTHORIZED, detail="Не правильный пароль"
+        )
+    user.hashedPassword = pwdContext.hash(userData.newPassword)
+    db.commit()
+    return HTTP_200_OK
+

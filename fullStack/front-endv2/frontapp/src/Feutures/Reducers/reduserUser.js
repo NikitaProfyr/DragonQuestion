@@ -22,7 +22,7 @@ const reducerUser = (state = stateUser, action) => {
         case LOGOUT:
             return {...state, userInfo: null, isActive: false}    
         case UPDATE_USER:
-            return {...state, userInfo: payload}
+            return {...state, userInfo: payload.user}
         default: 
             return state
     }

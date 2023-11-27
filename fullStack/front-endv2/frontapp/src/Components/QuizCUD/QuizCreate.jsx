@@ -104,8 +104,8 @@ const QuizCreate = () => {
           </div>
           
           <Carousel className='slederXXXTENTACION' activeIndex={index} onSelect={ handleSubmit } interval={null}>
-            {quiz.question.map((item) => (
-              <Carousel.Item className=''>
+            {quiz.question.map((item, index) => (
+              <Carousel.Item key={index} className=''>
                 <div className="d-flex justify-content-center align-items-center content-in-slide">
                   <div className="col-4 d-flex flex-column mx-5 in-slide-form-xxxtentacion">
                     <input onChange={(e) => (item.title = e.target.value)} type="text" placeholder='Введите вопрос'></input>
@@ -113,9 +113,9 @@ const QuizCreate = () => {
                     <button onClick={(e) => (removeQuestion(e, item))}>Удалить вопрос</button>
                   </div>
                   <div className="col-4 d-flex flex-column">
-                    {item.answer.map((ansItem) => (
+                    {item.answer.map((ansItem, index) => (
                       ansItem.right === true ?
-                        <div className="d-flex in-slide-form-lilpump active">
+                        <div className="d-flex in-slide-form-lilpump active" key={index}>
                           <div className="check-answer-icon active" onClick={() => (cheackAnswer(ansItem))}><img src={galka} height="30px" alt="" /></div>
                           <input onChange={(e) => (ansItem.title = e.target.value)} type="text" placeholder='Введите описание'></input>
                           <div className="del-answer-icon">
@@ -123,7 +123,7 @@ const QuizCreate = () => {
                           </div>
                         </div>
                         :
-                        <div className="d-flex in-slide-form-lilpump">
+                        <div className="d-flex in-slide-form-lilpump" key={index}>
                           <div className="check-answer-icon" onClick={() => (cheackAnswer(ansItem))}><img src={galka} height="30px" alt="" /></div>
                           <input onChange={(e) => (ansItem.title = e.target.value)} type="text" placeholder='Введите описание'></input>
                           <div className="del-answer-icon">

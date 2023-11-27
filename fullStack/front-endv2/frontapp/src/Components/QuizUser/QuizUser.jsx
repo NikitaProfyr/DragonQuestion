@@ -36,11 +36,9 @@ const QuizUser = () => {
   }, [quiz, quizResults])
 
   const onClickPagination = (item) => {
-    console.log(item);
     getUserQuiz(dispatch, user.id, item, 6)
   }
   const onClickPaginationQuizResult = (item) => {
-    console.log(item);
     getQuizResultAction(user.id, dispatch, item, 6)
   }
 
@@ -149,7 +147,7 @@ const QuizUser = () => {
                       :
                       <></>
                     }
-                  </div>  
+                  </div>
                 </Tab.Pane>
               </Tab.Content>
             </div>
