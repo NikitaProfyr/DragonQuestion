@@ -44,7 +44,7 @@ const UserSettings = () => {
                                 <h2>СМЕНА ПАРОЛЯ</h2>
                                 <form>
                                     <h3>ТЕКУЩИЙ ПАРОЛЬ</h3>
-                                    <input type="text" />
+                                    <input type="password" />
                                     <h3>НОВЫЙ ПАРОЛЬ</h3>
                                     <input type="password" />
                                     <h3>ПОДТВЕРДИТЕ НОВЫЙ ПАРОЛЬ</h3>
