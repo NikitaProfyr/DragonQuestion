@@ -2,6 +2,7 @@
 const LOGINSUCCES = 'LOGINSUCCES'
 const LOGINFAILED = 'LOGINFAILED'
 const LOGOUT = 'LOGOUT'
+const UPDATE_USER = 'UPDATE_USER'
 
 const user = JSON.parse(localStorage.getItem('user')) 
 
@@ -20,11 +21,12 @@ const reducerUser = (state = stateUser, action) => {
             return {...state, userInfo: null, isActive: false}
         case LOGOUT:
             return {...state, userInfo: null, isActive: false}    
-        // case SIGNUP:
-        //     return <Navigate to = "/authorization" />
+        case UPDATE_USER:
+            return {...state, userInfo: payload}
         default: 
             return state
     }
 }
 
+ 
 export default reducerUser 

@@ -20,10 +20,12 @@ from services.User import (
 )
 
 userPublicRouter = APIRouter(tags=["UserPublic"])
+# userPrivateRouter = APIRouter(
+#     tags=["UserPrivate"], dependencies=[Depends(CheckAuthMiddleware)]
+# )
 userPrivateRouter = APIRouter(
-    tags=["UserPrivate"], dependencies=[Depends(CheckAuthMiddleware)]
+    tags=["UserPrivate"]
 )
-
 
 @userPublicRouter.get("/refresh")
 def refresh(request: Request, db: Session = Depends(get_db)):

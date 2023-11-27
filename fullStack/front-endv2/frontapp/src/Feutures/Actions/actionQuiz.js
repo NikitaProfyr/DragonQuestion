@@ -15,7 +15,7 @@ export const getCurrentQuiz = async (idQuiz, dispatch) => {
 }
 
 export const getUserQuiz = async (dispatch, idUser, page, size) => {
-    const data = await QuizService.getUserQuiz(idUser, page, size)
+    const data  = await QuizService.getUserQuiz(idUser, page, size)
     dispatch({type: GET_QUIZ_USER, payload: data})
 }
 

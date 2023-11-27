@@ -7,7 +7,10 @@ export default class AuthService {
         await localStorage.setItem('user', JSON.stringify(data.user))
         return data
     }
-
+    static deleteCurrentUser = async (userId) => {
+        console.log('da', userId);
+        return await Api.delete(`/users/delete?userId=${userId}`)
+    }
     static logup(userName, password){    
         const userData = {
             userName: userName,
@@ -26,7 +29,19 @@ export default class AuthService {
         console.log(answer, "3232")
         return answer
     }
-
+    static updateUserData = async (userName, id, email) => {
+        const userData = {
+            email: email,
+            id: id,
+            userName: userName,
+        }
+        const {data} = await Api.put('/users/updateUser', userData).catch((err) => {
+            return err
+        })
+        localStorage.removeItem('user')
+        localStorage.setItem('user', JSON.stringify(data))
+        return data
+    }
     static logout = async () => {
         localStorage.removeItem('accessToken')
         localStorage.removeItem('user')

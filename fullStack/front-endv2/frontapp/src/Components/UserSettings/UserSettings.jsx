@@ -1,60 +1,92 @@
 import React from "react";
 import './user-settings.css'
+import { useState } from "react";
+import { useDispatch, useSelector } from 'react-redux'
+import { logoutAction, updateUserAction } from '../../Feutures/Actions/actionUser';
+import { useNavigate } from 'react-router-dom';
+import { ROUTES } from '../../utils/routes'
+import AuthService from '../../Services/AuthService';
 
 
 const UserSettings = () => {
-  return (
-    <div className="bg-content-user-settings">
-        {/* <img src={PurpleDragonEgor} className="bg-dragon-settings" width="600px" /> */}
-            <div className="wrapper">
-                <div className="all-content-user-settings">
-                    <div className="form-left-user-setting">
-                    </div>
-                    <div className="form-right-user-setting">asd</div>
-                    {/* <div className="left-content-settings">
-                        <input type="file" id="file" multiple accept="image/*"/>
-                        <img src="" alt="test" id="image" />
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae assumenda facilis consequatur numquam aut rem sunt est obcaecati consectetur sequi temporibus praesentium excepturi earum quos, perspiciatis animi repudiandae quo blanditiis!
-                    </div>
-                    <div className="right-content-settings">
-                        <div className="right-content-align">
-                            
-                            <div className="security-block-settings">
-                                <div className="content-security-block">
-                                    <div className="change-password-block">
-                                        <h1>БЕЗОПАСТНОСТЬ</h1>
-                                        <h2>СМЕНА ПАРОЛЯ</h2>
-                                        <h3>ТЕКУЩИЙ ПАРОЛЬ</h3>
-                                        <input type="password"/>
-                                        <h3>НОВЫЙ ПАРОЛЬ</h3>
-                                        <input type="password"/>
-                                        <h3>ПОДТВЕРДИТЕ НОВЫЙ ПАРОЛЬ</h3>
-                                        <input type="password"/>
-                                        <button>
-                                            Сменить пароль
-                                        </button>
-                                    </div>
-                                    <div className="account-deletion-block">
-                                        <h2>УДАЛЕНИЕ АККАУНТА</h2>
-                                        <button>Удалить</button>
-                                    </div>
-                                </div>
+    const [cheackDel, setCheackDel] = useState(false)
+    
+    const dispatch = useDispatch()
+    const user = useSelector(state => state.reducerUser.userInfo)
+    const [userName, setUserName] = useState(user.userName)
+    const [email, setEmail] = useState(user.email)
+    const navigate = useNavigate();
+    console.log();
+
+    const deleteUser = async () => {
+        console.log(user)
+        await AuthService.deleteCurrentUser(user.id)
+        logoutAction(dispatch)
+        return navigate(ROUTES.HOME)
+        
+        // нужно добавить подтверждение let cheack = confirm("Вы точно хотите удалить аккаунт?") при ok == true
+    }
+    const logOut = () => {
+        logoutAction(dispatch)
+        return navigate(ROUTES.HOME)
+    }
+    const userUpdateData = async (e) => {
+        e.preventDefault()
+        console.log(email, userName)
+        // const userData =  AuthService.updateUserData(userName, user.id ,email)
+        updateUserAction(dispatch, userName, user.id ,email)  
+    }
+    return (
+        <div className="bg-content-user-settings">
+            <div className="container">
+                <div className="row setting-content-all d-flex align-items-center">
+                    <div className="col-lg-6 col-md-12 col-sm-12 d-flex justify-content-lg-start justify-content-center">
+                        <div className="form-setting d-flex justify-content-center align-items-center">
+                            <div className="box-settings-content d-flex flex-column">
+                                <h1>БЕЗОПАСТНОСТЬ</h1>
+                                <h2>СМЕНА ПАРОЛЯ</h2>
+                                <form>
+                                    <h3>ТЕКУЩИЙ ПАРОЛЬ</h3>
+                                    <input type="password" />
+                                    <h3>НОВЫЙ ПАРОЛЬ</h3>
+                                    <input type="password" />
+                                    <h3>ПОДТВЕРДИТЕ НОВЫЙ ПАРОЛЬ</h3>
+                                    <input type="password" />
+                                    <button className="save-new-password-button">
+                                        Сохранить
+                                    </button>
+                                </form>
+                                <h2 className="title-del-user">УДАЛЕНИЕ АККАУНТА</h2>
+                                <button onClick={deleteUser} className="del-button-setting-user"> Удалить </button>
+
                             </div>
-                            <div className="button-user-settings">
-                                <button>
-                                    Отмена
-                                </button>
-                                <button className="gradient-button-settings">
-                                    Сохранить
+                        </div>
+                    </div>
+                    <div className="col-lg-6 col-md-12 col-sm-12 d-flex justify-content-lg-end justify-content-center">
+                        <div className="form-setting d-flex justify-content-center align-items-center">
+                            <div className="box-settings-content pink-color-title d-flex flex-column">
+                                <h1 color="#DD90E6">ЛИЧНЫЕ ДАННЫЕ</h1>
+                                <form onSubmit={(e) => (userUpdateData(e)) }>
+                                    <h3>ИМЯ ПРОФИЛЯ</h3>
+                                    <input type="text" onChange={(e) => {setUserName(e.target.value)}} defaultValue={user.userName} />
+                                    <h3 color="#DD90E6">EMAIL</h3>
+                                    <input type="text" onChange={(e) => {setEmail(e.target.value)}} defaultValue={user.email} />
+                                    <button type="submit" className="save-new-password-button">
+                                        Сохранить
+                                    </button>
+                                </form>
+                                <h2>ВЫЙТИ ИЗ АККАУНТА</h2>
+                                <button onClick={logOut} className="save-new-password-button">
+                                    ВЫЙТИ
                                 </button>
                             </div>
                         </div>
-                        
-                    </div> */}
+                    </div>
                 </div>
+
             </div>
-    </div>
-  )
+        </div>
+    )
 }
 
 export default UserSettings

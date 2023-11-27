@@ -3,7 +3,7 @@ from typing import Annotated
 
 from fastapi import HTTPException, Depends
 from jose import jwt, JWTError
-from sqlalchemy import select, update, delete, or_
+from sqlalchemy import select, update, delete, or_, and_
 from sqlalchemy.orm import Session
 from starlette import status
 from starlette.status import HTTP_400_BAD_REQUEST, HTTP_401_UNAUTHORIZED, HTTP_200_OK
@@ -133,17 +133,30 @@ def getCurrentUser(
 
 
 def updateUser(db: Session, user: UserUpdate):
-    query = (
-        update(User)
-        .where(or_(User.id == user.id))
-        .values(
-            userName=user.userName,
-            firstName=user.firstName,
-            lastName=user.lastName,
-            email=user.email,
+    existingUser = db.execute(
+        select(User).where(or_(User.userName == user.userName, User.email == user.email))).scalar()
+    if existingUser and existingUser.id != user.id:
+        raise HTTPException(
+            status_code=400,
+            detail="Пользователь с таким именем или email уже существует."
         )
-    )
-    db.execute(query)
-    db.commit()
-    user = db.scalar(select(User).where(or_(User.id == user.id)))
-    return user
+
+    try:
+        query = (
+            update(User)
+            .where(User.id == user.id)
+            .values(
+                userName=user.userName,
+                email=user.email,
+            )
+        )
+        db.execute(query)
+        db.commit()
+        updatedUser = db.execute(select(User).where(or_(User.id == user.id))).scalar()
+        return updatedUser
+    except Exception as ex:
+        db.rollback()
+        raise HTTPException(
+            status_code=500,
+            detail="Произошла ошибка при обновлении пользователя."
+        ) from ex

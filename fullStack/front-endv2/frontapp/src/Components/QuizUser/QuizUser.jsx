@@ -20,7 +20,6 @@ const QuizUser = () => {
   const [isLoading, setIsLoading] = useState(true)
 
   const dispatch = useDispatch()
-  console.log(quizResults);
 
   useEffect(() => {
     dispatch(setBaseCurrentQuiz())

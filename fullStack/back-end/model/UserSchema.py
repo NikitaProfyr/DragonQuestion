@@ -33,8 +33,7 @@ class UserId(BaseModel):
 
 class UserUpdate(UserLite):
     email: str
-    firstName: str
-    lastName: str
+    userName: str
 
 
 class TokenSchema(BaseModel):
