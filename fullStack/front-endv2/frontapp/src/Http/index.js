@@ -26,7 +26,7 @@ ApiWithToken.interceptors.response.use((config) => {
     const originalRequest = error.config
     if(error.response.status === 401){
         try {
-            const accessToken = await ApiWithOutToken.get('/users/refresh')
+            const accessToken = await ApiWithOutToken.get('/users/refresh', {withCredentials: true})
             console.log(accessToken.data.accessToken);
             localStorage.setItem('accessToken', accessToken.data.accessToken)
             return await ApiWithToken.request(originalRequest)

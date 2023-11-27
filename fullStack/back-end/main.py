@@ -25,15 +25,12 @@ add_pagination(app)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "http://localhost",
-        "http://localhost:8000",
+        # "http://localhost",
         "http://localhost:3000",
-        "http://127.0.0.1:3000",
-        "http://localhost:8080"
     ],  # Разрешить любые источники (можно настроить для конкретных источников)
     allow_credentials=True,  # Разрешить отправлять куки
     allow_methods=["POST", "GET", "DELETE", "PUT"],  # Разрешить любые HTTP-методы
-    allow_headers=["*"],  # Разрешить любые заголовки
+    allow_headers="*",  # Разрешить любые заголовки
 )
 
 # регистрация роутеров
