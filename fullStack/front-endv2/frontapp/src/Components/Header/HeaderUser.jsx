@@ -27,18 +27,24 @@ const HeaderUser = () => {
     else{
         return(
             <div className="Header-bg">
-            <div className="container">
-                <div className="Header">
-                    <div className="logo">
-                        <Link to={ROUTES.QUIZ_LIST}><img src={LogoImg} height="40" alt="Logo" /></Link>
-                    </div>
-                    <div className="nav-bar d-flex justify-content-end w-100">
-                        <Link to={ROUTES.QUIZ_LIST} className="link-quiz">Опросы</Link>
-                        <Link to={ROUTES.QUIZ_USER}>Мои опросы</Link>
-                        <Link to={ROUTES.USER_SETTING}>{user.userName}</Link>
+                <div className="container">
+                    <div className="Header">    
+                        <div className="logo">
+                            <Link to={ROUTES.QUIZ_LIST}><img src={LogoImg} height="40" alt="Logo" /></Link>
+                        </div>
+                        <div className="header-menu">
+                            <div className="nav-bar">
+                                <Link to={ROUTES.QUIZ_LIST} className="link-quiz">Опросы</Link>
+                                <Link to={ROUTES.QUIZ_USER}>Мои опросы</Link>
+                                <a href="#">О нас</a>
+                                <Link to={ROUTES.USER_SETTING}>{user.userName}</Link>
+                            </div>
+                        </div>
+                        <div className="burger-button">
+                            <span></span>
+                        </div>
                     </div>
                 </div>
-            </div>
             </div> 
         )
     }

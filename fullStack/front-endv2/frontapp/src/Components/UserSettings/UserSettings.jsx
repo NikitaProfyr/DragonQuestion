@@ -34,13 +34,25 @@ const UserSettings = () => {
     const userUpdateData = async (e) => {
         e.preventDefault()
         updateUserAction(dispatch, userName, user.id, email)
+        .then(() => {
+            return alert("Данные успешно обновлены.")
+        })
+        .catch((err) => {
+            return alert("Пользователь с таким именем или email уже существует.")
+        })
+
     }
     const updatePasswordUser = async (e) => {
         e.preventDefault()
-        if( newPassword1 !== newPassword2){
+        if(newPassword1 !== newPassword2){
             return alert('Пароли должны совпадать.')
         }
-        AuthService.updateUserPasswordDataTravisScott(user.id, oldPassword, newPassword1)
+        try {
+            await AuthService.updateUserPasswordDataTravisScott(user.id, oldPassword, newPassword1);
+            alert("Пароль успешно обновлен.");
+        } catch (err) {
+            alert("Не правильный пароль.");
+        }
     }
     return (
         <div className="bg-content-user-settings">

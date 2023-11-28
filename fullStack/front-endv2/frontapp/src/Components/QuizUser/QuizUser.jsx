@@ -44,7 +44,7 @@ const QuizUser = () => {
 
   return (
     <div className="bg-quiz-user">
-      <div className="container py-5">
+      <div className="container py-4">
         <Tab.Container id="list-group-tabs-example" defaultActiveKey="#user-quiz">
           <div className="row">
             <div className="col-lg-3 col-12 mb-4">

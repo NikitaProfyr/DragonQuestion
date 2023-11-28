@@ -1,7 +1,11 @@
 .Header-bg {
+    background-color: white;
     height: 80px;
     width: 100%;
-    z-index: 50;
+    z-index: 2;
+    position: fixed;
+    left: 0;
+    top: 0;
 }
 .Header {
     display: flex;
@@ -9,9 +13,9 @@
     height: 80px;
     justify-content: space-between;
     font-weight: bold;
-    z-index: 50;
+    z-index: 2;
+    
 }
-
 .nav-bar a{
     color: #90B1E6;
     text-decoration: none;
@@ -21,4 +25,68 @@
 }
 .nav-bar a:hover{
     color: #DD90E6;
+}
+.nav-bar{
+    display: flex;
+}
+.burger-button{
+    display: none;
+}
+
+
+
+@media(max-width: 767px) {
+    .burger-button{
+        width: 40px;
+        height: 20px;
+        position: relative;
+        display: block;
+        z-index: 4;
+    }
+    .logo{
+        z-index: 4;
+    }
+    .Header-bg:before{
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: white;
+        z-index: 3;
+    }
+    .header-menu{
+        background-color: #f5dbbd;
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 1;
+        padding: 100px 0 0 0;
+    }
+    .burger-button:after,.burger-button:before{
+        content: '';
+        background-color: rgb(194, 102, 202);
+        position: absolute;
+        width: 100%;
+        height: 2px;
+    }
+    .burger-button span{
+        background-color: rgb(194, 102, 202);
+        position: absolute;
+        width: 100%;
+        height: 2px;
+        top: 9px;
+    }
+    .burger-button:after{
+        bottom: 0;
+    }
+    .burger-button:before{
+        top: 0;
+    }
+    .nav-bar{
+        display: block;
+    }
 }

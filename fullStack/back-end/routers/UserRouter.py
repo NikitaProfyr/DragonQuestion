@@ -20,12 +20,12 @@ from services.User import (
 )
 
 userPublicRouter = APIRouter(tags=["UserPublic"])
-# userPrivateRouter = APIRouter(
-#     tags=["UserPrivate"], dependencies=[Depends(CheckAuthMiddleware)]
-# )
 userPrivateRouter = APIRouter(
-    tags=["UserPrivate"]
+    tags=["UserPrivate"], dependencies=[Depends(CheckAuthMiddleware)]
 )
+# userPrivateRouter = APIRouter(
+#     tags=["UserPrivate"]
+# )
 
 @userPublicRouter.get("/refresh")
 def refresh(request: Request, db: Session = Depends(get_db)):
@@ -130,3 +130,4 @@ def deleteUserData(userId: int, db: Session = Depends(get_db)):
 @userPrivateRouter.post("/update/password")
 def updatePasswordData(userData: UpdatePasswordSchema, db: Session = Depends(get_db)):
     updatePassword(userData=userData, db=db)
+    

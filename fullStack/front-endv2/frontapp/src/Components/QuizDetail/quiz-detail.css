@@ -1,9 +1,10 @@
 .bg-quiz-detail{
-    min-height: calc(100vh - 80px);
+    min-height: 100vh;
     background: rgb(191,191,191);
     background: linear-gradient(90deg, rgba(191,191,191,0.35) 0%, rgba(0,212,255,0.35) 100%), url('../../image/drakonEgor.png');
     background-repeat: no-repeat;
     background-position: center;
+    padding: 80px 0 0 0;
 }
 .quizButton{
     display: flex;

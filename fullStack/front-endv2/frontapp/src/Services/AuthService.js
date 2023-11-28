@@ -45,12 +45,17 @@ export default class AuthService {
         return data
     }
     static updateUserPasswordDataTravisScott = async (id, oldPassword, newPassword) => {
-        const userData = {
-            id: id,
-            oldPassword: oldPassword,
-            newPassword: newPassword,
-          }
-        return await Api.post("/users/update/password", userData)
+        try{
+            const userData = {
+                id: id,
+                oldPassword: oldPassword,
+                newPassword: newPassword,
+              }
+              const response = await Api.post("/users/update/password", userData)
+              return response.data;
+        } catch(err){
+            throw err;
+        }
     }
     static logout = async () => {
         localStorage.removeItem('accessToken')

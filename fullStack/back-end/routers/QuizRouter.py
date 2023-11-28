@@ -33,7 +33,7 @@ quizPublicRouter = APIRouter(prefix="/quiz-public", tags=["QuizPublic"])
 
 
 @quizPrivateRouter.get("/getquiz", response_model=Page[QuizBaseSchema])
-@cache(expire=60)
+@cache(expire=10)
 def getQuiz(db: Session = Depends(get_db)):
     """Получить все опросы"""
     return selectQuiz(db=db)

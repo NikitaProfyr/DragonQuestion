@@ -9,7 +9,7 @@
     background-color: #ffffff;
 }
 .bg-quiz-game {
-    min-height: calc(100vh - 80px);
+    min-height: 100vh;
     background: rgb(191,191,191);
     background: linear-gradient(135deg, rgba(191,191,191,0.35) 0%, rgba(198,100,181,0.3) 100%), url('../../image/whitepurpleDragon.png');
     background-repeat: no-repeat;
@@ -17,6 +17,8 @@
     color: #e690df;
     font-size: 22px;
     font-weight: bold;
+    position: relative;
+    padding-top: 80px;
 }
 .title-game {
     color: #90B1E6;

@@ -1,10 +1,12 @@
 .bg-quiz-user{
     background: rgb(221,144,230);
     background: linear-gradient(135deg, rgba(221,144,230,0.25) 0%, rgba(144,177,230,0.25) 100%), url('../../image/drakonEgorLGBT.png');
-    min-height: calc(100vh - 80px);   
+    min-height: 100vh;  
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center; 
+    position: relative;
+    padding-top: 80px;
 }
 
 .list-group-item.active{
