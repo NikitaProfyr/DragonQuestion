@@ -2,7 +2,7 @@ import React from 'react'
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { logoutAction } from '../../Feutures/Actions/actionUser';
 
 import LogoImg from '../../image/IBDnew.svg'
@@ -13,7 +13,10 @@ const HeaderUser = () => {
     const user = useSelector(state => state.reducerUser.userInfo)
     const [loader, setLoader] = useState(true)
     const [isActive, setActive] = useState(false);
+    	
+ 
 
+    console.log();
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -25,13 +28,22 @@ const HeaderUser = () => {
     const addActiveClass = () =>{
         setActive(!isActive);
         let body = document.querySelector("body")
-        if(isActive){
-            body.classList.remove('active')
-        }
-        else{
+        if(!isActive){
             body.classList.add('active')
-        }
-        console.log(body);
+        } 
+        else{
+            body.classList.remove('active')
+        }     
+    }
+
+    const removeActive = (url) => {
+        console.log(url);
+        console.log(window.location.pathname);
+        console.log("========================");
+        if(window.location.pathname !== url){
+            let body = document.querySelector("body")
+            body.classList.remove('active')
+        }  
     }
 
     if (loader) {
@@ -50,10 +62,10 @@ const HeaderUser = () => {
                         </div>
                         <div className={isActive ? "header-menu active" : "header-menu" }>
                             <ul className="nav-bar">
-                                <li><Link to={ROUTES.QUIZ_LIST} className="link-quiz">Опросы</Link></li>
-                                <li><Link to={ROUTES.QUIZ_USER} className="link-quiz">Мои опросы</Link></li>
+                                <li><Link onClick={removeActive(ROUTES.QUIZ_LIST)} to={ROUTES.QUIZ_LIST} className="link-quiz">Опросы</Link></li>
+                                <li><Link onClick={removeActive(ROUTES.QUIZ_USER)} to={ROUTES.QUIZ_USER} className="link-quiz">Мои опросы</Link></li>
                                 <li><a href="#" className="link-quiz">О нас</a></li>
-                                <li><Link to={ROUTES.USER_SETTING} className="link-quiz">{user.userName}</Link></li>
+                                <li><Link onClick={removeActive(ROUTES.USER_SETTING)} to={ROUTES.USER_SETTING} className="link-quiz">{user.userName}</Link></li>
                             </ul>
                         </div>
 
