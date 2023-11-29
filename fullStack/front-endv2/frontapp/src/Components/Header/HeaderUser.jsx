@@ -16,39 +16,40 @@ const HeaderUser = () => {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        if (user !== null){
+        if (user !== null) {
             setLoader(false)
         }
-    }, [user]) 
+    }, [user])
 
-    if (loader){
+    if (loader) {
         // return <Spinner animation='grow'/>
     }
-    else{
-        return(
+    else {
+        return (
             <div className="Header-bg">
-                <div className="container">
-                    <div className="Header">    
+                <div className="container wow">
+                    <div className="Header">
                         <div className="logo">
                             <Link to={ROUTES.QUIZ_LIST}><img src={LogoImg} height="40" alt="Logo" /></Link>
-                        </div>
-                        <div className="header-menu">
-                            <div className="nav-bar">
-                                <Link to={ROUTES.QUIZ_LIST} className="link-quiz">Опросы</Link>
-                                <Link to={ROUTES.QUIZ_USER}>Мои опросы</Link>
-                                <a href="#">О нас</a>
-                                <Link to={ROUTES.USER_SETTING}>{user.userName}</Link>
-                            </div>
                         </div>
                         <div className="burger-button">
                             <span></span>
                         </div>
+                        <div className="header-menu">
+                            <ul className="nav-bar">
+                                <li><Link to={ROUTES.QUIZ_LIST} className="link-quiz">Опросы</Link></li>
+                                <li><Link to={ROUTES.QUIZ_USER} className="link-quiz">Мои опросы</Link></li>
+                                <li><a href="#" className="link-quiz">О нас</a></li>
+                                <li><Link to={ROUTES.USER_SETTING} className="link-quiz">{user.userName}</Link></li>
+                            </ul>
+                        </div>
+
                     </div>
                 </div>
-            </div> 
+            </div>
         )
     }
-    
+
 }
 
 export default HeaderUser
