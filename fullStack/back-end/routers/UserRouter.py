@@ -130,4 +130,3 @@ def deleteUserData(userId: int, db: Session = Depends(get_db)):
 @userPrivateRouter.post("/update/password")
 def updatePasswordData(userData: UpdatePasswordSchema, db: Session = Depends(get_db)):
     updatePassword(userData=userData, db=db)
-    
