@@ -12,43 +12,57 @@ import './header-user.css'
 const HeaderUser = () => {
     const user = useSelector(state => state.reducerUser.userInfo)
     const [loader, setLoader] = useState(true)
+    const [isActive, setActive] = useState(false);
 
     const dispatch = useDispatch()
 
     useEffect(() => {
-        if (user !== null){
+        if (user !== null) {
             setLoader(false)
         }
-    }, [user]) 
+    }, [user])
 
-    if (loader){
+    const addActiveClass = () =>{
+        setActive(!isActive);
+        let body = document.querySelector("body")
+        if(isActive){
+            body.classList.remove('active')
+        }
+        else{
+            body.classList.add('active')
+        }
+        console.log(body);
+    }
+
+    if (loader) {
         // return <Spinner animation='grow'/>
     }
-    else{
-        return(
+    else {
+        return (
             <div className="Header-bg">
-                <div className="container">
-                    <div className="Header">    
+                <div className="container wow">
+                    <div className="Header">
                         <div className="logo">
                             <Link to={ROUTES.QUIZ_LIST}><img src={LogoImg} height="40" alt="Logo" /></Link>
                         </div>
-                        <div className="header-menu">
-                            <div className="nav-bar">
-                                <Link to={ROUTES.QUIZ_LIST} className="link-quiz">Опросы</Link>
-                                <Link to={ROUTES.QUIZ_USER}>Мои опросы</Link>
-                                <a href="#">О нас</a>
-                                <Link to={ROUTES.USER_SETTING}>{user.userName}</Link>
-                            </div>
-                        </div>
-                        <div className="burger-button">
+                        <div onClick={addActiveClass} className={isActive ? "burger-button active"  : "burger-button"}>
                             <span></span>
                         </div>
+                        <div className={isActive ? "header-menu active" : "header-menu" }>
+                            <ul className="nav-bar">
+                                <li><Link to={ROUTES.QUIZ_LIST} className="link-quiz">Опросы</Link></li>
+                                <li><Link to={ROUTES.QUIZ_USER} className="link-quiz">Мои опросы</Link></li>
+                                <li><a href="#" className="link-quiz">О нас</a></li>
+                                <li><Link to={ROUTES.USER_SETTING} className="link-quiz">{user.userName}</Link></li>
+                            </ul>
+                        </div>
+
                     </div>
                 </div>
-            </div> 
+            </div>
         )
     }
-    
+
 }
 
 export default HeaderUser
