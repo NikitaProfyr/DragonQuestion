@@ -44,7 +44,7 @@ const QuizGame = () => {
             allRightAnswer = allRightAnswer + item.answer.filter(i => i.right === true).length
         })
 
-        await QuizService.createQuizResults(user.id, quiz.id, Math.floor(((userAnswerRight.length / allRightAnswer) * 100) * (userAnswerRight.length /  answersUser.length)))
+        await QuizService.createQuizResults(user.id, quiz.id, Math.floor(((userAnswerRight.length / allRightAnswer) * 100) * (userAnswerRight.length / answersUser.length)))
         return navigate(ROUTES.QUIZ_LIST)
     }
 
@@ -64,12 +64,12 @@ const QuizGame = () => {
         <>
             {isLoading === true ? <Spinner></Spinner>
                 :
-                <div className="bg-quiz-game">
-                    <div className="container">
+                <div className="bg-quiz-game d-flex justify-content-center">
+                    <div className="container content">
                         <div className='title-game'>{quiz.title}</div>
                         <div className="numbers-quiz d-flex justify-content-center align-items-center mt-5">
                             {quiz.question.map((item, index) => {
-                                return <div onClick={() => (setStep(index))} key={index} className="question-number-item mx-2">{index + 1}</div>
+                                return <div onClick={() => (setStep(index))} key={index} className={step === index ? "question-number-item active mx-2" : "question-number-item mx-2"}>{index + 1}</div>
                             })}
                         </div>
                         <h2 className='title-question-quiz-game mt-5'>{quiz.question[step].title}</h2>
@@ -77,28 +77,28 @@ const QuizGame = () => {
                             {quiz.question[step].answer.map((item, index) => (
                                 answersUser.includes(item) === false ?
                                     <div className="d-flex flex-column justify-content-center align-items-center col-md-6 col-12 ">
-                                        <div className='answer-game' key={index} onClick={() => (onClickAnswer(item))}>{item.title}</div>
+                                        <div className='answer-game' key={index} onClick={() => (onClickAnswer(item))}>{index + 1}) {item.title}</div>
                                     </div>
                                     :
                                     <div className="d-flex flex-column justify-content-center align-items-center col-md-6 col-12 ">
-                                        <div className='answer-game active' key={index} onClick={() => (onClickAnswer(item))}>{item.title}</div>
+                                        <div className='answer-game active' key={index} onClick={() => (onClickAnswer(item))}>{index + 1}) {item.title}</div>
                                     </div>
                             ))}
                         </div>
-                        <div className="row">
+                        <div className="row lil-uzi">
                             {step === 0 ?
                                 <>
 
                                     <div className="col-6"></div>
-                                    <div onClick={() => (setStep(step + 1))} className="d-flex flex-column justify-content-center align-items-center col-md-6 col-12"> <div className="button-next-question">Следующий вопрос</div> </div>
+                                    <div onClick={() => (setStep(step + 1))} className="d-flex flex-column justify-content-center align-items-center col-md-6 col-12"> <div className="button-question next">Следующий вопрос</div> </div>
 
                                 </> :
                                 <>
-                                    <div onClick={() => (setStep(step - 1))} className="d-flex flex-column justify-content-center align-items-center col-md-6 col-12"><div className="button-next-question">Предыдущий опрос</div></div>
+                                    <div onClick={() => (setStep(step - 1))} className="d-flex flex-column justify-content-center align-items-center col-md-6 col-12"><div className="button-question end">Предыдущий опрос</div></div>
                                     {step + 1 === quiz.question.length ?
-                                        <div onClick={() => (onSubmitQuestion())} className="d-flex flex-column justify-content-center align-items-center col-md-6 col-12"> <div className="button-next-question">Завершить опрос</div> </div>
+                                        <div onClick={() => (onSubmitQuestion())} className="d-flex flex-column justify-content-center align-items-center col-md-6 col-12"> <div className="button-question next">Завершить опрос</div> </div>
                                         :
-                                        <div onClick={() => (setStep(step + 1))} className="d-flex flex-column justify-content-center align-items-center col-md-6 col-12"> <div className="button-next-question">Следующий вопрос</div> </div>
+                                        <div onClick={() => (setStep(step + 1))} className="d-flex flex-column justify-content-center align-items-center col-md-6 col-12"> <div className="button-question next">Следующий вопрос</div> </div>
                                     }
 
 

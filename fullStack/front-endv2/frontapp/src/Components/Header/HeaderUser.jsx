@@ -37,9 +37,6 @@ const HeaderUser = () => {
     }
 
     const removeActive = (url) => {
-        console.log(url);
-        console.log(window.location.pathname);
-        console.log("========================");
         if(window.location.pathname !== url){
             let body = document.querySelector("body")
             body.classList.remove('active')
