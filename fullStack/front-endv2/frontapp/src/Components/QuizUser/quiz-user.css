@@ -15,12 +15,7 @@
     border: 0;
     z-index: 0;
 }   
-.list-group-item.active{
-    background: rgb(107,160,244);
-    background: linear-gradient(135deg, rgba(107,160,244,1) 0%, rgb(73, 129, 218) 100%);
-    border: 0;
-    z-index: 0;
-}
+
 
 .list-group-item.active:hover{
     color: white;

@@ -13,6 +13,9 @@
     font-size: 20px;
     font-weight: bold;
 }
+.auth-link {
+    text-align: end;
+}
 .nav-bar a:hover{
     color: #DD90E6;
 }

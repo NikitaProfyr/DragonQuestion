@@ -5,20 +5,20 @@ import LogoImg from '../../image/IBDnew.svg'
 
 const HeaderBase = () => {
   return (
-      <div className="container">
-          <div className="Header">
-          
-              <div className="logo">
-                <Link to={ROUTES.HOME}><img src={LogoImg} height="40" alt="Logo" /></Link>  
+    <div className="container">
+      <div className="Header">
 
-              </div>
-              <div className="nav-bar">
-                  {/* <a href="#"></a> */}
-                  <Link to="/authorization">Авторизация</Link>
-              </div>
-          </div>
+        <div className="logo">
+          <Link to={ROUTES.HOME}><img src={LogoImg} height="40" alt="Logo" /></Link>
+
+        </div>
+        <div className="nav-bar auth-link">
+          {/* <a href="#"></a> */}
+          <Link to="/authorization">Авторизация</Link>
+        </div>
       </div>
-      
+    </div>
+
   )
 }
 

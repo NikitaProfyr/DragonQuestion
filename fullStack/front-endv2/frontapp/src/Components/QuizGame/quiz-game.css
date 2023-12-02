@@ -28,8 +28,9 @@
 
 .bg-quiz-game {
     min-height: 100vh;
-    background: rgb(191, 191, 191);
-    background: linear-gradient(135deg, rgba(191, 191, 191, 0.35) 0%, rgba(198, 100, 181, 0.3) 100%), url('../../image/whitepurpleDragon.png');
+    background: rgb(110,110,110);
+    background: linear-gradient(-45deg, rgba(202, 202, 202, 0.5) 0%, rgba(105,138,204,0.5) 100%), url('../../image/drakon-guizgame2.png');
+    background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
     color: #e690df;
@@ -40,13 +41,13 @@
 }
 
 .title-game {
-    color: #90B1E6;
+    color: #d15bc7;
     font-weight: bold;
-    font-size: 50px;
+    font-size: 48px;
     display: flex;
     align-items: center;
     justify-content: left;
-    padding-top: 5%;
+    padding-top: 8%;
 }
 
 .answer-game {
@@ -63,11 +64,20 @@
     min-height: 50px;
     margin-top: 5%;
     border-radius: 10px;
+    color: #d15bc7;
+    cursor: pointer;
 }
 
 .title-question-quiz-game {
-    color: #00aeff;
+    color: #ffffff;
     font-weight: 600;
+    margin-top: auto;
+    display: inline;
+    text-align: start;
+    width: 100%;
+    position: relative;
+    font-size: 32px;
+    /* backdrop-filter: blur(8px); */
 }
 
 .button-question {
@@ -102,6 +112,7 @@
     display: flex;
     flex-direction: column;
     min-height: calc(100vh - 80px);
+    justify-content: center;
 }
 
 .lil-uzi {

@@ -72,8 +72,8 @@ ul{
         z-index: 3;
     }
     .header-menu{
-        backdrop-filter: blur(8px);
-        background-color: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(12px);
+        background-color: rgba(0, 0, 0, 0.2);
         width: 100%;
         height: 100%;
         position: fixed;
@@ -128,7 +128,7 @@ ul{
         display: block;
     }
     .nav-bar li a{
-        color: #0066ff;
+        color: white;
         text-decoration: none;
         font-size: 42px;
         font-weight: bold;
@@ -140,6 +140,6 @@ ul{
         margin-top: 70px;
     }
     .nav-bar li:hover{
-        backdrop-filter: blur(12px);
+        backdrop-filter: blur(16px);
     }
 }
