@@ -67,6 +67,9 @@ def authorization(
         value=refreshToken,
         max_age=24 * 30 * 60 * 60 * 1000,
         httponly=True,
+        samesite=None,
+        secure=False,
+
     )
     response.headers["Authorization"] = accessToken
     print(user.id)  # Я не знаю почему, но без принта эта движуха не работает

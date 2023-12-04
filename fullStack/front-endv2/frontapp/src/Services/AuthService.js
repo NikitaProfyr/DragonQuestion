@@ -2,7 +2,10 @@ import Api from "../Http";
 
 export default class AuthService {
     static login = async (userName, password) => {
-        const {data} = await Api.post('/users/login', {userName, password})
+        const {data} = await Api.post('/users/login', {userName, password}, {headers:{
+            'Access-Control-Allow-Credentials':'true',
+            'credentials': 'include'
+        }})
         await localStorage.setItem('accessToken', data.accessToken)
         await localStorage.setItem('user', JSON.stringify(data.user))
         return data

@@ -22,12 +22,19 @@ app = FastAPI(
 
 add_pagination(app)
 
+origins = [
+    "http://localhost:3000",
+    "http://localhost",
+    "http://localhost:8080",
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        # "http://localhost",
-        "http://localhost:3000",
-    ],  # Разрешить любые источники (можно настроить для конкретных источников)
+    # allow_origins=[
+    #     # "http://localhost",
+    #     "http://localhost:3000",
+    # ],  # Разрешить любые источники (можно настроить для конкретных источников)
+    allow_origins=origins,
     allow_credentials=True,  # Разрешить отправлять куки
     allow_methods=["POST", "GET", "DELETE", "PUT"],  # Разрешить любые HTTP-методы
     allow_headers="*",  # Разрешить любые заголовки
