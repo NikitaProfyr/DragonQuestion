@@ -28,9 +28,11 @@ ApiWithToken.interceptors.response.use((config) => {
         try {
             const accessToken = await ApiWithOutToken.get('/users/refresh', {withCredentials: true})
             console.log(accessToken.data.accessToken);
+            
             localStorage.setItem('accessToken', accessToken.data.accessToken)
             return await ApiWithToken.request(originalRequest)
         } catch (e) {
+            console.log(document.cookie.toString);
             console.log(e);
         }
     }

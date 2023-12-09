@@ -94,6 +94,7 @@ def validateRefreshToken(token: str, db: Session = Depends(get_db)):
     except JWTError:
         # db.scalar(delete(Token).where(or_(Token.refreshToken == token)))
         # db.commit()
+        print(JWTError)
         return None
 
 

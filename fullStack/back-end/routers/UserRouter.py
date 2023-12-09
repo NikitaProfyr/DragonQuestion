@@ -23,9 +23,7 @@ userPublicRouter = APIRouter(tags=["UserPublic"])
 userPrivateRouter = APIRouter(
     tags=["UserPrivate"], dependencies=[Depends(CheckAuthMiddleware)]
 )
-# userPrivateRouter = APIRouter(
-#     tags=["UserPrivate"]
-# )
+
 
 @userPublicRouter.get("/refresh")
 def refresh(request: Request, db: Session = Depends(get_db)):
@@ -33,6 +31,9 @@ def refresh(request: Request, db: Session = Depends(get_db)):
     print(refreshToken)
     print(request.cookies)
     print("refreshToken")
+    print("==================================")
+    print("==================================")
+    print("==================================")
     refreshToken = validateRefreshToken(token=refreshToken, db=db)
     if not refreshToken:
         return HTTPException(
