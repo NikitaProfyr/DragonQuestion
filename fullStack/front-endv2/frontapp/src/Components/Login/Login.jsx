@@ -21,9 +21,8 @@ const Login = () => {
         .catch(() => {
             alert('Не правильный логин или пароль.')
         })
-        if(actionData != undefined){
-            dispatch(actionData)
-            return await navigate(ROUTES.QUIZ_LIST)
+        if(actionData != undefined){       
+            return navigate(ROUTES.QUIZ_LIST)
         }
     }
     

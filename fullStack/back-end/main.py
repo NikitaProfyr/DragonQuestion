@@ -1,9 +1,11 @@
+
 from fastapi import FastAPI, Request, Depends
 from fastapi_cache.backends.redis import RedisBackend
-from starlette.middleware.cors import CORSMiddleware
+
 
 from fastapi_cache import FastAPICache
 from redis import asyncio as aioredis
+from fastapi.middleware.cors import CORSMiddleware
 
 from routers.UserRouter import userPublicRouter, userPrivateRouter
 from routers.QuizRouter import quizPrivateRouter, quizPublicRouter
@@ -14,6 +16,12 @@ from fastapi_pagination import add_pagination
 
 load_dotenv()
 
+origins = [
+    "http://localhost:3000",
+    "http://localhost:3000/",
+]
+
+
 app = FastAPI(
     title="IBD App",
     description="IBD Corporation - perfect, fast, cheap.",
@@ -21,17 +29,6 @@ app = FastAPI(
 )
 
 add_pagination(app)
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=[
-        # "http://localhost",
-        "http://localhost:3000",
-    ],  # Разрешить любые источники (можно настроить для конкретных источников)
-    allow_credentials=True,  # Разрешить отправлять куки
-    allow_methods=["POST", "GET", "DELETE", "PUT"],  # Разрешить любые HTTP-методы
-    allow_headers="*",  # Разрешить любые заголовки
-)
 
 # регистрация роутеров
 
@@ -61,3 +58,14 @@ async def startup_event():
         f"redis://{getenv('REDIS_HOST')}", encoding="utf8", decode_responses=True
     )
     FastAPICache.init(RedisBackend(redis), prefix="fastapi-cache")
+
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"],
+    allow_credentials=True,  # Разрешить отправлять куки
+    allow_methods=["POST", "GET", "DELETE", "PUT"],  # Разрешить любые HTTP-методы
+    allow_headers=["*"],  # Разрешить любые заголовки
+)
+
+

@@ -6,7 +6,7 @@ from starlette.status import HTTP_401_UNAUTHORIZED, HTTP_200_OK, HTTP_410_GONE
 from middleware.Token import CheckAuthMiddleware
 from model.UserSchema import UserCreate, UserUpdate, UserId, UpdatePasswordSchema
 from model.Settings import get_db
-from security import ACCESS_TOKEN_EXPIRE_MINUTES, REFRESH_TOKEN_EXPIRE_DEYS
+from security import ACCESS_TOKEN_EXPIRE_MINUTES, REFRESH_TOKEN_EXPIRE_DAYS
 from services.User import (
     createUser,
     authenticated,
@@ -25,15 +25,18 @@ userPrivateRouter = APIRouter(
 )
 
 
-@userPublicRouter.get("/refresh")
-def refresh(request: Request, db: Session = Depends(get_db)):
+@userPublicRouter.post("/refresh")
+def refresh(request: Request, response: Response, db: Session = Depends(get_db)):
+    # response.headers["Access-Control-Allow-Credentials"] = "true"
     refreshToken = request.cookies.get("refreshToken")
     print(refreshToken)
     print(request.cookies)
-    print("refreshToken")
-    print("==================================")
-    print("==================================")
-    print("==================================")
+    print(request.cookies)
+    print(request.cookies)
+    print(request.cookies)
+    print("==========================================================================================")
+    print("==========================================================================================")
+    print("==========================================================================================")
     refreshToken = validateRefreshToken(token=refreshToken, db=db)
     if not refreshToken:
         return HTTPException(
@@ -55,7 +58,7 @@ def authorization(
             headers={"WWW-Authenticate": "Bearer"},
         )
     accessTokenExpires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
-    refreshTokenExpires = timedelta(days=REFRESH_TOKEN_EXPIRE_DEYS)
+    refreshTokenExpires = timedelta(days=REFRESH_TOKEN_EXPIRE_DAYS)
     accessToken = createToken(
         data={"userName": user.userName}, expiresDelta=accessTokenExpires
     )
@@ -68,6 +71,8 @@ def authorization(
         value=refreshToken,
         max_age=24 * 30 * 60 * 60 * 1000,
         httponly=True,
+        secure="False",
+        samesite="None",
     )
     response.headers["Authorization"] = accessToken
     print(user.id)  # Я не знаю почему, но без принта эта движуха не работает
@@ -100,7 +105,7 @@ def updateUserData(userData: UserUpdate, request: Request, response: Response, d
     response.delete_cookie("refreshToken")
     user = updateUser(db=db, user=userData)
     accessTokenExpires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
-    refreshTokenExpires = timedelta(days=REFRESH_TOKEN_EXPIRE_DEYS)
+    refreshTokenExpires = timedelta(days=REFRESH_TOKEN_EXPIRE_DAYS)
     accessToken = createToken(
         data={"userName": user.userName}, expiresDelta=accessTokenExpires
     )

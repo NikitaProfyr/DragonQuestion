@@ -12,7 +12,7 @@ import './quiz-cud.css'
 import { addQuestionAction } from '../../Feutures/Actions/actionQuiz';
 import { QuizService } from '../../Services/QuizService';
 import { useNavigate } from 'react-router-dom';
- 
+
 
 const QuizCreate = () => {
   const dispatch = useDispatch()
@@ -59,7 +59,7 @@ const QuizCreate = () => {
   }
   const removeQuestion = (e, item) => {
     e.preventDefault()
-    if(quiz.question.length < 2){
+    if (quiz.question.length < 2) {
       return alert("опрос должен содержать минимум 1 опрос")
     }
     const index = quiz.question.indexOf(item)
@@ -67,7 +67,7 @@ const QuizCreate = () => {
     quiz.question = quiz.question.filter(item => item !== null)
     setIndex(quiz.question.length - 1)
     dispatch(addQuestionAction(quiz))
-    
+
   }
   const addImage = (e) => {
 
@@ -90,42 +90,42 @@ const QuizCreate = () => {
     QuizService.createQuiz(quiz, user.id).catch((error) => {
       alert(error)
     });
-    return navigate(ROUTES.QUIZ_USER) 
+    return navigate(ROUTES.QUIZ_USER)
   }
   return (
-    <div className="bg-create-quiz">
-      <div className="container">
-        <form onSubmit={(e) => (addQuiz(e))} className='row col-12 py-5 create-quiz-content'>
-          <div className="d-flex col-4 flex-column form-create-quiz">
-            <input type="text" onChange={(e) => (quiz.title = e.target.value)} placeholder='Введите название опроса' />
-            <input type="text" onChange={(e) => (quiz.description = e.target.value)} placeholder='Введите описание' />
+    <div className="bg-create-quiz d-flex justify-content-center align-items-center">
+      <div className="container content-cud">
+        <form onSubmit={(e) => (addQuiz(e))} className='d-flex flex-column justify-content-center align-items-center forms-content-cud'>
+          <div className="d-flex col-8 col-lg-4 flex-column form-create-quiz">
+            <input className='rounded' type="text" onChange={(e) => (quiz.title = e.target.value)} placeholder='Введите название опроса' />
+            <input className='rounded' type="text" onChange={(e) => (quiz.description = e.target.value)} placeholder='Введите описание' />
             <label htmlFor="myfile" className="label">Выберите файл</label>
             <input type="file" onChange={addImage} className="my" id="myfile" name="myfile" accept="image/*"></input>
           </div>
-          
-          <Carousel className='slederXXXTENTACION' activeIndex={index} onSelect={ handleSubmit } interval={null}>
+
+          <Carousel className='slederXXXTENTACION' activeIndex={index} onSelect={handleSubmit} interval={null}>
             {quiz.question.map((item, index) => (
               <Carousel.Item key={index} className=''>
-                <div className="d-flex justify-content-center align-items-center content-in-slide">
-                  <div className="col-4 d-flex flex-column mx-5 in-slide-form-xxxtentacion">
-                    <input onChange={(e) => (item.title = e.target.value)} type="text" placeholder='Введите вопрос'></input>
-                    <button onClick={(e) => (addAnswer(e, item))}>Добавить ответ</button>
-                    <button onClick={(e) => (removeQuestion(e, item))}>Удалить вопрос</button>
+                <div className="row d-flex justify-content-center align-items-center content-in-slide">
+                  <div className="col-8 col-lg-4 d-flex mx-3 flex-column in-slide-form-xxxtentacion">
+                    <input className='rounded' onChange={(e) => (item.title = e.target.value)} type="text" placeholder='Введите вопрос'></input>
+                    <button className='rounded' onClick={(e) => (addAnswer(e, item))}>Добавить ответ</button>
+                    <button className='rounded' onClick={(e) => (removeQuestion(e, item))}>Удалить вопрос</button>
                   </div>
-                  <div className="col-4 d-flex flex-column">
+                  <div className="col-8 col-lg-4 mx-3 d-flex flex-column">
                     {item.answer.map((ansItem, index) => (
                       ansItem.right === true ?
-                        <div className="d-flex in-slide-form-lilpump active" key={index}>
+                        <div className="d-flex in-slide-form-lilpump active rounded" key={index}>
                           <div className="check-answer-icon active" onClick={() => (cheackAnswer(ansItem))}><img src={galka} height="30px" alt="" /></div>
-                          <input onChange={(e) => (ansItem.title = e.target.value)} type="text" placeholder='Введите описание'></input>
+                          <input className='rounded' onChange={(e) => (ansItem.title = e.target.value)} type="text" placeholder='Введите описание'></input>
                           <div className="del-answer-icon">
                             <img onClick={(e) => (removeAnswer(e, item, ansItem))} src={cross} height="30px" alt="" />
                           </div>
                         </div>
                         :
-                        <div className="d-flex in-slide-form-lilpump" key={index}>
+                        <div className="d-flex in-slide-form-lilpump rounded" key={index}>
                           <div className="check-answer-icon" onClick={() => (cheackAnswer(ansItem))}><img src={galka} height="30px" alt="" /></div>
-                          <input onChange={(e) => (ansItem.title = e.target.value)} type="text" placeholder='Введите описание'></input>
+                          <input className='rounded' onChange={(e) => (ansItem.title = e.target.value)} type="text" placeholder='Введите описание'></input>
                           <div className="del-answer-icon">
                             <img onClick={(e) => (removeAnswer(e, item, ansItem))} src={cross} height="30px" alt="" />
                           </div>
@@ -136,9 +136,9 @@ const QuizCreate = () => {
               </Carousel.Item>
             ))}
           </Carousel>
-          <div className="buttons-group col-4">
-            <button onClick={addQuestion}>Добавить вопрос</button>
-            <button type='submit'>Создать опрос</button>
+          <div className="buttons-group col-8 col-lg-4">
+            <button className='rounded' onClick={addQuestion}>Добавить вопрос</button>
+            <button className='rounded' type='submit'>Создать опрос</button>
           </div>
 
         </form>

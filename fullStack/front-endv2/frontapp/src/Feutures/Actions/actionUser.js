@@ -5,9 +5,9 @@ import AuthService from "../../Services/AuthService"
 //     dispatch({type: 'LOGINSUCCES', payload: data})
 // }
 
-export const loginAction = async (userName, password) => {
+export const loginAction = async (userName, password, dispatch) => {
         const data = await AuthService.login(userName, password)
-        return {type: 'LOGINSUCCES', payload: data} 
+        return dispatch({type: 'LOGINSUCCES', payload: data}) 
     }
 
 export const logoutAction = (dispatch) => {
