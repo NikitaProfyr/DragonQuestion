@@ -24,7 +24,6 @@ add_pagination(app)
 
 origins = [
     "http://localhost:3000",
-    "http://localhost",
     "http://localhost:8080",
 ]
 
