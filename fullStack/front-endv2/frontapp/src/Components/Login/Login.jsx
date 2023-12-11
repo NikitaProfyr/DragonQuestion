@@ -4,27 +4,39 @@ import { Link, useNavigate} from "react-router-dom";
 import DraconImg from '../../image/drakonEgor.png'
 import logo from "../../image/logo.png"
 import './autorization.css'
-import { useDispatch } from 'react-redux'
+ 
+import { useDispatch, useSelector } from 'react-redux'
+import { store } from '../../Feutures/Reducers/rootReduser';
 import { loginAction } from '../../Feutures/Actions/actionUser';
 import { ROUTES } from '../../utils/routes';
+import { useEffect } from 'react';
 
 
 const Login = () => {
     const [userName, setUserName] = useState()
     const [password, setPassword] = useState()
+    const user = useSelector(state => state.reducerUser.userInfo)
     const navigate = useNavigate()
-
     const dispatch = useDispatch()
+  
     const onClickLogin = async (e) => {
         e.preventDefault()
-        const actionData = await loginAction(userName, password).then(async (res) => {
-            dispatch(res)
-            return navigate(ROUTES.QUIZ_LIST)
-        }).catch((e) => (
+        const data = await loginAction(userName, password)
+        .catch((e) => {
+            console.log(e);
             alert("Не правильный логин или пароль.")
-        ))
+        })
+        store.dispatch(data)
+         
     }
 
+    useEffect(() => {
+        if(user !== null) {
+            return navigate(ROUTES.QUIZ_LIST)
+        }
+    }, [user])
+
+    
 
     return (
         <>

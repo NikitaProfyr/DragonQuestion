@@ -69,7 +69,7 @@ def authorization(
     response.set_cookie(
         key="refreshToken",
         value=refreshToken,
-        max_age=24 * 30 * 60 * 60 * 1000,
+        max_age=24 * 30 * 60 * 60,
         httponly=True,
         samesite="None",
         secure="False",

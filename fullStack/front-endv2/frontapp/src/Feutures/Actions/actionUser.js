@@ -1,4 +1,5 @@
 import AuthService from "../../Services/AuthService"
+import { ROUTES } from "../../utils/routes";
 // import UPDATE_USER from "../Reducers/reduserUser"
 // export const loginAction = async (userName, password, dispatch) => {
 //     const data = await AuthService.login(userName, password)
@@ -6,17 +7,15 @@ import AuthService from "../../Services/AuthService"
 // }
 
 export const loginAction = async (userName, password) => {
-        const data = await AuthService.login(userName, password)
-        return {type: 'LOGINSUCCES', payload: data}
+      const data = await AuthService.login(userName, password)
+      return {type: 'LOGINSUCCES', payload: data}    
     }
-
 export const logoutAction = (dispatch) => {
     AuthService.logout()
     dispatch({
         type: 'LOGOUT',
     })
 }
-
 export const updateUserAction = async (dispatch, userName, id, email) => {
     const data = await AuthService.updateUserData(userName, id, email)
     dispatch({type: "UPDATE_USER", payload: data})

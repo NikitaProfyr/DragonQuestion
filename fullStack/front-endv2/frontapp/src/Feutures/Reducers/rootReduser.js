@@ -14,6 +14,6 @@ export const store = createStore(
         reducerUser: reducerUser,
         reducerQuiz: reducerQuiz,
     }),
-    {},
+   
     applyMiddleware(thunk)
 );

@@ -14,6 +14,9 @@ const ApiWithOutToken = axios.create({
 const ApiWithToken = axios.create({
     withCredentials: true,
     baseURL: ApiUrl,
+    headers: {
+        Authorization: localStorage.getItem('accessToken')
+    }
 })
 
 ApiWithToken.interceptors.request.use((config) => {
