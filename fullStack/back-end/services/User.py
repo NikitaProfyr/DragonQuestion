@@ -18,7 +18,7 @@ def getUser(db: Session, userShema: UserBase):
     user = db.scalar(select(User).where(or_(User.userName == userShema.userName)))
     if not user:
         raise HTTPException(
-            status_code=HTTP_401_UNAUTHORIZED,
+            status_code=HTTP_400_BAD_REQUEST,
             detail="Пользователь с таким именем не найден.",
         )
     return user
@@ -92,8 +92,9 @@ def validateRefreshToken(token: str, db: Session = Depends(get_db)):
         print(payload)
         return payload
     except JWTError:
-        # db.scalar(delete(Token).where(or_(Token.refreshToken == token)))
-        # db.commit()
+        db.scalar(delete(Token).where(or_(Token.refreshToken == token)))
+        db.commit()
+        print(JWTError)
         return None
 
 

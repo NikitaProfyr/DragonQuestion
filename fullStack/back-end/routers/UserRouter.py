@@ -1,12 +1,12 @@
 from datetime import timedelta
 from fastapi import APIRouter, Depends, HTTPException, Response, Request
 from sqlalchemy.orm import Session
-from starlette.status import HTTP_401_UNAUTHORIZED, HTTP_200_OK, HTTP_410_GONE
+from starlette.status import HTTP_401_UNAUTHORIZED, HTTP_200_OK, HTTP_410_GONE, HTTP_400_BAD_REQUEST
 
 from middleware.Token import CheckAuthMiddleware
 from model.UserSchema import UserCreate, UserUpdate, UserId, UpdatePasswordSchema
 from model.Settings import get_db
-from security import ACCESS_TOKEN_EXPIRE_MINUTES, REFRESH_TOKEN_EXPIRE_DEYS
+from security import ACCESS_TOKEN_EXPIRE_MINUTES, REFRESH_TOKEN_EXPIRE_DAYS
 from services.User import (
     createUser,
     authenticated,
@@ -23,16 +23,20 @@ userPublicRouter = APIRouter(tags=["UserPublic"])
 userPrivateRouter = APIRouter(
     tags=["UserPrivate"], dependencies=[Depends(CheckAuthMiddleware)]
 )
-# userPrivateRouter = APIRouter(
-#     tags=["UserPrivate"]
-# )
 
-@userPublicRouter.get("/refresh")
-def refresh(request: Request, db: Session = Depends(get_db)):
+
+@userPublicRouter.post("/refresh")
+def refresh(request: Request, response: Response, db: Session = Depends(get_db)):
+    # response.headers["Access-Control-Allow-Credentials"] = "true"
     refreshToken = request.cookies.get("refreshToken")
     print(refreshToken)
     print(request.cookies)
-    print("refreshToken")
+    print(request.cookies)
+    print(request.cookies)
+    print(request.cookies)
+    print("==========================================================================================")
+    print("==========================================================================================")
+    print("==========================================================================================")
     refreshToken = validateRefreshToken(token=refreshToken, db=db)
     if not refreshToken:
         return HTTPException(
@@ -49,12 +53,12 @@ def authorization(
     user = authenticated(db=db, userSchema=userData)
     if not user:
         raise HTTPException(
-            status_code=HTTP_401_UNAUTHORIZED,
+            status_code=HTTP_400_BAD_REQUEST,
             detail="Некорректные имя пользователя или пароль",
             headers={"WWW-Authenticate": "Bearer"},
         )
     accessTokenExpires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
-    refreshTokenExpires = timedelta(days=REFRESH_TOKEN_EXPIRE_DEYS)
+    refreshTokenExpires = timedelta(days=REFRESH_TOKEN_EXPIRE_DAYS)
     accessToken = createToken(
         data={"userName": user.userName}, expiresDelta=accessTokenExpires
     )
@@ -102,7 +106,7 @@ def updateUserData(userData: UserUpdate, request: Request, response: Response, d
     response.delete_cookie("refreshToken")
     user = updateUser(db=db, user=userData)
     accessTokenExpires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
-    refreshTokenExpires = timedelta(days=REFRESH_TOKEN_EXPIRE_DEYS)
+    refreshTokenExpires = timedelta(days=REFRESH_TOKEN_EXPIRE_DAYS)
     accessToken = createToken(
         data={"userName": user.userName}, expiresDelta=accessTokenExpires
     )

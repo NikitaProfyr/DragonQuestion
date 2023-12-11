@@ -11,6 +11,7 @@ from services.User import getCurrentUser
 def CheckAuthMiddleware(
     request: Request, response: Response, db: Session = Depends(get_db)
 ):
+    print("==================midleware========================")
     authorizationHeader = request.headers.get("Authorization")
     if not authorizationHeader:
         raise HTTPException(
