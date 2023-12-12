@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link, useNavigate} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import DraconImg from '../../image/drakonEgor.png'
 import logo from "../../image/logo.png"
@@ -12,17 +12,18 @@ import { ROUTES } from '../../utils/routes';
 const Login = () => {
     const [userName, setUserName] = useState()
     const [password, setPassword] = useState()
-    const navigate = useNavigate()
+
 
     const dispatch = useDispatch()
-    const onClickLogin = async (e) => {
+    const onClickLogin = (e) => {
         e.preventDefault()
-        const actionData = await loginAction(userName, password).then(async (res) => {
-            dispatch(res)
-            return navigate(ROUTES.QUIZ_LIST)
-        }).catch((e) => (
-            alert("Не правильный логин или пароль.")
-        ))
+        
+            
+        // .catch((e) => (
+        //     alert("Не правильный логин или пароль.")
+        // ))
+        loginAction(userName, password, dispatch)
+        
     }
 
 
