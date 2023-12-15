@@ -12,11 +12,11 @@ from services.User import (
     authenticated,
     createToken,
     getCurrentUser,
-    updateUser,
+    update_user,
     saveRefreshToken,
     deleteRefreshToken,
     validateRefreshToken,
-    deleteUser, updatePassword,
+    deleteUser, updatePassword, get_user_id_by_token,
 )
 
 userPublicRouter = APIRouter(tags=["UserPublic"])
@@ -26,7 +26,7 @@ userPrivateRouter = APIRouter(
 
 
 @userPublicRouter.post("/refresh")
-def refresh(request: Request, response: Response, db: Session = Depends(get_db)):
+def refresh(request: Request, db: Session = Depends(get_db)):
     # response.headers["Access-Control-Allow-Credentials"] = "true"
     refreshToken = request.cookies.get("refreshToken")
     print(refreshToken)
@@ -104,16 +104,16 @@ def updateUserData(userData: UserUpdate, request: Request, response: Response, d
     refreshToken = request.cookies.get("refreshToken")
     deleteRefreshToken(token=refreshToken, db=db)
     response.delete_cookie("refreshToken")
-    user = updateUser(db=db, user=userData)
+    user_updated = update_user(request=request, db=db, user=userData)
     accessTokenExpires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     refreshTokenExpires = timedelta(days=REFRESH_TOKEN_EXPIRE_DAYS)
     accessToken = createToken(
-        data={"userName": user.userName}, expiresDelta=accessTokenExpires
+        data={"userName": user_updated.userName}, expiresDelta=accessTokenExpires
     )
     refreshToken = createToken(
-        data={"userName": user.userName}, expiresDelta=refreshTokenExpires
+        data={"userName": user_updated.userName}, expiresDelta=refreshTokenExpires
     )
-    saveRefreshToken(userId=user.id, token=refreshToken, db=db)
+    saveRefreshToken(userId=user_updated.id, token=refreshToken, db=db)
     response.set_cookie(
         key="refreshToken",
         value=refreshToken,
@@ -123,15 +123,15 @@ def updateUserData(userData: UserUpdate, request: Request, response: Response, d
     response.headers["Authorization"] = accessToken
 
     return {"user": {
-        "id": user.id,
-        "userName": user.userName,
-        "email": user.email,
+        "id": user_updated.id,
+        "userName": user_updated.userName,
+        "email": user_updated.email,
     }, "accessToken": accessToken, "refreshToken": refreshToken}
 
 
 @userPrivateRouter.delete("/delete")
-def deleteUserData(userId: int, db: Session = Depends(get_db)):
-    deleteUser(userId=userId, db=db)
+def deleteUserData(request: Request, db: Session = Depends(get_db)):
+    deleteUser(request=request, db=db)
 
 
 @userPrivateRouter.post("/update/password")

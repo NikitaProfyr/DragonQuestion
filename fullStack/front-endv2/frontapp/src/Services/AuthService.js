@@ -16,7 +16,7 @@ export default class AuthService {
     }
     static deleteCurrentUser = async (userId) => {
         console.log('da', userId);
-        return await Api.delete(`/users/delete?userId=${userId}`)
+        return await Api.delete(`/users/delete/`)
     }
     static logup(userName, password) {
         const userData = {

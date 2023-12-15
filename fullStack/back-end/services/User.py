@@ -2,6 +2,7 @@ from datetime import timedelta, datetime
 from typing import Annotated
 
 from fastapi import HTTPException, Depends
+from fastapi import Request
 from jose import jwt, JWTError
 from sqlalchemy import select, update, delete, or_, and_
 from sqlalchemy.orm import Session
@@ -98,15 +99,26 @@ def validateRefreshToken(token: str, db: Session = Depends(get_db)):
         return None
 
 
-def deleteUser(userId: int, db: Session = Depends(get_db)):
+def deleteUser(request: Request, db: Session = Depends(get_db)):
     try:
         db.execute(
-            delete(User).where(or_(User.id == userId))
+            delete(User).where(or_(User.id == get_user_id_by_token(request=request, db=db)))
         )  # <== НАДО ПОФИКСИТЬ (СДЕЛАТЬ УДАЛЕНИЕ ЕДИНСТВЕННОГО ЭКЗЕМПЛЯРА)
         db.commit()
         return HTTP_200_OK
     except HTTPException:
         return HTTPException(status_code=HTTP_400_BAD_REQUEST)
+
+
+def get_user_id_by_token(request: Request, db: Session = Depends(get_db)):
+    refresh_token = request.cookies.get("refreshToken")
+    token = db.scalar(select(Token).where(or_(Token.refreshToken == refresh_token)))
+
+    if token is None:
+        raise HTTPException(status_code=404, detail="Токен не найден")
+
+    return token.userId
+
 
 
 def getCurrentUser(
@@ -133,7 +145,8 @@ def getCurrentUser(
     return user
 
 
-def updateUser(db: Session, user: UserUpdate):
+def update_user(request: Request, db: Session, user: UserUpdate):
+    print(user.id)
     existingUser = db.execute(
         select(User).where(or_(User.userName == user.userName, User.email == user.email))).scalar()
     if existingUser and existingUser.id != user.id:
@@ -145,7 +158,7 @@ def updateUser(db: Session, user: UserUpdate):
     try:
         query = (
             update(User)
-            .where(User.id == user.id)
+            .where(or_(User.id == user.id))
             .values(
                 userName=user.userName,
                 email=user.email,
@@ -153,14 +166,14 @@ def updateUser(db: Session, user: UserUpdate):
         )
         db.execute(query)
         db.commit()
-        updatedUser = db.execute(select(User).where(or_(User.id == user.id))).scalar()
+        updated_user = db.execute(select(User).where(or_(User.id == user.id))).scalar()
         # token = createToken({"userName": existingUser.userName})
         # responseData = UserUpdate(
         #     id=updatedUser.id,
         #     userName=updatedUser.userName,
         #     email=updatedUser.email
         # )
-        return updatedUser
+        return updated_user
         # return {"user": responseData, "accessToken": token}
     except Exception as ex:
         print(Exception)
