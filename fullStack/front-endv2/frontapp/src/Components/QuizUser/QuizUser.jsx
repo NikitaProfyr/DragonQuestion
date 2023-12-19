@@ -23,10 +23,10 @@ const QuizUser = () => {
 
   useEffect(() => {
     dispatch(setBaseCurrentQuiz())
-    getUserQuiz(dispatch, user.id, 1, 6)
+    getUserQuiz(dispatch, 1, 6)
   }, [])
   useEffect(() => {
-    getQuizResultAction(user.id, dispatch, 1, 6)
+    getQuizResultAction(dispatch, 1, 6)
   }, [])
 
   useEffect(() => {
@@ -60,7 +60,7 @@ const QuizUser = () => {
                 <Tab.Pane eventKey="#user-quiz">
                   <div className="row">
                     {quiz.items === undefined ?
-                      <div className='col-12'>вопросов нет</div>
+                      <div className='col-12 none-quiz'>Опросов нет</div>
                       :
                       <>
                         {isLoading ?

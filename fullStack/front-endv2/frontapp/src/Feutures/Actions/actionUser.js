@@ -7,17 +7,15 @@ import { ROUTES } from "../../utils/routes";
 // }
 
 export const loginAction = (userName, password, dispatch) => {
-        AuthService.login(userName, password).then((res)=>{
-            console.log(res);
-            dispatch({type: 'LOGINSUCCES', payload: res})
-            window.location.href = "http://localhost:3000/quizlist";
-            // navigate(ROUTES.QUIZ_LIST)
-            
-            
-        })
-        
-        // return {type: 'LOGINSUCCES', payload: data}
-    }
+    AuthService.login(userName, password).then((res) => {
+        console.log(res);
+        dispatch({ type: 'LOGINSUCCES', payload: res })
+        window.location.href = "http://localhost:3000/quizlist";
+    }).catch((e) => {
+        console.log(e);
+        alert("Не правильный логин или пароль.")
+})
+}
 
 export const logoutAction = (dispatch) => {
     AuthService.logout()
@@ -28,5 +26,5 @@ export const logoutAction = (dispatch) => {
 
 export const updateUserAction = async (dispatch, userName, id, email) => {
     const data = await AuthService.updateUserData(userName, id, email)
-    dispatch({type: "UPDATE_USER", payload: data})
+    dispatch({ type: "UPDATE_USER", payload: data })
 }

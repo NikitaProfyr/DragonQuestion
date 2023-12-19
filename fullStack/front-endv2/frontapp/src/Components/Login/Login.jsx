@@ -17,13 +17,7 @@ const Login = () => {
     const dispatch = useDispatch()
     const onClickLogin = (e) => {
         e.preventDefault()
-        
-            
-        // .catch((e) => (
-        //     alert("Не правильный логин или пароль.")
-        // ))
         loginAction(userName, password, dispatch)
-        
     }
 
 

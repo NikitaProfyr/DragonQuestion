@@ -31,7 +31,7 @@ class UserId(BaseModel):
     id: int
 
 
-class UserUpdate(UserLite):
+class UserUpdate(BaseModel):
     email: str
     userName: str
 
@@ -41,6 +41,5 @@ class TokenSchema(BaseModel):
 
 
 class UpdatePasswordSchema(BaseModel):
-    id: int
     oldPassword: str
     newPassword: str

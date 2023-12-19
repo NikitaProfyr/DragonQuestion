@@ -39,7 +39,6 @@ export default class AuthService {
     static updateUserData = async (userName, id, email) => {
         const userData = {
             email: email,
-            id: id,
             userName: userName,
         }
         const { data } = await Api.put('/users/update/user', userData).catch((err) => {
@@ -54,7 +53,6 @@ export default class AuthService {
     static updateUserPasswordDataTravisScott = async (id, oldPassword, newPassword) => {
         try {
             const userData = {
-                id: id,
                 oldPassword: oldPassword,
                 newPassword: newPassword,
             }

@@ -87,7 +87,7 @@ const QuizCreate = () => {
     console.log(quiz)
     quiz.image = await QuizService.createImageQuiz(quiz.image)
     dispatch(addQuestionAction(quiz))
-    QuizService.createQuiz(quiz, user.id).catch((error) => {
+    QuizService.createQuiz(quiz).catch((error) => {
       alert(error)
     });
     return navigate(ROUTES.QUIZ_USER)

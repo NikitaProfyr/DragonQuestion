@@ -1,4 +1,5 @@
 import axios from "axios";
+import { ROUTES } from "../utils/routes"
 
 // export const ApiUrl = 'http://localhost:8000'
 export const ApiUrl = 'http://127.0.0.1:8000'
@@ -26,19 +27,23 @@ ApiWithToken.interceptors.response.use((config) => {
 }, async (error) => {
     const originalRequest = error.config
     if(error.response.status === 401){
-        try {
+       try {
             const accessToken = await ApiWithOutToken.post('/users/refresh')
-            console.log(accessToken.data.accessToken);
-            
             localStorage.setItem('accessToken', accessToken.data.accessToken)
             return await ApiWithToken.request(originalRequest)
         } catch (e) {
-            console.log(e);
             return Promise.reject(e);
         }
     }
+    if(error.response.status === 408){
+        console.log("залупа!!!!!!!!!!!!!!!!!!!!!");
+        try {
+            window.location.href = ROUTES.LOGIN
+        } catch (e) {
+            return Promise.reject(e);
+        } 
+    }
 })
-
 
 if(localStorage.getItem('accessToken') === null){
     Api = ApiWithOutToken
