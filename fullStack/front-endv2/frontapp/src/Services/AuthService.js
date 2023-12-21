@@ -16,7 +16,7 @@ export default class AuthService {
     }
     static deleteCurrentUser = async (userId) => {
         console.log('da', userId);
-        return await Api.delete(`/users/delete?userId=${userId}`)
+        return await Api.delete(`/users/delete/`)
     }
     static logup(userName, password) {
         const userData = {
@@ -39,7 +39,6 @@ export default class AuthService {
     static updateUserData = async (userName, id, email) => {
         const userData = {
             email: email,
-            id: id,
             userName: userName,
         }
         const { data } = await Api.put('/users/update/user', userData).catch((err) => {
@@ -54,7 +53,6 @@ export default class AuthService {
     static updateUserPasswordDataTravisScott = async (id, oldPassword, newPassword) => {
         try {
             const userData = {
-                id: id,
                 oldPassword: oldPassword,
                 newPassword: newPassword,
             }

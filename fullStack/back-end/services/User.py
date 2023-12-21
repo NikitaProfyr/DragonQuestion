@@ -2,6 +2,7 @@ from datetime import timedelta, datetime
 from typing import Annotated
 
 from fastapi import HTTPException, Depends
+from fastapi import Request
 from jose import jwt, JWTError
 from sqlalchemy import select, update, delete, or_, and_
 from sqlalchemy.orm import Session
@@ -42,12 +43,12 @@ def authenticated(db: Session, userSchema: UserCreate):
     user = getUser(db=db, userShema=userSchema)
     if not user:
         raise HTTPException(
-            status_code=HTTP_401_UNAUTHORIZED,
+            status_code=HTTP_400_BAD_REQUEST,
             detail="Пользователь с таким именем не найден",
         )
     if not pwdContext.verify(userSchema.password, user.hashedPassword):
         raise HTTPException(
-            status_code=HTTP_401_UNAUTHORIZED, detail="Не правильный пароль"
+            status_code=HTTP_400_BAD_REQUEST, detail="Не правильный пароль"
         )
     return user
 
@@ -63,12 +64,12 @@ def createToken(data: dict, expiresDelta: timedelta | None = None):
     return encodedJwt
 
 
-def deleteRefreshToken(token: str, db: Session = Depends(get_db)):
+def delete_refresh_token(token: str, db: Session = Depends(get_db)):
     db.execute(delete(Token).where(or_(Token.refreshToken == token)))
     db.commit()
 
 
-def saveRefreshToken(userId: int, token: str, db: Session = Depends(get_db)):
+def save_refresh_token(userId: int, token: str, db: Session = Depends(get_db)):
     refreshToken = db.scalar(select(Token).where(or_(Token.userId == userId)))
     if refreshToken:
         refreshToken.refreshToken = token
@@ -87,26 +88,31 @@ def selectCurrentToken(userId: str, db: Session = Depends(get_db)) -> str:
 
 def validateRefreshToken(token: str, db: Session = Depends(get_db)):
     try:
-        print(token)
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        print(payload)
         return payload
     except JWTError:
-        db.scalar(delete(Token).where(or_(Token.refreshToken == token)))
-        db.commit()
-        print(JWTError)
         return None
 
 
-def deleteUser(userId: int, db: Session = Depends(get_db)):
+def deleteUser(request: Request, db: Session = Depends(get_db)):
     try:
         db.execute(
-            delete(User).where(or_(User.id == userId))
-        )  # <== НАДО ПОФИКСИТЬ (СДЕЛАТЬ УДАЛЕНИЕ ЕДИНСТВЕННОГО ЭКЗЕМПЛЯРА)
+            delete(User).where(or_(User.id == get_user_id_by_token(request=request, db=db)))
+        )
         db.commit()
         return HTTP_200_OK
     except HTTPException:
         return HTTPException(status_code=HTTP_400_BAD_REQUEST)
+
+
+def get_user_id_by_token(request: Request, db: Session = Depends(get_db)):
+    refresh_token = request.cookies.get("refreshToken")
+    token = db.scalar(select(Token).where(or_(Token.refreshToken == refresh_token)))
+    if token is None:
+        raise HTTPException(status_code=404, detail="Токен не найден")
+
+    return token.userId
+
 
 
 def getCurrentUser(
@@ -133,10 +139,11 @@ def getCurrentUser(
     return user
 
 
-def updateUser(db: Session, user: UserUpdate):
+def update_user(request: Request, db: Session, user: UserUpdate):
+    id_user = get_user_id_by_token(request=request, db=db)
     existingUser = db.execute(
         select(User).where(or_(User.userName == user.userName, User.email == user.email))).scalar()
-    if existingUser and existingUser.id != user.id:
+    if existingUser and existingUser.id != id_user:
         raise HTTPException(
             status_code=400,
             detail="Пользователь с таким именем или email уже существует."
@@ -145,7 +152,7 @@ def updateUser(db: Session, user: UserUpdate):
     try:
         query = (
             update(User)
-            .where(User.id == user.id)
+            .where(or_(User.id == id_user))
             .values(
                 userName=user.userName,
                 email=user.email,
@@ -153,15 +160,10 @@ def updateUser(db: Session, user: UserUpdate):
         )
         db.execute(query)
         db.commit()
-        updatedUser = db.execute(select(User).where(or_(User.id == user.id))).scalar()
-        # token = createToken({"userName": existingUser.userName})
-        # responseData = UserUpdate(
-        #     id=updatedUser.id,
-        #     userName=updatedUser.userName,
-        #     email=updatedUser.email
-        # )
-        return updatedUser
-        # return {"user": responseData, "accessToken": token}
+        updated_user = db.execute(select(User).where(or_(User.id == id_user))).scalar()
+
+        return updated_user
+
     except Exception as ex:
         print(Exception)
         db.rollback()
@@ -171,14 +173,14 @@ def updateUser(db: Session, user: UserUpdate):
         ) from ex
 
 
-def updatePassword(userData: UpdatePasswordSchema, db: Session = Depends(get_db)):
-
-    user = db.scalar(select(User).where(or_(User.id == userData.id)))
-    if not pwdContext.verify(userData.oldPassword, user.hashedPassword):
+def update_password(request: Request, user_data: UpdatePasswordSchema, db: Session = Depends(get_db)):
+    id_user = get_user_id_by_token(request=request, db=db)
+    user = db.scalar(select(User).where(or_(User.id == id_user)))
+    if not pwdContext.verify(user_data.oldPassword, user.hashedPassword):
         raise HTTPException(
             status_code=HTTP_401_UNAUTHORIZED, detail="Не правильный пароль"
         )
-    user.hashedPassword = pwdContext.hash(userData.newPassword)
+    user.hashedPassword = pwdContext.hash(user_data.newPassword)
     db.commit()
     return HTTP_200_OK
 

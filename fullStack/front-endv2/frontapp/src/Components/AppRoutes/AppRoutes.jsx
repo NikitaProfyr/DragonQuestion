@@ -67,7 +67,7 @@ const PrivateRoutes = [
 
 const AppRoutes = () => {
   const isActive = useSelector(state => state.reducerUser.isActive)
-   
+
   return (
     <BrowserRouter>
       <Routes>

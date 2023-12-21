@@ -90,7 +90,7 @@ const QuizUpdate = () => {
     }
     const removeQuiz = async (e) => {
         e.preventDefault()
-        await QuizService.delQuiz(quiz.id, user.id)
+        await QuizService.delQuiz(quiz.id)
         return navigate(ROUTES.QUIZ_USER)   
     }
     const updateQuiz = async (e) => {

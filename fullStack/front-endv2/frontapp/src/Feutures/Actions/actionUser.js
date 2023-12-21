@@ -6,17 +6,25 @@ import { ROUTES } from "../../utils/routes";
 //     dispatch({type: 'LOGINSUCCES', payload: data})
 // }
 
-export const loginAction = async (userName, password) => {
-      const data = await AuthService.login(userName, password)
-      return {type: 'LOGINSUCCES', payload: data}    
-    }
+export const loginAction = (userName, password, dispatch) => {
+    AuthService.login(userName, password).then((res) => {
+        console.log(res);
+        dispatch({ type: 'LOGINSUCCES', payload: res })
+        window.location.href = "http://localhost:3000/quizlist";
+    }).catch((e) => {
+        console.log(e);
+        alert("Не правильный логин или пароль.")
+})
+}
+
 export const logoutAction = (dispatch) => {
     AuthService.logout()
     dispatch({
         type: 'LOGOUT',
     })
 }
+
 export const updateUserAction = async (dispatch, userName, id, email) => {
     const data = await AuthService.updateUserData(userName, id, email)
-    dispatch({type: "UPDATE_USER", payload: data})
+    dispatch({ type: "UPDATE_USER", payload: data })
 }

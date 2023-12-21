@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Link, Navigate } from "react-router-dom";
-
+import { Link, Routes, useNavigate } from "react-router-dom";
+import { ROUTES } from '../../utils/routes'
 import './registration.css'
 import logo from "../../image/logo.png"
 import DraconImg from '../../image/drakonEgor.png'
@@ -12,7 +12,7 @@ const Registration = () => {
     const [userName, setUserName] = useState()
     const [password1, setPassword1] = useState()
     const [password2, setPassword2] = useState()
-
+    const navigate = useNavigate()
     // const dispatch = useDispatch()
     const submitDataReg = (e) => {
         // data.preventDefault()
@@ -32,8 +32,8 @@ const Registration = () => {
             return alert("Пароль должен иметь более 6 символов.")
         }
         AuthService.logup(userName, password1)
+        navigate(ROUTES.LOGIN)
         
-        return <Navigate to= "/authorization"></Navigate>
     }
     return (
     <>         

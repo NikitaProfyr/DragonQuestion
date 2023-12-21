@@ -9,33 +9,24 @@ export class QuizService {
         const { data } = await Api.get(`quiz/getquiz/${idQuiz}`)
         return data
     }
-    static getUserQuiz = async (idUser, page, size) => {
-        const { data } = await Api.get(`/quiz/getquiz/user/${idUser}?page=${page}&size=${size}`)
+    static getUserQuiz = async (page, size) => {
+        const { data } = await Api.get(`/quiz/getquizuser?page=${page}&size=${size}`)
             .catch(() => ({}))
         return data
     }
-    static createQuiz = (quiz, userId) => {
-        console.log(quiz);  
-        console.log(userId);  
-        // console.log(userId);
-        // console.log(JSON.stringify({quiz: quiz, userId:{id: userId}}));
-
-        return Api.post('/quiz/createquiz',{
-            quizData: quiz,
-            userId:{id: userId},
-        },
-        )
+    static createQuiz = (quiz) => {
+        return Api.post('/quiz/createquiz', quiz)
     }
-    static delQuiz = async (quiz, idUser) => {
-        return await Api.delete(`/quiz/deletequiz/?quizData=${quiz}&idUser=${idUser}`
+    static delQuiz = async (quiz) => {
+        return await Api.delete(`/quiz/deletequiz/?quiz_data=${quiz}`
         )
     }
     static createImageQuiz = async (image) => {
         console.log(image);
-        const data = await Api.post('/quiz/download/image', image, {headers:{'Content-type':'multipart/form-data'}})
-        .catch(
-            (error) => {console.log(error);}
-        )
+        const data = await Api.post('/quiz/download/image', image, { headers: { 'Content-type': 'multipart/form-data' } })
+            .catch(
+                (error) => { console.log(error); }
+            )
         return data.data
     }
     static getImage = async (imgUrl) => {
@@ -43,30 +34,29 @@ export class QuizService {
         const data = await Api.get(`/quiz/image/?urlImage=${imgUrl}`)
         console.log(data);
         return data
-        .catch(() => {
-            return '../../image/currentQuizDragon.png'
-        })
-    } 
+            .catch(() => {
+                return '../../image/currentQuizDragon.png'
+            })
+    }
     static updateCurrentQuiz = async (quiz) => {
         console.log(quiz);
         return await Api.put('/quiz/updatequiz/', quiz)
     }
-    static updateImage = async(formdata) => {
+    static updateImage = async (formdata) => {
         console.log(formdata.get('quizId'));
         console.log(formdata.get('image'));
-        const data = await Api.put('/quiz/update/image', formdata, {headers:{'Content-type':'multipart/form-data'}})
-        .catch(
-            (error) => {console.log(error);}
-        )
+        const data = await Api.put('/quiz/update/image', formdata, { headers: { 'Content-type': 'multipart/form-data' } })
+            .catch(
+                (error) => { console.log(error); }
+            )
         return data.data
     }
-    static createQuizResults = async (userId, quizId, result) => {
-        return await Api.post(`/quiz/create-result?userId=${userId}&quizId=${quizId}&result=${result}` 
+    static createQuizResults = async (quizId, result) => {
+        return await Api.post(`/quiz/create-result?quizId=${quizId}&result=${result}`
         )
     }
-    static getQuizResultsUser = async (userId, page, size) => {
-        const {data} = await Api.get(`/quiz/result?idUser=${userId}&page=${page}&size=${size}`)
+    static getQuizResultsUser = async (page, size) => {
+        const { data } = await Api.get(`/quiz/result?page=${page}&size=${size}`)
         return data
     }
 }
-    

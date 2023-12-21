@@ -58,7 +58,27 @@ const UserSettings = () => {
         <div className="bg-content-user-settings">
             <div className="container">
                 <div className="row setting-content-all d-flex align-items-center">
-                    <div className="col-lg-6 col-md-12 col-sm-12 d-flex justify-content-lg-start justify-content-center">
+                <div className="col-lg-6 col-md-12 col-sm-12 d-flex justify-content-lg-start justify-content-center">
+                        <div className="form-setting d-flex justify-content-center align-items-center">
+                            <div className="box-settings-content pink-color-title d-flex flex-column">
+                                <h1 color="#DD90E6">ЛИЧНЫЕ ДАННЫЕ</h1>
+                                <form onSubmit={(e) => (userUpdateData(e))}>
+                                    <h3>ИМЯ ПРОФИЛЯ</h3>
+                                    <input type="text" onChange={(e) => { setUserName(e.target.value) }} defaultValue={user.userName} />
+                                    <h3 color="#DD90E6">EMAIL</h3>
+                                    <input type="text" onChange={(e) => { setEmail(e.target.value) }} defaultValue={user.email} />
+                                    <button type="submit" className="save-new-password-button">
+                                        Сохранить
+                                    </button>
+                                </form>
+                                <h2>ВЫЙТИ ИЗ АККАУНТА</h2>
+                                <button onClick={logOut} className="save-new-password-button">
+                                    ВЫЙТИ
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-lg-6 col-md-12 col-sm-12 d-flex justify-content-lg-end justify-content-center">
                         <div className="form-setting d-flex justify-content-center align-items-center">
                             <div className="box-settings-content d-flex flex-column">
                                 <h1>БЕЗОПАСТНОСТЬ</h1>
@@ -77,26 +97,6 @@ const UserSettings = () => {
                                 <h2 className="title-del-user">УДАЛЕНИЕ АККАУНТА</h2>
                                 <button onClick={deleteUser} className="del-button-setting-user"> Удалить </button>
 
-                            </div>
-                        </div>
-                    </div>
-                    <div className="col-lg-6 col-md-12 col-sm-12 d-flex justify-content-lg-end justify-content-center">
-                        <div className="form-setting d-flex justify-content-center align-items-center">
-                            <div className="box-settings-content pink-color-title d-flex flex-column">
-                                <h1 color="#DD90E6">ЛИЧНЫЕ ДАННЫЕ</h1>
-                                <form onSubmit={(e) => (userUpdateData(e))}>
-                                    <h3>ИМЯ ПРОФИЛЯ</h3>
-                                    <input type="text" onChange={(e) => { setUserName(e.target.value) }} defaultValue={user.userName} />
-                                    <h3 color="#DD90E6">EMAIL</h3>
-                                    <input type="text" onChange={(e) => { setEmail(e.target.value) }} defaultValue={user.email} />
-                                    <button type="submit" className="save-new-password-button">
-                                        Сохранить
-                                    </button>
-                                </form>
-                                <h2>ВЫЙТИ ИЗ АККАУНТА</h2>
-                                <button onClick={logOut} className="save-new-password-button">
-                                    ВЫЙТИ
-                                </button>
                             </div>
                         </div>
                     </div>
