@@ -1,7 +1,11 @@
 from datetime import timedelta
 from fastapi import APIRouter, Depends, HTTPException, Response, Request
 from sqlalchemy.orm import Session
+<<<<<<< HEAD
 from starlette.status import HTTP_401_UNAUTHORIZED, HTTP_200_OK, HTTP_410_GONE, HTTP_400_BAD_REQUEST, HTTP_408_REQUEST_TIMEOUT, HTTP_402_PAYMENT_REQUIRED
+=======
+from starlette.status import HTTP_401_UNAUTHORIZED, HTTP_200_OK, HTTP_410_GONE, HTTP_400_BAD_REQUEST, HTTP_408_REQUEST_TIMEOUT
+>>>>>>> a369357d7d4c84b42a23928c1c94538f1e5ef340
 
 from middleware.Token import CheckAuthMiddleware
 from model.UserSchema import UserCreate, UserUpdate, UserId, UpdatePasswordSchema

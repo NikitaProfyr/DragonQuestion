@@ -1,6 +1,9 @@
 import axios from "axios";
 import { ROUTES } from "../utils/routes"
+<<<<<<< HEAD
 import{ AuthService } from "../Services/AuthService"
+=======
+>>>>>>> a369357d7d4c84b42a23928c1c94538f1e5ef340
 
 // export const ApiUrl = 'http://localhost:8000'
 export const ApiUrl = 'http://127.0.0.1:8000'
@@ -34,6 +37,7 @@ ApiWithToken.interceptors.response.use((config) => {
     if(error.response.status === 401){
        try {
             const accessToken = await ApiWithOutToken.post('/users/refresh')
+<<<<<<< HEAD
             .catch((err) => {
                 if(err.response.status === 408){
                     try {
@@ -46,13 +50,26 @@ ApiWithToken.interceptors.response.use((config) => {
                     } 
                 }
             })
+=======
+>>>>>>> a369357d7d4c84b42a23928c1c94538f1e5ef340
             localStorage.setItem('accessToken', accessToken.data.accessToken)
             return await ApiWithToken.request(originalRequest)
         } catch (e) {
             return Promise.reject(e);
         }
     }
+<<<<<<< HEAD
     
+=======
+    if(error.response.status === 408){
+        console.log("залупа!!!!!!!!!!!!!!!!!!!!!");
+        try {
+            window.location.href = ROUTES.LOGIN
+        } catch (e) {
+            return Promise.reject(e);
+        } 
+    }
+>>>>>>> a369357d7d4c84b42a23928c1c94538f1e5ef340
 })
 
 if(localStorage.getItem('accessToken') === null){

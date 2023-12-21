@@ -1,5 +1,6 @@
 .idea
 /fullStack/back-end/venv
+/fullStack/back-end/__pycache__
 /fullStack/frontEnd/node_modules
 /fullStack/front-endv2/frontapp/node_modules
 /fullStack/front-endv2/node_modules
