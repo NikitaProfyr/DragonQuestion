@@ -32,7 +32,6 @@ def refresh(request: Request, db: Session = Depends(get_db)):
     refreshToken = request.cookies.get("refreshToken")
     refreshToken = validateRefreshToken(token=refreshToken, db=db)
     if refreshToken is None:
-        print("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=")
         raise HTTPException(
             status_code=HTTP_408_REQUEST_TIMEOUT, detail="не валидный refresh token"
         )
@@ -52,7 +51,7 @@ def authorization(
             headers={"WWW-Authenticate": "Bearer"},
         )
     accessTokenExpires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
-    refreshTokenExpires = timedelta(minutes=REFRESH_TOKEN_EXPIRE_DAYS)
+    refreshTokenExpires = timedelta(days=REFRESH_TOKEN_EXPIRE_DAYS)
     accessToken = createToken(
         data={"userName": user.userName}, expiresDelta=accessTokenExpires
     )
