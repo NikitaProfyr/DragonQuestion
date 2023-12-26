@@ -37,7 +37,7 @@ const Login = () => {
                             <button type="submit">ВОЙТИ</button>
                         </form>
 
-                        <a href=""><span>ЗАБЫЛ ПАРОЛЬ</span></a><br />
+                        <a className='refresh-password-link' href="#"><span title='Пока не работает'>ЗАБЫЛ ПАРОЛЬ</span></a><br />
                         <Link to="/registration" className="link-to-registration">ЗАРЕГИСТРИРОВАТЬСЯ</Link>
 
                         <img src={logo} alt="" width="110px" className="logo-content-autorization" />

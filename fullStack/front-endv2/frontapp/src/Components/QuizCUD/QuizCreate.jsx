@@ -26,12 +26,17 @@ const QuizCreate = () => {
   }
   const addAnswer = (e, item) => {
     e.preventDefault()
-    item.answer.push({
-      id: "1",
-      title: "",
-      right: false
-    })
-    dispatch(addQuestionAction(quiz))
+    if(item.answer.length < 6){
+      item.answer.push({
+        id: "1",
+        title: "",
+        right: false
+      })
+      dispatch(addQuestionAction(quiz))
+    }
+    else{
+      alert('В одном вопросе может быть не более 6 вариантов ответа')
+    }
   }
   const cheackAnswer = (item) => {
     item.right === true ?
@@ -41,17 +46,31 @@ const QuizCreate = () => {
   }
   const removeAnswer = (e, item, ansItem) => {
     e.preventDefault()
-    const index = item.answer.indexOf(ansItem)
-    delete item.answer[index]
-    item.answer = item.answer.filter(element => element !== null)
-    dispatch(addQuestionAction(quiz))
+    console.log(item.answer.length);
+    if(item.answer.length > 2){
+      const index = item.answer.indexOf(ansItem)
+      delete item.answer[index]
+      item.answer = item.answer.filter(element => element !== null)
+      dispatch(addQuestionAction(quiz))
+    }
+    else{
+      alert('В одном вопросе должно быть 2 и более вариантов ответа')
+    }
   }
   const addQuestion = (e) => {
     e.preventDefault()
     quiz.question.push({
       id: "1",
       title: "",
-      answer: []
+      answer: [{
+        id: "1",
+        title: "",
+        right: false
+      },{
+        id: "1",
+        title: "",
+        right: true
+    }]
     }
     )
     setIndex(quiz.question.length - 1)
