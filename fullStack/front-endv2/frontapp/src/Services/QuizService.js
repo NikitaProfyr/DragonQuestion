@@ -31,7 +31,7 @@ export class QuizService {
     }
     static getImage = async (imgUrl) => {
         // console.log(`/quiz/image/${imgUrl}`);
-        const data = await Api.get(`/quiz/image/?urlImage=${imgUrl}`)
+        const data = await Api.get(`/quiz/image/?url_image=${imgUrl}`)
         console.log(data);
         return data
             .catch(() => {
@@ -43,7 +43,7 @@ export class QuizService {
         return await Api.put('/quiz/updatequiz/', quiz)
     }
     static updateImage = async (formdata) => {
-        console.log(formdata.get('quizId'));
+        console.log(formdata.get('quiz_id'));
         console.log(formdata.get('image'));
         const data = await Api.put('/quiz/update/image', formdata, { headers: { 'Content-type': 'multipart/form-data' } })
             .catch(
@@ -52,7 +52,7 @@ export class QuizService {
         return data.data
     }
     static createQuizResults = async (quizId, result) => {
-        return await Api.post(`/quiz/create-result?quizId=${quizId}&result=${result}`
+        return await Api.post(`/quiz/create-result?quiz_id=${quizId}&result=${result}`
         )
     }
     static getQuizResultsUser = async (page, size) => {

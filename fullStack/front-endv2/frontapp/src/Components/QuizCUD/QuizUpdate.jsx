@@ -114,7 +114,7 @@ const QuizUpdate = () => {
   const updateQuiz = async (e) => {
     e.preventDefault()
     console.log(quiz)
-    formData.append('quizId', quiz.id)
+    formData.append('quiz_id', quiz.id)
     formData.append('image', quiz.image)
     // console.log(formData.get('image'));
     console.log(quiz);
