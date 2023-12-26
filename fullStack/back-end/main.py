@@ -7,8 +7,8 @@ from fastapi_cache import FastAPICache
 from redis import asyncio as aioredis
 from fastapi.middleware.cors import CORSMiddleware
 
-from routers.UserRouter import userPublicRouter, userPrivateRouter
-from routers.QuizRouter import quizPrivateRouter, quizPublicRouter
+from routers.UserRouter import user_public_router, user_private_router
+from routers.QuizRouter import quiz_private_router, quiz_public_router
 from dotenv import load_dotenv
 from os import getenv
 
@@ -37,21 +37,21 @@ add_pagination(app)
 # регистрация роутеров
 
 app.include_router(
-    router=userPublicRouter,
+    router=user_public_router,
     prefix="/users",
 )
 
 app.include_router(
-    router=userPrivateRouter,
+    router=user_private_router,
     prefix="/users",
 )
 
 app.include_router(
-    router=quizPrivateRouter,
+    router=quiz_private_router,
 )
 
 app.include_router(
-    router=quizPublicRouter,
+    router=quiz_public_router,
 )
 
 

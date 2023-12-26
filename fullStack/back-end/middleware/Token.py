@@ -5,7 +5,7 @@ from starlette.responses import Response
 from fastapi import Request, Depends, HTTPException
 
 from model.Settings import get_db
-from services.User import getCurrentUser
+from services.User import get_current_user
 
 
 def CheckAuthMiddleware(
@@ -18,7 +18,7 @@ def CheckAuthMiddleware(
             status_code=401,
             detail="Пользователь не авторизован",
         )
-    user = getCurrentUser(token=authorizationHeader, db=db)
+    user = get_current_user(token=authorizationHeader, db=db)
     if not user:
         raise HTTPException(
             status_code=401,

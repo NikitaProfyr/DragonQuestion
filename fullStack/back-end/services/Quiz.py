@@ -102,11 +102,11 @@ def selectQuizJoined(db: Session = Depends(get_db)):
     return quiz
 
 
-def selectQuiz(db: Session = Depends(get_db)):
+def select_quiz(db: Session = Depends(get_db)):
     return paginate(conn=db, query=select(Quiz).order_by(Quiz.id))
 
 
-def selelctCurrentQuiz(idQuiz: int, db: Session = Depends(get_db)):
+def selelct_current_quiz(idQuiz: int, db: Session = Depends(get_db)):
     currentQuiz = db.scalar(select(Quiz).where(Quiz.id == idQuiz))
     if not currentQuiz:
         raise HTTPException(
@@ -141,24 +141,24 @@ def delete_image(imageUrl: str):
         os.remove(imageUrl)
 
 
-def createImageQuiz(image: UploadFile = File(...)):
+def create_image_quiz(image: UploadFile = File(...)):
     imgPath = "media/quizImage/"
     with open(f"{imgPath}{image.filename}", "wb") as buffer:
         shutil.copyfileobj(image.file, buffer)
     return imgPath + image.filename
 
 
-def updateImageQuiz(
+def update_image_quiz(
     quizId: int = Form(...),
     image: UploadFile = File(...),
     db: Session = Depends(get_db),
 ):
     quiz = db.scalar((select(Quiz).where(Quiz.id == quizId)))
     delete_image(imageUrl=quiz.image)
-    return createImageQuiz(image=image)
+    return create_image_quiz(image=image)
 
 
-def updateCurrentQuiz(quizData: QuizSchema, db: Session = Depends(get_db)):
+def update_current_quiz(quizData: QuizSchema, db: Session = Depends(get_db)):
     query = (
         update(Quiz)
         .where(Quiz.id == quizData.id)

@@ -5,13 +5,13 @@ from sqlalchemy.orm import Session
 from main import app
 from model.Settings import get_db
 from model.UserSchema import UserBase, UserId
-from services.User import createToken, getCurrentUser, getUser
+from services.User import create_token, get_current_user, getUser
 
 client = TestClient(app)
 
 
 testUser = {"userName": "testUserName", "password": "testPassword"}
-testToken = createToken(testUser)
+testToken = create_token(testUser)
 
 
 def testRegistration():
