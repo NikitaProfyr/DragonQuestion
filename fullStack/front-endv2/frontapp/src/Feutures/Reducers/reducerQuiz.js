@@ -44,6 +44,10 @@ const stateQuiz = {
                 id: "1",
                 title: "",
                 right: false
+            },{
+                id: "1",
+                title: "",
+                right: true
             }]
         }]
     },

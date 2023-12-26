@@ -94,6 +94,9 @@
     justify-content: center;
     align-items: center;
 }
+.refresh-password-link{
+    cursor: not-allowed;
+}
 .content-autorization span{
     margin-top: 15px;
     color: #DD90E6;

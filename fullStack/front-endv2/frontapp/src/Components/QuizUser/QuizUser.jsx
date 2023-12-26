@@ -35,11 +35,11 @@ const QuizUser = () => {
     }
   }, [quiz, quizResults])
 
-  const onClickPagination = (item) => {
-    getUserQuiz(dispatch, user.id, item, 6)
+  const onClickPagination = (page) => {
+    getUserQuiz(dispatch, page, 6)
   }
-  const onClickPaginationQuizResult = (item) => {
-    getQuizResultAction(user.id, dispatch, item, 6)
+  const onClickPaginationQuizResult = (page) => {
+    getQuizResultAction(dispatch, page, 6)
   }
 
   return (
