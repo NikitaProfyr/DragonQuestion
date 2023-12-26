@@ -25,7 +25,7 @@ def getUser(db: Session, userShema: UserBase):
     return user
 
 
-def createUser(db: Session, userSchema: UserCreate):
+def create_user(db: Session, userSchema: UserCreate):
     if db.scalar(select(User).where(or_(User.userName == userSchema.userName))):
         raise HTTPException(
             status_code=HTTP_400_BAD_REQUEST,
@@ -53,7 +53,7 @@ def authenticated(db: Session, userSchema: UserCreate):
     return user
 
 
-def createToken(data: dict, expiresDelta: timedelta | None = None):
+def create_token(data: dict, expiresDelta: timedelta | None = None):
     toEncode = data.copy()
     if expiresDelta:
         expire = datetime.utcnow() + expiresDelta
@@ -86,7 +86,7 @@ def selectCurrentToken(userId: str, db: Session = Depends(get_db)) -> str:
     return refreshToken
 
 
-def validateRefreshToken(token: str, db: Session = Depends(get_db)):
+def validate_refresh_token(token: str, db: Session = Depends(get_db)):
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         return payload
@@ -94,7 +94,7 @@ def validateRefreshToken(token: str, db: Session = Depends(get_db)):
         return None
 
 
-def deleteUser(request: Request, db: Session = Depends(get_db)):
+def delete_user(request: Request, db: Session = Depends(get_db)):
     try:
         db.execute(
             delete(User).where(or_(User.id == get_user_id_by_token(request=request, db=db)))
@@ -115,7 +115,7 @@ def get_user_id_by_token(request: Request, db: Session = Depends(get_db)):
 
 
 
-def getCurrentUser(
+def get_current_user(
     token: Annotated[str, Depends(oauth2Scheme)],
     # token: str,
     db: Session = Annotated[str, Depends(get_db)],
