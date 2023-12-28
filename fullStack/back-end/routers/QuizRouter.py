@@ -7,7 +7,7 @@ from middleware.Token import CheckAuthMiddleware
 from model.QuizSchema import QuizSchema, QuizBaseSchema, QuizResult
 from model.Settings import get_db
 from services.Quiz import (
-    selelct_current_quiz,
+    select_current_quiz,
     delete_current_quiz,
     select_user_quiz,
     create_image_quiz,
@@ -35,7 +35,7 @@ def get_quiz(db: Session = Depends(get_db)):
 @quiz_private_router.get("/getquiz/{idQuiz}")
 def get_current_quiz(id_quiz: int, db: Session = Depends(get_db)) -> QuizSchema:
     """Получить конкретный опрос"""
-    return selelct_current_quiz(idQuiz=id_quiz, db=db)
+    return select_current_quiz(id_quiz=id_quiz, db=db)
 
 
 @quiz_private_router.get("/getquizuser", response_model=Page[QuizBaseSchema])
@@ -77,7 +77,7 @@ def download_image(image: UploadFile = File(...)):
 @quiz_private_router.put("/updatequiz")
 def update_quiz(quiz_data: QuizSchema, db: Session = Depends(get_db)):
     """Обновить данные конкретного опроса"""
-    return update_current_quiz(quizData=quiz_data, db=db)
+    return update_current_quiz(quiz_data=quiz_data, db=db)
 
 
 @quiz_private_router.put("/update/image")
@@ -87,7 +87,7 @@ def update_image(
     db: Session = Depends(get_db),
 ):
     """Обновить изображение у конкретного опроса"""
-    return update_image_quiz(quizId=quiz_id, image=image, db=db)
+    return update_image_quiz(quiz_id=quiz_id, image=image, db=db)
 
 
 @quiz_private_router.delete("/deletequiz/")

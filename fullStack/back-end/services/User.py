@@ -15,8 +15,8 @@ from model.UserSchema import UserBase, UserCreate, UserUpdate, UserId, UpdatePas
 from security import pwdContext, SECRET_KEY, ALGORITHM, oauth2Scheme
 
 
-def getUser(db: Session, userShema: UserBase):
-    user = db.scalar(select(User).where(or_(User.userName == userShema.userName)))
+def get_user(db: Session, user_data: UserBase):
+    user = db.scalar(select(User).where(or_(User.userName == user_data.userName)))
     if not user:
         raise HTTPException(
             status_code=HTTP_400_BAD_REQUEST,
@@ -25,43 +25,43 @@ def getUser(db: Session, userShema: UserBase):
     return user
 
 
-def create_user(db: Session, userSchema: UserCreate):
-    if db.scalar(select(User).where(or_(User.userName == userSchema.userName))):
+def create_user(db: Session, user_data: UserCreate):
+    if db.scalar(select(User).where(or_(User.userName == user_data.userName))):
         raise HTTPException(
             status_code=HTTP_400_BAD_REQUEST,
             detail="Пользователь с таким именем уже зарегистрирован",
         )
-    hashedPassword = pwdContext.hash(userSchema.password)
-    user = User(userName=userSchema.userName)
-    user.hashedPassword = hashedPassword
+    hashed_password = pwdContext.hash(user_data.password)
+    user = User(userName=user_data.userName)
+    user.hashedPassword = hashed_password
     db.add(user)
     db.commit()
     return user
 
 
-def authenticated(db: Session, userSchema: UserCreate):
-    user = getUser(db=db, userShema=userSchema)
+def authenticated(db: Session, user_data: UserCreate):
+    user = get_user(db=db, user_data=user_data)
     if not user:
         raise HTTPException(
             status_code=HTTP_400_BAD_REQUEST,
             detail="Пользователь с таким именем не найден",
         )
-    if not pwdContext.verify(userSchema.password, user.hashedPassword):
+    if not pwdContext.verify(user_data.password, user.hashedPassword):
         raise HTTPException(
             status_code=HTTP_400_BAD_REQUEST, detail="Не правильный пароль"
         )
     return user
 
 
-def create_token(data: dict, expiresDelta: timedelta | None = None):
-    toEncode = data.copy()
-    if expiresDelta:
-        expire = datetime.utcnow() + expiresDelta
+def create_token(data: dict, expires_delta: timedelta | None = None):
+    to_encode = data.copy()
+    if expires_delta:
+        expire = datetime.utcnow() + expires_delta
     else:
         expire = datetime.utcnow() + timedelta(minutes=15)
-    toEncode.update({"exp": expire})
-    encodedJwt = jwt.encode(toEncode, SECRET_KEY, algorithm=ALGORITHM)
-    return encodedJwt
+    to_encode.update({"exp": expire})
+    encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
+    return encoded_jwt
 
 
 def delete_refresh_token(token: str, db: Session = Depends(get_db)):
@@ -69,21 +69,22 @@ def delete_refresh_token(token: str, db: Session = Depends(get_db)):
     db.commit()
 
 
-def save_refresh_token(userId: int, token: str, db: Session = Depends(get_db)):
-    refreshToken = db.scalar(select(Token).where(or_(Token.userId == userId)))
-    if refreshToken:
-        refreshToken.refreshToken = token
+def save_refresh_token(request: Request, token: str, db: Session = Depends(get_db)):
+    id_user = get_user_id_by_token(request=request, db=db)
+    refresh_token = db.scalar(select(Token).where(or_(Token.userId == id_user)))
+    if refresh_token:
+        refresh_token.refreshToken = token
     else:
-        refreshToken = Token(refreshToken=token, userId=userId)
-    db.add(refreshToken)
+        refresh_token = Token(refreshToken=token, userId=id_user)
+    db.add(refresh_token)
     db.commit()
 
 
-def selectCurrentToken(userId: str, db: Session = Depends(get_db)) -> str:
-    refreshToken = db.scalar(select(Token).where(or_(userId == userId)))
-    if not refreshToken:
+def select_current_token(user_id: str, db: Session = Depends(get_db)) -> str:  # не используется
+    refresh_token = db.scalar(select(Token).where(or_(user_id == user_id)))
+    if not refresh_token:
         raise HTTP_400_BAD_REQUEST
-    return refreshToken
+    return refresh_token
 
 
 def validate_refresh_token(token: str, db: Session = Depends(get_db)):
@@ -114,36 +115,35 @@ def get_user_id_by_token(request: Request, db: Session = Depends(get_db)):
     return token.userId
 
 
-
 def get_current_user(
-    token: Annotated[str, Depends(oauth2Scheme)],
-    # token: str,
-    db: Session = Annotated[str, Depends(get_db)],
+        token: Annotated[str, Depends(oauth2Scheme)],
+        # token: str,
+        db: Session = Annotated[str, Depends(get_db)],
 ):
-    credentialsException = HTTPException(
+    credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Не удалось проверить учетные данные",
         headers={"WWW-Authenticate": "Bearer"},
     )
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        userName = payload.get("userName")
-        if not userName:
-            raise credentialsException
-        tokenData = UserBase(userName=userName)
+        user_name = payload.get("userName")
+        if not user_name:
+            raise credentials_exception
+        token_data = UserBase(userName=user_name)
     except JWTError:
-        raise credentialsException
-    user = getUser(db=db, userShema=tokenData)
+        raise credentials_exception
+    user = get_user(db=db, user_data=token_data)
     if not user:
-        raise credentialsException
+        raise credentials_exception
     return user
 
 
 def update_user(request: Request, db: Session, user: UserUpdate):
     id_user = get_user_id_by_token(request=request, db=db)
-    existingUser = db.execute(
+    existing_user = db.execute(
         select(User).where(or_(User.userName == user.userName, User.email == user.email))).scalar()
-    if existingUser and existingUser.id != id_user:
+    if existing_user and existing_user.id != id_user:
         raise HTTPException(
             status_code=400,
             detail="Пользователь с таким именем или email уже существует."
@@ -183,4 +183,3 @@ def update_password(request: Request, user_data: UpdatePasswordSchema, db: Sessi
     user.hashedPassword = pwdContext.hash(user_data.newPassword)
     db.commit()
     return HTTP_200_OK
-

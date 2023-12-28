@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 from main import app
 from model.Settings import get_db
 from model.UserSchema import UserBase, UserId
-from services.User import create_token, get_current_user, getUser
+from services.User import create_token, get_current_user, get_user
 
 client = TestClient(app)
 

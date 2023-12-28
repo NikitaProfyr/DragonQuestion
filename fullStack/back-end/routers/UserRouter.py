@@ -34,32 +34,31 @@ def refresh(request: Request, db: Session = Depends(get_db)):
     refresh_token = validate_refresh_token(token=refresh_token, db=db)
     if refresh_token is None:
         raise HTTPException(
-            status_code=HTTP_408_REQUEST_TIMEOUT, detail="не валидный refresh token"
+            status_code=HTTP_408_REQUEST_TIMEOUT, detail="Не валидный refresh token"
         )
     access_token = create_token({"userName": refresh_token.get("userName")})
     return {"accessToken": access_token}
 
 
 @user_public_router.post("/login")
-def authorization(
-    user_data: UserCreate, response: Response, db: Session = Depends(get_db)
-):
-    user = authenticated(db=db, userSchema=user_data)
+def authorization(user_data: UserCreate, response: Response, request: Request, db: Session = Depends(get_db)):
+    """Авторизует пользователя"""
+    user = authenticated(db=db, user_data=user_data)
     if not user:
         raise HTTPException(
             status_code=HTTP_400_BAD_REQUEST,
-            detail="Некорректные имя пользователя или пароль",
+            detail="Некорректное имя пользователя или пароль",
             headers={"WWW-Authenticate": "Bearer"},
         )
     access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     refresh_token_expires = timedelta(days=REFRESH_TOKEN_EXPIRE_DAYS)
     access_token = create_token(
-        data={"userName": user.userName}, expiresDelta=access_token_expires
+        data={"userName": user.userName}, expires_delta=access_token_expires
     )
     refresh_token = create_token(
-        data={"userName": user.userName}, expiresDelta=refresh_token_expires
+        data={"userName": user.userName}, expires_delta=refresh_token_expires
     )
-    save_refresh_token(userId=user.id, token=refresh_token, db=db)
+    save_refresh_token(request=request, token=refresh_token, db=db)
     response.set_cookie(
         key="refreshToken",
         value=refresh_token,
@@ -75,12 +74,14 @@ def authorization(
 
 @user_public_router.post("/logup")
 def registration(user_data: UserCreate, db: Session = Depends(get_db)):
-    create_user(db=db, userSchema=user_data)
+    """Создаёт нового пользователя (Регистрирует)"""
+    create_user(db=db, user_data=user_data)
     return HTTP_200_OK
 
 
 @user_public_router.post("/logout")
 def logout(request: Request, response: Response, db: Session = Depends(get_db)):
+    """Удаляет токен и куки пользователя (Выходит из аккаунта)"""
     refresh_token = request.cookies.get("refreshToken")
     delete_refresh_token(token=refresh_token, db=db)
     response.delete_cookie("refreshToken")
@@ -89,11 +90,13 @@ def logout(request: Request, response: Response, db: Session = Depends(get_db)):
 
 @user_public_router.post("/getUser")
 def current_user(token, db: Session = Depends(get_db)):
+    """Получает данные конкретного пользователя"""
     return get_current_user(token, db=db)
 
 
 @user_private_router.put("/update/user")
 def update_user_data(user_data: UserUpdate, request: Request, response: Response, db: Session = Depends(get_db)):
+    """Обновляет данные конкретного пользователя"""
     refresh_token = request.cookies.get("refreshToken")
     user_updated = update_user(request=request, db=db, user=user_data)
     delete_refresh_token(token=refresh_token, db=db)
@@ -101,12 +104,12 @@ def update_user_data(user_data: UserUpdate, request: Request, response: Response
     access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     refresh_token_expires = timedelta(days=REFRESH_TOKEN_EXPIRE_DAYS)
     access_token = create_token(
-        data={"userName": user_updated.userName}, expiresDelta=access_token_expires
+        data={"userName": user_updated.userName}, expires_delta=access_token_expires
     )
     refresh_token = create_token(
-        data={"userName": user_updated.userName}, expiresDelta=refresh_token_expires
+        data={"userName": user_updated.userName}, expires_delta=refresh_token_expires
     )
-    save_refresh_token(userId=user_updated.id, token=refresh_token, db=db)
+    save_refresh_token(user_id=user_updated.id, token=refresh_token, db=db)
     response.set_cookie(
         key="refreshToken",
         value=refresh_token,
@@ -126,9 +129,11 @@ def update_user_data(user_data: UserUpdate, request: Request, response: Response
 
 @user_private_router.delete("/delete")
 def delete_user_data(request: Request, db: Session = Depends(get_db)):
+    """Удаляет конкретного пользователя"""
     delete_user(request=request, db=db)
 
 
 @user_private_router.post("/update/password")
 def update_password_data(request: Request, user_data: UpdatePasswordSchema, db: Session = Depends(get_db)):
+    """Обновляет пароль у конкретного пользователя"""
     update_password(request=request, user_data=user_data, db=db)
